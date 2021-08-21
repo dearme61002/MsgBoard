@@ -1,0 +1,52 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="MsgBoardWebApp.Main" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link rel="stylesheet" href="Bootstrap/css/bootstrap.css" />
+    <script src="Bootstrap/js/bootstrap.js"></script>
+    <style>
+        div{
+            border: 1px solid #000000;
+        }
+        .Logo {
+            height: 100px;
+        }
+        .FontSetting{
+            font-family: 微軟正黑體;
+            font-size: 28px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="container">
+            <div class="row">
+                <div class ="col-8">
+                    <a class="title">
+                        <img src="Img/Logo.png" class="Logo" />
+                        Woolong 留言板
+                    </a>
+                </div>
+                <div class="col-4">
+                    Function buttons
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    List
+                </div>
+                <div class="col-10">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
