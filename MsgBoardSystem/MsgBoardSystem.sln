@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsgBoardWebApp", "MsgBoardWebApp\MsgBoardWebApp.csproj", "{73E9D23F-FDBA-4C74-9E60-2CF2F29A1787}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{6058776B-2E13-4202-9332-D2FEDD1509B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{DAEB81F2-BE08-4080-A90B-B15342EEA93C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{73E9D23F-FDBA-4C74-9E60-2CF2F29A1787}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73E9D23F-FDBA-4C74-9E60-2CF2F29A1787}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73E9D23F-FDBA-4C74-9E60-2CF2F29A1787}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6058776B-2E13-4202-9332-D2FEDD1509B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6058776B-2E13-4202-9332-D2FEDD1509B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6058776B-2E13-4202-9332-D2FEDD1509B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6058776B-2E13-4202-9332-D2FEDD1509B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAEB81F2-BE08-4080-A90B-B15342EEA93C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAEB81F2-BE08-4080-A90B-B15342EEA93C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAEB81F2-BE08-4080-A90B-B15342EEA93C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAEB81F2-BE08-4080-A90B-B15342EEA93C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
