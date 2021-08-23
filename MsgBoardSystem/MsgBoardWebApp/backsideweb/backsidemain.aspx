@@ -33,7 +33,7 @@
                 });
 			});
             function showContent(myurl) {
-                var urlhtml = '<iframe src="' + myurl + '" onscroll="no" style="height: 100 %; width: 100 %; border: 0"></iframe>';
+                var urlhtml = '<iframe src="'+ myurl+'"style="height:100%; width:100%;border:0"></iframe>';
 				return urlhtml;
 			}
             /*綁定按鈕*/
@@ -51,20 +51,20 @@
 	<div data-options="region:'west',split:true,title:'功能列表'" style="width:300px;padding:10px;">
        <%-- 功能列--%>
         <div class="easyui-accordion" data-options="fit:true" style="width:auto;">
-	   <a id="index"  href="#" class="easyui-linkbutton functionbar" data-options="iconCls:'icon-reload'" style="width:inherit" url="index.aspx" >功能首頁</a> <%--主頁按鈕--%>
+	   <a id="index"  href="#" class="easyui-linkbutton functionbar" data-options="iconCls:'icon-reload'" style="width:inherit" url="index.aspx?title=功能首頁" >功能首頁</a> <%--主頁按鈕--%>
 		<div title="留言貼文管理"  data-options="iconCls:'icon-ok',fit:true" style="padding:10px 0px;width:auto;">
-	   <a id="badlanguage" href="#" class="easyui-linkbutton functionbar"  style="width:inherit" url="badlanguage.aspx">禁言管理</a> <%--禁言管理按鈕--%>
+	   <a id="badlanguage" href="#" class="easyui-linkbutton functionbar"  style="width:inherit" url="badlanguage.aspx?title=禁言管理">禁言管理</a> <%--禁言管理按鈕--%>
 			
-	    <a id="editarticles" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="editarticles.aspx">貼文管理</a> <%--貼文管理按鈕--%>
-			<a id="board" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="board.aspx">佈告欄管理</a> <%--佈告欄管理管理按鈕--%>
+	    <a id="editarticles" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="editarticles.aspx?title=貼文管理">貼文管理</a> <%--貼文管理按鈕--%>
+			<a id="board" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="board.aspx?title=佈告欄管理"">佈告欄管理</a> <%--佈告欄管理管理按鈕--%>
 		</div>
 		<div title="會員管理" data-options="iconCls:'icon-ok',fit:true"  style="padding:10px 0px;width:auto;">
-		<a id="editmember" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="editmember.aspx">會員資訊</a> <%--會員資訊按鈕--%>
-			<a id="blackmember" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="blackmember.aspx">黑名單</a> <%--黑名單按鈕--%>	
+		<a id="editmember" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="editmember.aspx?title=會員資訊">會員資訊</a> <%--會員資訊按鈕--%>
+			<a id="blackmember" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="blackmember.aspx?title=黑名單">黑名單</a> <%--黑名單按鈕--%>	
 		</div>
 			<div title="系統管理" data-options="iconCls:'icon-ok',selected:true" style="padding:10px 0px;width:auto;">
-		<a id="errorlog" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="errorlog.aspx">錯誤ＬＯＧ檔案生成</a> <%--錯誤ＬＯＧ檔案生成--%>	
-				<a id="passwordchange" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="passwordchange.aspx">跟改密碼及帳號</a> <%--跟改密碼及帳號--%>	
+		<a id="errorlog" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="errorlog.aspx?title=錯誤ＬＯＧ檔案生成">錯誤ＬＯＧ檔案生成</a> <%--錯誤ＬＯＧ檔案生成--%>	
+				<a id="passwordchange" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="passwordchange.aspx?title=跟改密碼及帳號">跟改密碼及帳號</a> <%--跟改密碼及帳號--%>	
 		</div>
 		
 	</div>

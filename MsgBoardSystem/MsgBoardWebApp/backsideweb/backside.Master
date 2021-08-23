@@ -10,11 +10,16 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <form id="form1" runat="server">
+     <%--接收標題--%>
+     <%--檢查標別是否有參數如果沒有傳入空字符--%><%string titleh1 = (Request.QueryString["title"] != null) ? Request.QueryString["title"] : string.Empty;%>
+
+     <%--接收標題--%>
+                <h1><%:titleh1%></h1>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+              
             </asp:ContentPlaceHolder>
         </div>
-    </form>
+    
 </body>
 </html>
