@@ -3,57 +3,73 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <body class="bg-light">
-        <div class="container">
-            <main>
-                <div class="py-5 text-center">
+    <form class="row g-3 needs-validation" novalidate>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col-3">
+                <label for="txtAcc" class="form-label">帳號 : </label>
+            </div>
+            <div class="col-6">
+                <input type="text" class="form-control" id="txtAcc" value="" required>
+                <div class="invalid-feedback">
+                    Looks bad!
                 </div>
-                <div class="row g-5">
-                    <div class="col-md-5 col-lg-4 order-md-last">
-                        <form class="card p-2">
-                            <div class="input-group">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-7 col-lg-8">
-                        <h3 class="mb-3">會員登入</h3>
-                        <hr class="my-4">
-                        <form class="needs-validation" novalidate>
-                            <div class="row g-3">
-                                <div class="col-sm-3">
-                                    <label for="txtAcc" class="form-label">
-                                        <h4>帳號 : </h4>
-                                    </label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtAcc" placeholder="" value="" required>
-                                    <div class="invalid-feedback">
-                                        請輸入帳號
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-3">
-                                <div class="col-sm-3">
-                                    <label for="txtPwd" class="form-label">
-                                        <h4>密碼 : </h4>
-                                    </label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="txtPwd" placeholder="" value="" required>
-                                    <div class="invalid-feedback">
-                                        請輸入密碼
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="my-4">
-                            <button class="btn btn-primary btn-lg" type="submit">送出</button>
-                        </form>
-                    </div>
-                </div>
-            </main>
+            </div>
+            <div class="col-3"></div>
         </div>
+        <div class="row">
+            <div class="col-3">
+                <label for="txtPwd" class="form-label">密碼 : </label>
+            </div>
+            <div class="col-6">
+                <input type="text" class="form-control" id="txtPwd" value="" required>
+                <div class="invalid-feedback">
+                    Looks bad!
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">送出</button>
+        </div>
+        <hr class="my-4">
+    </form>
 
-        <script src="Bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="Bootstrap/Page02Login/form-validation.js"></script>
-    </body>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    else {
+                        var acc = $("#txtAcc").val();
+                        var pwd = $("#txtPwd").val();
+                        event.preventDefault()
+                        $.ajax({
+                            url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=Login",
+                            type: "POST",
+                            data: {
+                                "Account": acc,
+                                "Password": pwd
+                            },
+                            success: function (result) {
+                                alert("Success");
+                                window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+                            }
+                        });
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            });
+        })()
+    </script>
 </asp:Content>

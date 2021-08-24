@@ -546,6 +546,7 @@
     <Content Include="Bootstrap\js\bootstrap.min.js" />
     <Content Include="Bootstrap\Page02Login\form-validation.css" />
     <Content Include="Bootstrap\Page02Login\form-validation.js" />
+    <Content Include="Bootstrap\Page02Login\LoginVaild.js" />
     <Content Include="Global.asax" />
     <Content Include="Img\Logo.png" />
     <Content Include="jquery\jquery.min.js" />
@@ -633,6 +634,9 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\SystemHandler.ashx.cs">
+      <DependentUpon>SystemHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
@@ -734,6 +738,7 @@
     <Content Include="backsideUI\themes\material-teal\images\Thumbs.db" />
     <Content Include="backsideUI\themes\material\images\Thumbs.db" />
     <Content Include="backsideweb\backside.Master" />
+    <Content Include="Handler\SystemHandler.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
