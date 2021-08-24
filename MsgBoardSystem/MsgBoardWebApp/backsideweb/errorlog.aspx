@@ -7,8 +7,9 @@
             url: 'api/back/GeterrorLogs',
             success: function (res) {
                 var  rows=[];
-                $.each(res, function (i,item) {
-                    rows.push('<tr><td>' + item.ID + '</td><td>' + item.CreateDate + '</td><td>' + item.Body + '</td><td><a href="javascript:;">刪除</a></td></tr>');
+                $.each(res, function (i, item) {
+                    var CreateDate = new Date(item.CreateDate);
+                    rows.push('<tr><td>' + item.ID + '</td><td>' + CreateDate.getFullYear() + '年' + CreateDate.getMonth() + '月' + + CreateDate.getDate() + '日' + CreateDate.getHours() + '點' + + CreateDate.getMinutes() + '分' + + CreateDate.getSeconds() + '秒' + '</td><td>' + item.Body + '</td><td><a href="javascript:;">刪除</a></td></tr>');
                 })
                 var dd = rows.join('');
                     $('#tb').empty().append(rows.join(''));
