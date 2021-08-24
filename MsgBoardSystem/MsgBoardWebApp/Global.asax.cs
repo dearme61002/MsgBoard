@@ -9,6 +9,8 @@ using System.Web.SessionState;
 using System.Web.UI.WebControls;
 using System.Web.Http;
 using System.Web.Routing;
+using System.Web.UI;
+using MsgBoardWebApp.filter;
 
 namespace MsgBoardWebApp
 {
@@ -22,8 +24,17 @@ namespace MsgBoardWebApp
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = System.Web.Http.RouteParameter.Optional }
                 );
+            #region 註冊filters
+            RegisterWebApiFilters(GlobalConfiguration.Configuration.Filters);
+            #endregion
             #endregion
         }
+        #region filters
+        public static void RegisterWebApiFilters(System.Web.Http.Filters.HttpFilterCollection filters)
+        {
+            filters.Add(new BacksideFilter());
+        }
+        #endregion
         protected void Application_Error(object sender, EventArgs e)
         {
             ////獲得錯誤代碼

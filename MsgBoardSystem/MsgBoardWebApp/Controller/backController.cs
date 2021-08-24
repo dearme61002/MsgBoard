@@ -9,7 +9,8 @@ namespace MsgBoardWebApp
 {
     public class backController : ApiController
     {
-        // GET api/<controller>
+        // GET api/<controller>[TypeFilter(type)]
+      
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

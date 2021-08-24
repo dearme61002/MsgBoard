@@ -643,6 +643,7 @@
     <Compile Include="backsideweb\passwordchange.aspx.designer.cs">
       <DependentUpon>passwordchange.aspx</DependentUpon>
     </Compile>
+    <Compile Include="filter\BacksideFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
