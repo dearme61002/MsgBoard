@@ -14,7 +14,8 @@ namespace MsgBoardWebApp
     {
         // GET api/<controller>[TypeFilter(type)]
       
-        public List<databaseORM.data.ErrorLog> Get()
+        [HttpPost]
+        public List<databaseORM.data.ErrorLog> GetErrorLogs()
         {
            using (databaseEF context = new databaseEF())
             {
@@ -25,6 +26,7 @@ namespace MsgBoardWebApp
         }
 
         // GET api/<controller>/5
+       [HttpGet]
         public string Get(int id)
         {
             return "value";
