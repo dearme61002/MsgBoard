@@ -52,6 +52,10 @@
     <Compile Include="writefile.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\databaseORM\databaseORM.csproj">
+      <Project>{17f0546a-ea55-45f1-9cd4-e416d70c551d}</Project>
+      <Name>databaseORM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{daeb81f2-be08-4080-a90b-b15342eea93c}</Project>
       <Name>Model</Name>
