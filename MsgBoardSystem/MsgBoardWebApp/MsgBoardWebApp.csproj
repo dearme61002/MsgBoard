@@ -544,6 +544,8 @@
     <Content Include="Bootstrap\js\bootstrap.esm.min.js" />
     <Content Include="Bootstrap\js\bootstrap.js" />
     <Content Include="Bootstrap\js\bootstrap.min.js" />
+    <Content Include="Bootstrap\Page02Login\form-validation.css" />
+    <Content Include="Bootstrap\Page02Login\form-validation.js" />
     <Content Include="Global.asax" />
     <Content Include="Img\Logo.png" />
     <Content Include="jquery\jquery.min.js" />
