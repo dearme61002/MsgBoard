@@ -1,4 +1,5 @@
-﻿using System;
+﻿using databaseORM.data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,9 +12,14 @@ namespace MsgBoardWebApp
     {
         // GET api/<controller>[TypeFilter(type)]
       
-        public IEnumerable<string> Get()
+        public List<databaseORM.data.ErrorLog> Get()
         {
-            return new string[] { "value1", "value2" };
+           using (databaseEF context = new databaseEF())
+            {
+                List<databaseORM.data.ErrorLog> cc =  context.ErrorLogs.ToList();
+                return cc;
+            }
+           
         }
 
         // GET api/<controller>/5
