@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI.WebControls;
+using System.Web.Http;
+using System.Web.Routing;
 
 namespace MsgBoardWebApp
 {
@@ -14,6 +16,13 @@ namespace MsgBoardWebApp
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            #region 註冊API路由
+            RouteTable.Routes.MapHttpRoute(
+                name: "DefautApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = System.Web.Http.RouteParameter.Optional }
+                );
+            #endregion
         }
         protected void Application_Error(object sender, EventArgs e)
         {
