@@ -4,30 +4,28 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form class="row g-3 needs-validation" novalidate>
-        <hr class="my-4">
-        <div class="row">
-            <div class="col-3">
+        <h2>會員登入</h2>
+        <div class="row mb-3">
+            <div class="col-2 text-center">
                 <label for="txtAcc" class="form-label">帳號 : </label>
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <input type="text" class="form-control" id="txtAcc" value="" required>
                 <div class="invalid-feedback">
-                    Looks bad!
+                    請填入帳號!
                 </div>
             </div>
-            <div class="col-3"></div>
         </div>
-        <div class="row">
-            <div class="col-3">
+        <div class="row mb-3">
+            <div class="col-2 text-center">
                 <label for="txtPwd" class="form-label">密碼 : </label>
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <input type="text" class="form-control" id="txtPwd" value="" required>
                 <div class="invalid-feedback">
-                    Looks bad!
+                    請填入密碼!
                 </div>
             </div>
-            <div class="col-3"></div>
         </div>
         <div class="col-12">
             <button class="btn btn-primary" type="submit">送出</button>

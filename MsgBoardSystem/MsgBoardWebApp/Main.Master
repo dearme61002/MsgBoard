@@ -14,8 +14,6 @@
     <style>
         div {
             //border: 1px solid #000000;
-            font-family: 微軟正黑體;
-            font-size: 28px;
         }
 
         .Logo {
@@ -32,16 +30,19 @@
     <div class="container">
         <header class="blog-header py-3">
             <div class="row flex-nowrap justify-content-between align-items-center">
-                <div class="col-3 pt-1">
+                <div class="col-2 pt-1">
                     <a class="link-secondary" href="Page01Default.aspx">
                         <image src="Img/Logo.png" class="img-fluid"></image>
                     </a>
                 </div>
                 <div class="col-6 text-center">
-                    <a class="blog-header-logo text-dark" href="Page01Default.aspx">Woolang 留言板</a>
+                    <a class="blog-header-logo text-dark" href="Page01Default.aspx">
+                        <h1>Woolang 留言板</h1>
+                    </a>
                 </div>
-                <div class="col-3 d-flex justify-content-end align-items-center">
-                    <a class="btn btn-sm btn-outline-secondary" href="Page02Login.aspx">會員登入</a>
+                <div class="col-4">
+                    <a class="btn btn-sm btn-outline-secondary" href="Page02Login.aspx">登入</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="Page03Register.aspx">註冊</a>
                 </div>
             </div>
         </header>
@@ -52,6 +53,7 @@
                 List
             </div>
             <div class="col-10">
+                <hr class="my-4">
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>

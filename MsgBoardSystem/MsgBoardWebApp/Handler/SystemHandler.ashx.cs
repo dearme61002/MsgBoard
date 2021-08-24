@@ -50,9 +50,9 @@ namespace MsgBoardWebApp.Handler
             }
         }
 
-        private void LoginAuthentication(HttpContext context, string account)
+        public void LoginAuthentication(HttpContext context, string account)
         {
-            string userID = "";
+            string userID = "S12345";
             string[] roles = { "Admin" };
             bool isPersistance = false;
 
@@ -78,7 +78,6 @@ namespace MsgBoardWebApp.Handler
             GenericPrincipal gp = new GenericPrincipal(identity, roles);
             HttpContext.Current.User = gp;
             HttpContext.Current.Response.Cookies.Add(cookie);
-            context.Response.Redirect("~\\Page01Default.aspx");
         }
     }
 }
