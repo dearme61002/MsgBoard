@@ -19,7 +19,7 @@ namespace MsgBoardWebApp
             #region 註冊API路由
             RouteTable.Routes.MapHttpRoute(
                 name: "DefautApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = System.Web.Http.RouteParameter.Optional }
                 );
             #endregion

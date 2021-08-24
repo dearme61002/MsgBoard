@@ -44,6 +44,8 @@
 <body class="easyui-layout">
    <%--top--%>
 	<div data-options="region:'north',border:false" style="height:100px;padding:10px;overflow:hidden">
+		<h1><%=ee %></h1>
+		
           <img src="../Img/Logo.png" width="100" height="100" style="padding-bottom:12px;float:left"/>
         <div style="float:left;line-height:100px;margin-left:20px;font-size:60px">Woolong留言板</div>
  <%--top--%>
