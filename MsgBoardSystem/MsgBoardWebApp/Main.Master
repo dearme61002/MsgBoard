@@ -9,8 +9,10 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link rel="stylesheet" href="Bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="DataTableFrame/datatables.min.css" />
     <script src="Bootstrap/js/bootstrap.js"></script>
     <script src="jquery/jquery.min.js"></script>
+    <script src="DataTableFrame/datatables.min.js"></script>
     <style>
         div {
             //border: 1px solid #000000;
@@ -26,6 +28,9 @@
         }
     </style>
     <script>
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable();
+        });
         $(function () {
             var authx = document.cookie.indexOf(".ASPXAUTH");
             if (authx == 0) {

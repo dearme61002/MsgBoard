@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Test Page</h1>
+    <h1>貼文區</h1>
     <form runat="server" id="page04form">
         <asp:Literal runat="server" ID="ltlMsg"></asp:Literal><br />
     </form>
@@ -33,4 +33,107 @@
             <small class="text-muted">第二段放這裡...</small>
         </a>
     </div>
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th class="th-sm">標題
+
+                </th>
+                <th class="th-sm">發文者
+
+                </th>
+                <th class="th-sm">時間
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <a href="#">測試項目1</a>
+                </td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目2</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目3</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目4</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目5</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目6</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目7</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目8</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目9</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目10</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目11</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目12</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目13</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+            <tr>
+                <td>測試項目14</td>
+                <td>Tiger Nixon</td>
+                <td>2021-01-01</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>標題
+                </th>
+                <th>發文者
+                </th>
+                <th>時間
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <hr class="my-4">
+
+    <script src="Bootstrap/js/bootstrap.bundle.min.js"></script>
 </asp:Content>
