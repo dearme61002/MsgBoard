@@ -12,7 +12,7 @@
                             var CreateDate = new Date(item.CreateDate);
                             var BirthDay = new Date(item.BirthDay);
                             /*dataID是我自定義的屬性用來查ID用的*/
-                            rows.push('<tr><td>' + item.Name + '</td><td>' + CreateDate.getFullYear() + '年' + CreateDate.getMonth() + '月' + CreateDate.getDate() + '日' + CreateDate.getHours() + '點' + CreateDate.getMinutes() + '分' + CreateDate.getSeconds() + '秒' + '</td><td>' + item.Account + '</td><td>' + item.Password + '</td><td>' + item.Email + '</td><td>' + CreateDate.getFullYear() + '年' + CreateDate.getMonth() + '月' + CreateDate.getDate() + '日' + CreateDate.getHours() + '點' + CreateDate.getMinutes() + '分' + CreateDate.getSeconds() + '秒' + '</td><td><a href="javascript:;"class="del" dataID="' + item.ID + '">刪除</a></td><td><a href="javascript:;"class="edit" dataID="' + item.ID + '">送出</a></td></tr>');
+                            rows.push('<tr><td>' + item.Name + '</td><td>' + CreateDate.getFullYear() + '年' + CreateDate.getMonth() + '月' + CreateDate.getDate() + '日' + CreateDate.getHours() + '點' + CreateDate.getMinutes() + '分' + CreateDate.getSeconds() + '秒' + '</td><td>' + item.Account + '</td><td>' + item.Password + '</td><td>' + item.Email + '</td><td>' + BirthDay.getFullYear() + '年' + BirthDay.getMonth() + '月' + BirthDay.getDate() + '日' + '</td><td><a href="javascript:;"class="del" dataID="' + item.ID + '">刪除</a></td><td><a href="javascript:;"class="edit" dataID="' + item.ID + '">送出</a></td></tr>');
                         })
                         var dd = rows.join('');
                         $('#tb').empty().append(rows.join(''));
