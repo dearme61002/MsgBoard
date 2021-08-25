@@ -562,18 +562,67 @@
     <Content Include="Bootstrap\js\bootstrap.esm.min.js" />
     <Content Include="Bootstrap\js\bootstrap.js" />
     <Content Include="Bootstrap\js\bootstrap.min.js" />
+    <Content Include="Bootstrap\Page02Login\form-validation.css" />
+    <Content Include="Bootstrap\Page02Login\form-validation.js" />
+    <Content Include="Bootstrap\Page02Login\LoginVaild.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap4.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap4.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap5.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap5.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bulma.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bulma.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.dataTables.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.dataTables.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.foundation.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.foundation.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.jqueryui.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.jqueryui.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.semanticui.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.semanticui.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\jquery.dataTables.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\jquery.dataTables.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\images\sort_asc.png" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\images\sort_asc_disabled.png" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\images\sort_both.png" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\images\sort_desc.png" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\images\sort_desc_disabled.png" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap4.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap4.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap5.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap5.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bulma.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bulma.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.dataTables.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.dataTables.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.foundation.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.foundation.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.jqueryui.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.jqueryui.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.semanticui.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.semanticui.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\jquery.dataTables.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\jquery.dataTables.min.js" />
+    <Content Include="DataTableFrame\datatables.css" />
+    <Content Include="DataTableFrame\datatables.js" />
+    <Content Include="DataTableFrame\datatables.min.css" />
+    <Content Include="DataTableFrame\datatables.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Img\Logo.png" />
     <Content Include="jquery\jquery.min.js" />
     <Content Include="Page01Default.aspx" />
+    <Content Include="Page021ForgetPW.aspx" />
     <Content Include="Page02Login.aspx" />
     <Content Include="Page03Register.aspx" />
+    <Content Include="Page041EditPost.aspx" />
     <Content Include="Page04PostingHall.aspx" />
     <Content Include="Page05PostMsg.aspx" />
-    <Content Include="PageAdmin\Page071Front.aspx" />
-    <Content Include="PageAdmin\Page072Back.aspx" />
     <Content Include="PageMember\Page061Front.aspx" />
     <Content Include="PageMember\Page062Back.aspx" />
+    <Content Include="PageMember\Page063ChangePW.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -652,6 +701,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handler\SystemHandler.ashx.cs">
+      <DependentUpon>SystemHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -665,6 +717,13 @@
     </Compile>
     <Compile Include="Page01Default.aspx.designer.cs">
       <DependentUpon>Page01Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Page021ForgetPW.aspx.cs">
+      <DependentUpon>Page021ForgetPW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Page021ForgetPW.aspx.designer.cs">
+      <DependentUpon>Page021ForgetPW.aspx</DependentUpon>
     </Compile>
     <Compile Include="Page02Login.aspx.cs">
       <DependentUpon>Page02Login.aspx</DependentUpon>
@@ -680,6 +739,13 @@
     <Compile Include="Page03Register.aspx.designer.cs">
       <DependentUpon>Page03Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Page041EditPost.aspx.cs">
+      <DependentUpon>Page041EditPost.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Page041EditPost.aspx.designer.cs">
+      <DependentUpon>Page041EditPost.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Page04PostingHall.aspx.cs">
       <DependentUpon>Page04PostingHall.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -694,20 +760,6 @@
     <Compile Include="Page05PostMsg.aspx.designer.cs">
       <DependentUpon>Page05PostMsg.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageAdmin\Page071Front.aspx.cs">
-      <DependentUpon>Page071Front.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PageAdmin\Page071Front.aspx.designer.cs">
-      <DependentUpon>Page071Front.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PageAdmin\Page072Back.aspx.cs">
-      <DependentUpon>Page072Back.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PageAdmin\Page072Back.aspx.designer.cs">
-      <DependentUpon>Page072Back.aspx</DependentUpon>
-    </Compile>
     <Compile Include="PageMember\Page061Front.aspx.cs">
       <DependentUpon>Page061Front.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -721,6 +773,13 @@
     </Compile>
     <Compile Include="PageMember\Page062Back.aspx.designer.cs">
       <DependentUpon>Page062Back.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageMember\Page063ChangePW.aspx.cs">
+      <DependentUpon>Page063ChangePW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageMember\Page063ChangePW.aspx.designer.cs">
+      <DependentUpon>Page063ChangePW.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -752,6 +811,7 @@
     <Content Include="backsideUI\themes\material-teal\images\Thumbs.db" />
     <Content Include="backsideUI\themes\material\images\Thumbs.db" />
     <Content Include="backsideweb\backside.Master" />
+    <Content Include="Handler\SystemHandler.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
