@@ -27,6 +27,19 @@ namespace MsgBoardWebApp
 
         }
         [HttpPost]
+        public List<databaseORM.data.Accounting> GetEditMember()
+        {
+            #region 從資料庫取出EditAccounting紀錄
+            using (databaseEF context = new databaseEF())
+            {
+                List<databaseORM.data.Accounting> cc = context.Accountings.ToList();
+                return cc;
+            }
+            #endregion
+
+        }
+
+        [HttpPost]
         public Model.ApiResult DelErrorLogs([FromBody] string dataID)
         {
            
@@ -57,6 +70,40 @@ namespace MsgBoardWebApp
             #endregion
 
         }
+        [HttpPost]
+        public Model.ApiResult DelMember([FromBody] string dataID)
+        {
+
+            #region 從資料庫刪除ErrorLog紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+                Model.ApiResult apiResult = new Model.ApiResult();
+                try
+                {
+                    Accounting log = new Accounting() { ID = Convert.ToInt32(dataID) };
+                    context.Accountings.Attach(log);
+                    context.Accountings.Remove(log);
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "刪除成功";
+                    return apiResult;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "刪除失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
+
+
+
 
         // GET api/<controller>/5
         [HttpGet]
