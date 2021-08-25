@@ -21,7 +21,7 @@
                 <label for="txtPwd" class="form-label">密碼 : </label>
             </div>
             <div class="col-4">
-                <input type="text" class="form-control" id="txtPwd" value="" required>
+                <input type="password" class="form-control" id="txtPwd" value="" required>
                 <div class="invalid-feedback">
                     請填入密碼!
                 </div>
