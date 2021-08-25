@@ -12,7 +12,7 @@
     <table class="AllRangeSetting">
         <tr>
             <td>
-                <h2>歡迎訊息放這裡</h2>
+                <h2>歡迎訊息放這裡aaa</h2>
                 <a>相關訊息1</a>
                 <a>相關訊息2</a>
             </td>
