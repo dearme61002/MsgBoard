@@ -71,6 +71,7 @@
             <div class="col-2">
                 <div class="list-group" id="funcList">
                     <a href="../Page04PostingHall.aspx" class="list-group-item list-group-item-action list-group-item-warning">貼文區</a>
+                    <a href="../Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning">撰寫新貼文</a>
                     <a href="../PageMember/Page061Front.aspx" class="list-group-item list-group-item-action list-group-item-warning">個人資訊</a>
                 </div>
             </div>

@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>貼文區</h1>
+    <h2>貼文區</h2>
     <form runat="server" id="page04form">
         <asp:Literal runat="server" ID="ltlMsg"></asp:Literal><br />
     </form>

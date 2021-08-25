@@ -29,20 +29,18 @@
         </div>
         <div class="col-12">
             <button class="btn btn-primary" type="submit">送出</button>
+            <a class="btn btn btn-outline-info" type="button" href="../Page021ForgetPW.aspx">忘記密碼</a>
             <input class="btn btn-warning" type="reset" value="登出" id="logoutBtn">
         </div>
         <hr class="my-4">
     </form>
 
     <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {
             'use strict'
 
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.querySelectorAll('.needs-validation')
 
-            // Loop over them and prevent submission
             Array.prototype.slice.call(forms).forEach(function (form) {
                 form.addEventListener('submit', function (login) {
                     if (!form.checkValidity()) {

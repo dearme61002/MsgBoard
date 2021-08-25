@@ -596,8 +596,10 @@
     <Content Include="Img\Logo.png" />
     <Content Include="jquery\jquery.min.js" />
     <Content Include="Page01Default.aspx" />
+    <Content Include="Page021ForgetPW.aspx" />
     <Content Include="Page02Login.aspx" />
     <Content Include="Page03Register.aspx" />
+    <Content Include="Page041EditPost.aspx" />
     <Content Include="Page04PostingHall.aspx" />
     <Content Include="Page05PostMsg.aspx" />
     <Content Include="PageMember\Page061Front.aspx" />
@@ -695,6 +697,13 @@
     <Compile Include="Page01Default.aspx.designer.cs">
       <DependentUpon>Page01Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Page021ForgetPW.aspx.cs">
+      <DependentUpon>Page021ForgetPW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Page021ForgetPW.aspx.designer.cs">
+      <DependentUpon>Page021ForgetPW.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Page02Login.aspx.cs">
       <DependentUpon>Page02Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -708,6 +717,13 @@
     </Compile>
     <Compile Include="Page03Register.aspx.designer.cs">
       <DependentUpon>Page03Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Page041EditPost.aspx.cs">
+      <DependentUpon>Page041EditPost.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Page041EditPost.aspx.designer.cs">
+      <DependentUpon>Page041EditPost.aspx</DependentUpon>
     </Compile>
     <Compile Include="Page04PostingHall.aspx.cs">
       <DependentUpon>Page04PostingHall.aspx</DependentUpon>
