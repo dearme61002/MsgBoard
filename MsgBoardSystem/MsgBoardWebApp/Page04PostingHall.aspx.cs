@@ -26,21 +26,11 @@ namespace MsgBoardWebApp
 
                 var userdata = identity.Ticket;
                 this.ltlMsg.Text = $"User : {user.Identity.Name}, ID : {identity.Ticket.UserData}";
-                this.btnLogout.Visible = true;
             }
             else
             {
                 this.ltlMsg.Text = "Not Login";
             }
-        }
-
-        protected void btnLogout_Click(object sender, EventArgs e)
-        {
-            //FormsAuthentication.SignOut();
-            var cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-            cookie.Expires = DateTime.Now.AddHours(-5);
-            Response.Cookies.Add(cookie);
-            Response.Redirect(Request.RawUrl);
         }
     }
 }

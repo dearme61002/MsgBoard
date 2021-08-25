@@ -29,6 +29,7 @@
         </div>
         <div class="col-12">
             <button class="btn btn-primary" type="submit">送出</button>
+            <input class="btn btn-warning" type="reset" value="登出" id="logoutBtn">
         </div>
         <hr class="my-4">
     </form>
@@ -43,7 +44,7 @@
 
             // Loop over them and prevent submission
             Array.prototype.slice.call(forms).forEach(function (form) {
-                form.addEventListener('submit', function (event) {
+                form.addEventListener('submit', function (login) {
                     if (!form.checkValidity()) {
                         event.preventDefault()
                         event.stopPropagation()
@@ -74,6 +75,11 @@
                         });
                     }
                     form.classList.add('was-validated')
+                }, false)
+                form.addEventListener('reset', function (resetEvn) {
+                    document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+                    alert("登出成功");
+                    window.location.href = "http://localhost:49461/Page01Default.aspx";
                 }, false)
             });
         })()

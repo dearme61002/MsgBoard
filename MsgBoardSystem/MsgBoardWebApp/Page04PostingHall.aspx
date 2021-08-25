@@ -6,7 +6,6 @@
     <h1>Test Page</h1>
     <form runat="server" id="page04form">
         <asp:Literal runat="server" ID="ltlMsg"></asp:Literal><br />
-        <asp:Button runat="server" ID="btnLogout" Text="Logout" OnClick="btnLogout_Click" Visible="false" />
     </form>
     <div class="list-group">
         <a href="#" class="list-group-item list-group-item-action list-group-item-info" aria-current="true">
