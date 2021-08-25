@@ -59,9 +59,15 @@
                                 "Account": acc,
                                 "Password": pwd
                             },
-                            success: function (result) {
-                                alert("Success");
-                                window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+                            success: function (result) {                                
+                                var authx = document.cookie.indexOf(".ASPXAUTH");
+                                if (authx == 0) {
+                                    alert("Success");
+                                    window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+                                }
+                                else {
+                                    alert("Fail");
+                                }
                             }
                         });
                     }

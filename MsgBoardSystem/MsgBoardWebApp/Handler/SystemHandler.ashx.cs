@@ -36,7 +36,8 @@ namespace MsgBoardWebApp.Handler
                 {
                     if(string.Compare(pwd, "12345", false) == 0)
                     {
-                        LoginAuthentication(context, acc);
+                        // 登入驗證
+                        LoginAuthentication();
                     }
                 }
             }
@@ -50,8 +51,9 @@ namespace MsgBoardWebApp.Handler
             }
         }
 
-        public void LoginAuthentication(HttpContext context, string account)
+        public void LoginAuthentication()
         {
+            string account = "Will";
             string userID = "S12345";
             string[] roles = { "Admin" };
             bool isPersistance = false;
@@ -73,7 +75,7 @@ namespace MsgBoardWebApp.Handler
                     FormsAuthentication.FormsCookieName,
                     FormsAuthentication.Encrypt(ticket)
                 );
-            cookie.HttpOnly = true;
+            cookie.HttpOnly = false;
 
             GenericPrincipal gp = new GenericPrincipal(identity, roles);
             HttpContext.Current.User = gp;
