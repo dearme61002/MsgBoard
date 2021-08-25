@@ -40,6 +40,7 @@
     <script>
         (function () {
             'use strict'
+
             var forms = document.querySelectorAll('.needs-validation')
 
             Array.prototype.slice.call(forms)
@@ -49,7 +50,6 @@
                             event.preventDefault()
                             event.stopPropagation()
                         }
-
                         form.classList.add('was-validated')
                     }, false),
                     form.addEventListener('reset', function (resetEvn) {

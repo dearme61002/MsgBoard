@@ -10,10 +10,11 @@
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         </div>
     </div>
+
     <table id="msgTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th class="th-sm">內容
+                <th class="th-sm">留言內容
 
                 </th>
                 <th class="th-sm">留言者
@@ -93,20 +94,23 @@
         </tbody>
     </table>
     <hr class="my-4">
-    <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">編輯留言 : </label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        <div class="invalid-feedback">
-            請填入內容!
+
+    <form class="row g-3 needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="msgText" class="form-label">留下留言 : </label>
+            <textarea class="form-control" id="msgText" rows="3" required placeholder="寫點什麼...."></textarea>
+            <div class="invalid-feedback">
+                請填入內容!
+            </div>
         </div>
-    </div>
-    <div class="col-12">
-        <button class="btn btn-outline-primary" type="submit">送出</button>
-        <button class="btn btn-outline-secondary" type="reset">清除</button>
-    </div>
+        <div class="col-12">
+            <button class="btn btn-outline-primary" type="submit">送出</button>
+            <button class="btn btn-outline-secondary" type="reset">清除</button>
+        </div>
+    </form>
     <hr class="my-4">
 
-        <script>
+    <script>
         (function () {
             'use strict'
             var forms = document.querySelectorAll('.needs-validation')
@@ -121,7 +125,7 @@
                         else {
                             alert("成功");
                             event.preventDefault();
-                            location.reload();
+                            window.location.reload();
                         }
 
                         form.classList.add('was-validated')
@@ -131,5 +135,5 @@
                         }, false)
                 })
         })()
-        </script>
+    </script>
 </asp:Content>

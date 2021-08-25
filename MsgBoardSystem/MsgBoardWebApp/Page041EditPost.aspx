@@ -6,15 +6,15 @@
     <form class="row g-3 needs-validation" novalidate>
         <h2>撰寫新貼文</h2>
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">貼文標題 : </label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+            <label for="postTitle" class="form-label">貼文標題 : </label>
+            <input type="text" class="form-control" id="postTitle" placeholder="" required>
             <div class="invalid-feedback">
                 請填入貼文標題!
             </div>
         </div>
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">貼文內容 : </label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <label for="postContext" class="form-label">貼文內容 : </label>
+            <textarea class="form-control" id="postContext" placeholder="請在此輸入內容" required style="height: 100px"></textarea>
             <div class="invalid-feedback">
                 請填入貼文內容!
             </div>
@@ -26,9 +26,14 @@
         <hr class="my-4">
     </form>
 
+
+
+
+
     <script>
         (function () {
             'use strict'
+
             var forms = document.querySelectorAll('.needs-validation')
 
             Array.prototype.slice.call(forms)
