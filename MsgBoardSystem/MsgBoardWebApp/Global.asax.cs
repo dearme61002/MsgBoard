@@ -9,6 +9,8 @@ using System.Web.Http;
 using System.Web.Routing;
 using System.Web.UI;
 using MsgBoardWebApp.filter;
+using DAL;
+using System.Data.SqlClient;
 
 namespace MsgBoardWebApp
 {
@@ -28,12 +30,27 @@ namespace MsgBoardWebApp
         }
         protected void Application_Error(object sender, EventArgs e)
         {
-            ////獲得錯誤代碼
-            //string Message = "";
-            //Exception ex = Server.GetLastError();
-            //Message = "發生錯誤的網頁:{0}錯誤訊息:{1}堆疊內容:{2}";
-            //Message = String.Format(Message, Request.Path + Environment.NewLine, ex.GetBaseException().Message + Environment.NewLine, Environment.NewLine + ex.StackTrace);
-            ////以下要寫出錯誤代碼並導入置資料庫
+            //獲得錯誤代碼
+            string Message = "";
+            Exception ex = Server.GetLastError();
+            Message = "發生錯誤的網頁:{0}錯誤訊息:{1}堆疊內容:{2}";
+            Message = String.Format(Message, Request.Path + Environment.NewLine, ex.GetBaseException().Message + Environment.NewLine, Environment.NewLine + ex.StackTrace);
+            //以下要寫出錯誤代碼並導入置資料庫
+            DAL.sqlhelper sqlhelper = new sqlhelper();
+            string sql = @"insert into ErrorLog(Body) values (@Body)";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@Body",Message)
+            };
+            try
+            {
+                sqlhelper.executeNonQuerysql(sql, sqlParameters, false);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("LOG寫入問題");
+            }
+
         }
 
         protected void Session_Start(object sender, EventArgs e)
