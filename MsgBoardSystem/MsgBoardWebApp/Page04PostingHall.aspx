@@ -33,7 +33,8 @@
             <small class="text-muted">第二段放這裡...</small>
         </a>
     </div>
-    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+    <hr class="my-4">
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th class="th-sm">標題
@@ -50,7 +51,7 @@
         <tbody>
             <tr>
                 <td>
-                    <a href="#">測試項目1</a>
+                    <a href="../Page05PostMsg.aspx?PID=abc123">測試項目1</a>
                 </td>
                 <td>Tiger Nixon</td>
                 <td>2021-01-01</td>
@@ -132,7 +133,6 @@
             </tr>
         </tfoot>
     </table>
-
     <hr class="my-4">
 
     <script src="Bootstrap/js/bootstrap.bundle.min.js"></script>

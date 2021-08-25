@@ -30,6 +30,14 @@
     <script>
         $(document).ready(function () {
             $('#dtBasicExample').DataTable();
+            $('#msgTable').DataTable({
+                "scrollY": "200px",
+                "scrollCollapse": true,
+                "paging": false,
+                "sorting": false,
+                "info": false,
+                "searching": false
+            });
         });
         $(function () {
             var authx = document.cookie.indexOf(".ASPXAUTH");
