@@ -6,8 +6,6 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
     <link rel="stylesheet" href="Bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="DataTableFrame/datatables.min.css" />
     <script src="Bootstrap/js/bootstrap.js"></script>
@@ -51,6 +49,8 @@
             }
         });
     </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body>
     <div class="container">
@@ -80,7 +80,6 @@
                 <div class="list-group" id="funcList">
                     <a href="../Page04PostingHall.aspx" class="list-group-item list-group-item-action list-group-item-warning">貼文區</a>
                     <a href="../Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning">撰寫新貼文</a>
-                    <a href="../PageMember/Page061Front.aspx" class="list-group-item list-group-item-action list-group-item-warning">個人資訊</a>
                 </div>
             </div>
             <div class="col-9">

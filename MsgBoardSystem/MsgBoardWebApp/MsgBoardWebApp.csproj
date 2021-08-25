@@ -604,6 +604,7 @@
     <Content Include="Page05PostMsg.aspx" />
     <Content Include="PageMember\Page061Front.aspx" />
     <Content Include="PageMember\Page062Back.aspx" />
+    <Content Include="PageMember\Page063ChangePW.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -752,6 +753,13 @@
     </Compile>
     <Compile Include="PageMember\Page062Back.aspx.designer.cs">
       <DependentUpon>Page062Back.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageMember\Page063ChangePW.aspx.cs">
+      <DependentUpon>Page063ChangePW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageMember\Page063ChangePW.aspx.designer.cs">
+      <DependentUpon>Page063ChangePW.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
