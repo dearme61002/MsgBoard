@@ -63,10 +63,12 @@
                                 var authx = document.cookie.indexOf(".ASPXAUTH");
                                 if (authx == 0) {
                                     alert("Success");
+                                    $('#funcList').show();
                                     window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
                                 }
                                 else {
                                     alert("Fail");
+                                    $('#funcList').hide();
                                 }
                             }
                         });

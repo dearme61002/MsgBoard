@@ -25,35 +25,49 @@
             font-size: 28px;
         }
     </style>
+    <script>
+        $(function () {
+            var authx = document.cookie.indexOf(".ASPXAUTH");
+            if (authx == 0) {
+                $("#funcList").show();
+            }
+            else {
+                $("#funcList").hide();
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="container">
         <header class="blog-header py-3">
             <div class="row flex-nowrap justify-content-between align-items-center">
                 <div class="col-2 pt-1">
-                    <a class="link-secondary" href="Page01Default.aspx">
-                        <image src="Img/Logo.png" class="img-fluid"></image>
+                    <a class="link-secondary" href="../Page01Default.aspx">
+                        <image src="../Img/Logo.png" class="img-fluid"></image>
                     </a>
                 </div>
                 <div class="col-6 text-center">
-                    <a class="blog-header-logo text-dark" href="Page01Default.aspx">
+                    <a class="blog-header-logo text-dark" href="../Page01Default.aspx">
                         <h1>Woolang 留言板</h1>
                     </a>
                 </div>
                 <div class="col-4">
-                    <a class="btn btn-sm btn-outline-secondary" href="Page02Login.aspx">登入</a>
-                    <a class="btn btn-sm btn-outline-secondary" href="Page03Register.aspx">註冊</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="../Page02Login.aspx">登入</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="../Page03Register.aspx">註冊</a>
                 </div>
             </div>
+            <hr class="my-4">
         </header>
     </div>
     <div class="container">
         <div class="row">
             <div class="col-2">
-                List
+                <div class="list-group" id="funcList">
+                    <a href="../Page04PostingHall.aspx" class="list-group-item list-group-item-action">貼文區</a>
+                    <a href="../PageMember/Page061Front.aspx" class="list-group-item list-group-item-action">個人資訊</a>
+                </div>
             </div>
-            <div class="col-10">
-                <hr class="my-4">
+            <div class="col-9">
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>
