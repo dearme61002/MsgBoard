@@ -7,11 +7,11 @@
 // </自動產生的>
 //------------------------------------------------------------------------------
 
-namespace MsgBoardWebApp.PageMember
+namespace MsgBoardWebApp
 {
 
 
-    public partial class Page061Front
+    public partial class Page041EditPost
     {
     }
 }

@@ -4,49 +4,89 @@
 
 <html>
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
     <link rel="stylesheet" href="Bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="DataTableFrame/datatables.min.css" />
     <script src="Bootstrap/js/bootstrap.js"></script>
+    <script src="jquery/jquery.min.js"></script>
+    <script src="DataTableFrame/datatables.min.js"></script>
     <style>
-        div{
-            border: 1px solid #000000;
+        div {
+            //border: 1px solid #000000;
         }
+
         .Logo {
             height: 100px;
         }
-        .FontSetting{
+
+        .FontSetting {
             font-family: 微軟正黑體;
             font-size: 28px;
         }
     </style>
+    <script>
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable();
+            $('#msgTable').DataTable({
+                "scrollY": "200px",
+                "scrollCollapse": true,
+                "paging": false,
+                "sorting": false,
+                "info": false,
+                "searching": false
+            });
+        });
+        $(function () {
+            var authx = document.cookie.indexOf(".ASPXAUTH");
+            if (authx == 0) {
+                $("#funcList").show();
+                $("#logoutBtn").show();
+            }
+            else {
+                $("#funcList").hide();
+                $("#logoutBtn").hide();
+            }
+        });
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div class="container">
-            <div class="row">
-                <div class ="col-8">
-                    <a class="title">
-                        <img src="Img/Logo.png" class="Logo" />
-                        Woolong 留言板
+    <div class="container">
+        <header class="blog-header py-3">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-2 pt-1">
+                    <a class="link-secondary" href="../Page01Default.aspx">
+                        <image src="../Img/Logo.png" class="img-fluid"></image>
+                    </a>
+                </div>
+                <div class="col-6 text-center">
+                    <a class="blog-header-logo text-dark" href="../Page01Default.aspx">
+                        <h1>Woolang 留言板</h1>
                     </a>
                 </div>
                 <div class="col-4">
-                    Function buttons
+                    <a class="btn btn-sm btn-outline-secondary" href="../Page02Login.aspx">登入</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="../Page03Register.aspx">註冊</a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-2">
-                    List
+            <hr class="my-4">
+        </header>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <div class="list-group" id="funcList">
+                    <a href="../Page04PostingHall.aspx" class="list-group-item list-group-item-action list-group-item-warning">貼文區</a>
+                    <a href="../Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning">撰寫新貼文</a>
                 </div>
-                <div class="col-10">
-                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                    </asp:ContentPlaceHolder>
-                </div>
+            </div>
+            <div class="col-9">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
             </div>
         </div>
-    </form>
+    </div>
 </body>
 </html>
