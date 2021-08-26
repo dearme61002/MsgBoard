@@ -4,6 +4,15 @@
     <script>
         $(document).ready(function () {
             $('#dtBasicExample').DataTable();
+
+            /*$.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetSession",
+                type: "GET",
+                data: {},
+                success: function (result) {
+                    alert(result);
+                }
+            });*/
         });
     </script>
 </asp:Content>
