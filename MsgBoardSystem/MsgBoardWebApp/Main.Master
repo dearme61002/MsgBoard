@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 <html>
-<head runat="server">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <link rel="stylesheet" href="Bootstrap/css/bootstrap.css" />
@@ -26,17 +26,6 @@
         }
     </style>
     <script>
-        $(document).ready(function () {
-            $('#dtBasicExample').DataTable();
-            $('#msgTable').DataTable({
-                "scrollY": "200px",
-                "scrollCollapse": true,
-                "paging": false,
-                "sorting": false,
-                "info": false,
-                "searching": false
-            });
-        });
         $(function () {
             var authx = document.cookie.indexOf(".ASPXAUTH");
             if (authx == 0) {
@@ -57,18 +46,18 @@
         <header class="blog-header py-3">
             <div class="row flex-nowrap justify-content-between align-items-center">
                 <div class="col-2 pt-1">
-                    <a class="link-secondary" href="../Page01Default.aspx">
+                    <a class="link-secondary" href="Page01Default.aspx">
                         <image src="../Img/Logo.png" class="img-fluid"></image>
                     </a>
                 </div>
                 <div class="col-6 text-center">
-                    <a class="blog-header-logo text-dark" href="../Page01Default.aspx">
+                    <a class="blog-header-logo text-dark" href="Page01Default.aspx">
                         <h1>Woolang 留言板</h1>
                     </a>
                 </div>
                 <div class="col-4">
-                    <a class="btn btn-sm btn-outline-secondary" href="../Page02Login.aspx">登入</a>
-                    <a class="btn btn-sm btn-outline-secondary" href="../Page03Register.aspx">註冊</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="Page02Login.aspx">登入</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="Page03Register.aspx">註冊</a>
                 </div>
             </div>
             <hr class="my-4">
@@ -78,8 +67,9 @@
         <div class="row">
             <div class="col-2">
                 <div class="list-group" id="funcList">
-                    <a href="../Page04PostingHall.aspx" class="list-group-item list-group-item-action list-group-item-warning">貼文區</a>
-                    <a href="../Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning">撰寫新貼文</a>
+                    <a href="Page04PostingHall.aspx" class="list-group-item list-group-item-action list-group-item-warning">貼文區</a>
+                    <a href="Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning">撰寫新貼文</a>
+                    <a href="Page06MemberCenter.aspx" class="list-group-item list-group-item-action list-group-item-warning">會員中心</a>
                 </div>
             </div>
             <div class="col-9">
