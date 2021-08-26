@@ -839,6 +839,10 @@
       <Project>{daeb81f2-be08-4080-a90b-b15342eea93c}</Project>
       <Name>Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SystemAuth\SystemAuth.csproj">
+      <Project>{83E8BFB3-62AE-4CD2-8300-963F6A2F92D1}</Project>
+      <Name>SystemAuth</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

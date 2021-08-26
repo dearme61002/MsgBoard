@@ -1,9 +1,12 @@
-﻿using System;
+﻿using databaseORM.data;
+using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Security;
+using SystemAuth;
 
 namespace MsgBoardWebApp.Handler
 {
@@ -31,13 +34,14 @@ namespace MsgBoardWebApp.Handler
                 var get_pwd = context.Request.Form["Password"];
                 string acc = Convert.ToString(get_acc);
                 string pwd = Convert.ToString(get_pwd);
-                
-                if(string.Compare(acc, "Admin", false) == 0)
+
+                if (string.Compare(acc, "Admin", false) == 0)
                 {
-                    if(string.Compare(pwd, "12345", false) == 0)
+                    if (string.Compare(pwd, "12345", false) == 0)
                     {
                         // 登入驗證
                         LoginAuthentication();
+                        GetInfo(acc, context);
                     }
                 }
             }
@@ -80,6 +84,30 @@ namespace MsgBoardWebApp.Handler
             GenericPrincipal gp = new GenericPrincipal(identity, roles);
             HttpContext.Current.User = gp;
             HttpContext.Current.Response.Cookies.Add(cookie);
+        }
+
+        private void GetInfo(string account, HttpContext context)
+        {
+            List<Accounting> sourceList = AuthManager.GetAccountInfo(account);
+            List<UserInfoModel> userSource =
+                sourceList.Select(obj => new UserInfoModel()
+                {
+                    ID = obj.ID,
+                    UserID = obj.UserID,
+                    Name = obj.Name,
+                    CreateDate = obj.CreateDate,
+                    Account = obj.Account,
+                    Password = obj.Password,
+                    Level = obj.Level,
+                    Email = obj.Email,
+                    Bucket = obj.Bucket,
+                    Birthday = obj.BirthDay
+                }).ToList();
+
+            string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(userSource);
+
+            context.Response.ContentType = "application/json";
+            context.Response.Write(jsonText);
         }
     }
 }
