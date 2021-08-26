@@ -610,6 +610,8 @@
     <Content Include="DataTableFrame\datatables.js" />
     <Content Include="DataTableFrame\datatables.min.css" />
     <Content Include="DataTableFrame\datatables.min.js" />
+    <Content Include="DataTableFrame\jquery-3.5.1.js" />
+    <Content Include="DataTableFrame\jquery.dataTables.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Img\Logo.png" />
     <Content Include="jquery\jquery.min.js" />
