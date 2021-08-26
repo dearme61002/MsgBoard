@@ -6,6 +6,13 @@
     <form class="row g-3 needs-validation" novalidate>
         <h2>註冊會員</h2>
         <div class="col-9 form-floating mb-3">
+            <input type="text" class="form-control" id="floatingName" placeholder="123" required>
+            <div class="invalid-feedback">
+                請填入用戶名稱!
+            </div>
+            <label for="floatingAcc">請在此填入用戶名稱</label>
+        </div>
+        <div class="col-9 form-floating mb-3">
             <input type="text" class="form-control" id="floatingAcc" placeholder="123" required>
             <div class="invalid-feedback">
                 請填入帳號!
@@ -13,7 +20,7 @@
             <label for="floatingAcc">請在此填入帳號</label>
         </div>
         <div class="col-9 form-floating mb-3">
-            <input type="text" class="form-control" id="floatingPwd" placeholder="123" required>
+            <input type="password" class="form-control" id="floatingPwd" placeholder="123" required>
             <div class="invalid-feedback">
                 請填入密碼!
             </div>
@@ -45,8 +52,37 @@
                 .forEach(function (form) {
                     form.addEventListener('submit', function (event) {
                         if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        else {
+                            var name = $("#floatingName").val();
+                            var account = $("#floatingAcc").val();
+                            var password = $("#floatingPwd").val();
+                            var email = $("#floatingEmail").val();
+                            var birthday = $("#floatingBirthDate").val();
+
+                            event.preventDefault();
+                            $.ajax({
+                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=Register",
+                                type: "POST",
+                                data: {
+                                    "Name" : name,
+                                    "Account": account,
+                                    "Password": password,
+                                    "Email": email,
+                                    "BirthDay": birthday
+                                },
+                                success: function (result) {
+                                    if ("Success" == result) {
+                                        alert("註冊成功!! 轉跳至首頁")
+                                        window.location.href = "http://localhost:49461/Page01Default.aspx";
+                                    }
+                                    else {
+                                        alert(result);
+                                    }
+                                }
+                            });
                         }
                         form.classList.add('was-validated')
                     }, false),

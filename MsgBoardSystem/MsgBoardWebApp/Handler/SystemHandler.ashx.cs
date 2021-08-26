@@ -28,8 +28,10 @@ namespace MsgBoardWebApp.Handler
                 context.Response.End();
             }
 
+            string responseMsg = string.Empty;
+
             // 登入驗證
-            if (actionName == "Login") 
+            if (actionName == "Login")
             {
                 var get_acc = context.Request.Form["Account"];
                 var get_pwd = context.Request.Form["Password"];
@@ -38,7 +40,7 @@ namespace MsgBoardWebApp.Handler
 
                 List<UserInfoModel> userInfo = AuthManager.GetInfo(acc);
 
-                if(userInfo != null)
+                if (userInfo != null)
                 {
                     if (string.Compare(pwd, userInfo[0].Password, false) == 0)
                     {
@@ -69,13 +71,51 @@ namespace MsgBoardWebApp.Handler
                 context.Response.Write(jsonText);
             }
             // 從DB取得貼文資料
-            else if(actionName == "GetAllPost")
+            else if (actionName == "GetAllPost")
             {
                 List<PostInfoModel> allPostInfo = PostManager.GetAllPostInfo();
 
                 string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(allPostInfo);
                 context.Response.ContentType = "application/json";
                 context.Response.Write(jsonText);
+            }
+            // 註冊會員功能
+            else if (actionName == "Register")
+            {
+                string name = context.Request.Form["Name"];
+                string account = context.Request.Form["Account"];
+                string password = context.Request.Form["Password"];
+                string email = context.Request.Form["Email"];
+                DateTime birthday = Convert.ToDateTime(context.Request.Form["BirthDay"]);
+
+                try
+                {
+                    Accounting accountInfo = new Accounting()
+                    {
+                        UserID = Guid.NewGuid(),
+                        Name = name,
+                        CreateDate = DateTime.Now,
+                        Account = account,
+                        Password = password,
+                        Level = "Member",
+                        Email = email,
+                        BirthDay = birthday
+                    };
+                    responseMsg = AccountFunction.CreateAccount(accountInfo);
+
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            // 確認註冊成功
+            else if (actionName == "Register_re")
+            {
+
             }
         }
 
