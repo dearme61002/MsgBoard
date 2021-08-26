@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MsgBoardWebApp.PageMember
+namespace MsgBoardWebApp
 {
-    public partial class Page062Back : System.Web.UI.Page
+    public partial class Page061EditInfo : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

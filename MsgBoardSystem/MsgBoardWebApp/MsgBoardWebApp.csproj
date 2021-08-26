@@ -556,6 +556,7 @@
     <Content Include="Bootstrap\css\bootstrap.min.css" />
     <Content Include="Bootstrap\css\bootstrap.rtl.css" />
     <Content Include="Bootstrap\css\bootstrap.rtl.min.css" />
+    <Content Include="Bootstrap\js\bootstrap-datepicker.min.js" />
     <Content Include="Bootstrap\js\bootstrap.bundle.js" />
     <Content Include="Bootstrap\js\bootstrap.bundle.min.js" />
     <Content Include="Bootstrap\js\bootstrap.esm.js" />
@@ -610,6 +611,8 @@
     <Content Include="DataTableFrame\datatables.js" />
     <Content Include="DataTableFrame\datatables.min.css" />
     <Content Include="DataTableFrame\datatables.min.js" />
+    <Content Include="DataTableFrame\jquery-3.5.1.js" />
+    <Content Include="DataTableFrame\jquery.dataTables.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Img\Logo.png" />
     <Content Include="jquery\jquery.min.js" />
@@ -620,9 +623,9 @@
     <Content Include="Page041EditPost.aspx" />
     <Content Include="Page04PostingHall.aspx" />
     <Content Include="Page05PostMsg.aspx" />
-    <Content Include="PageMember\Page061Front.aspx" />
-    <Content Include="PageMember\Page062Back.aspx" />
-    <Content Include="PageMember\Page063ChangePW.aspx" />
+    <Content Include="Page061EditInfo.aspx" />
+    <Content Include="Page062EditPwd.aspx" />
+    <Content Include="Page06MemberCenter.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -760,26 +763,26 @@
     <Compile Include="Page05PostMsg.aspx.designer.cs">
       <DependentUpon>Page05PostMsg.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageMember\Page061Front.aspx.cs">
-      <DependentUpon>Page061Front.aspx</DependentUpon>
+    <Compile Include="Page061EditInfo.aspx.cs">
+      <DependentUpon>Page061EditInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PageMember\Page061Front.aspx.designer.cs">
-      <DependentUpon>Page061Front.aspx</DependentUpon>
+    <Compile Include="Page061EditInfo.aspx.designer.cs">
+      <DependentUpon>Page061EditInfo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageMember\Page062Back.aspx.cs">
-      <DependentUpon>Page062Back.aspx</DependentUpon>
+    <Compile Include="Page062EditPwd.aspx.cs">
+      <DependentUpon>Page062EditPwd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PageMember\Page062Back.aspx.designer.cs">
-      <DependentUpon>Page062Back.aspx</DependentUpon>
+    <Compile Include="Page062EditPwd.aspx.designer.cs">
+      <DependentUpon>Page062EditPwd.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageMember\Page063ChangePW.aspx.cs">
-      <DependentUpon>Page063ChangePW.aspx</DependentUpon>
+    <Compile Include="Page06MemberCenter.aspx.cs">
+      <DependentUpon>Page06MemberCenter.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PageMember\Page063ChangePW.aspx.designer.cs">
-      <DependentUpon>Page063ChangePW.aspx</DependentUpon>
+    <Compile Include="Page06MemberCenter.aspx.designer.cs">
+      <DependentUpon>Page06MemberCenter.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -836,6 +839,14 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{daeb81f2-be08-4080-a90b-b15342eea93c}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemAuth\SystemAuth.csproj">
+      <Project>{83E8BFB3-62AE-4CD2-8300-963F6A2F92D1}</Project>
+      <Name>SystemAuth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDBFunction\SystemDBFunction.csproj">
+      <Project>{F1B304DC-1808-44F2-969A-2F8D80CDAC6D}</Project>
+      <Name>SystemDBFunction</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

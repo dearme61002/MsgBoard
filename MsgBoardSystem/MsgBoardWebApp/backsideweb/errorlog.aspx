@@ -59,7 +59,7 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th>順列</th>
+                <th>#</th>
                 <th>產生時間</th>
                 <th>內文</th>
                 <th>操作</th>

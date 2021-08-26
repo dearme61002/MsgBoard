@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class sqlhelper
+   public class sqlhelper
     {
-        public class sqlcanhelp
-        {
+        
             private static string connstring = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
             #region 不帶參數的連接資料庫
             public static int executeNonQuerysql(string sql)
@@ -208,5 +207,5 @@ namespace DAL
             //}
             //#endregion
         }
-    }
+    
 }
