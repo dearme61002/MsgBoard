@@ -64,10 +64,36 @@ namespace MsgBoardWebApp
         }
         //驗證方法
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
-        {   
+        {
+            
             var request = HttpContext.Current.Request;
             var response = HttpContext.Current.Response;
             string path = request.Url.PathAndQuery;
+            //後台的驗證
+            if (path.StartsWith("/backsideweb", StringComparison.InvariantCultureIgnoreCase)) //網址前面驗證
+            {
+                bool isAuth = HttpContext.Current.Request.IsAuthenticated;
+                var user = HttpContext.Current.User;
+
+                if (!isAuth || user == null)
+                {
+                    response.StatusCode = 403;
+                    response.Redirect("~/Page02Login.aspx");//驗證不過調轉我要的頁面
+                    response.End();
+                    return;
+                }
+
+                var identity = HttpContext.Current.User.Identity as FormsIdentity;
+
+                if (identity == null)
+                {
+                    response.StatusCode = 403;
+                    response.Redirect("~/Page02Login.aspx");//驗證不過調轉我要的頁面
+                    response.Write("Please Login");
+                    response.End();
+                    return;
+                }
+            }
 
             if (path.StartsWith("/Page06", StringComparison.InvariantCultureIgnoreCase)) //網址前面驗證
             {
@@ -93,6 +119,8 @@ namespace MsgBoardWebApp
                     return;
                 }
             }
+
+
         }
         
         // filters
