@@ -78,7 +78,7 @@ namespace WebAuth
         /// <returns></returns>
         public static List<UserInfoModel> GetInfo(string account)
         {
-            List<Accounting> sourceList = AuthManager.GetAccountInfo(account);
+            List<Accounting> sourceList = GetAccountInfo(account);
 
             if (sourceList != null)
             {

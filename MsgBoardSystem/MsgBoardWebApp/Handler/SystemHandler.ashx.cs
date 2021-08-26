@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.SessionState;
+using SystemDBFunction;
 using WebAuth;
 
 namespace MsgBoardWebApp.Handler
@@ -27,7 +28,8 @@ namespace MsgBoardWebApp.Handler
                 context.Response.End();
             }
 
-            if (actionName == "Login")
+            // 登入驗證
+            if (actionName == "Login") 
             {
                 var get_acc = context.Request.Form["Account"];
                 var get_pwd = context.Request.Form["Password"];
@@ -59,15 +61,21 @@ namespace MsgBoardWebApp.Handler
                     context.Response.End();
                 }
             }
+            // 用Session傳送UID
             else if (actionName == "GetSession")
             {
                 string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(context.Session["UID"]);
                 context.Response.ContentType = "application/json";
                 context.Response.Write(jsonText);
             }
+            // 從DB取得貼文資料
             else if(actionName == "GetAllPost")
             {
+                List<PostInfoModel> allPostInfo = PostManager.GetAllPostInfo();
 
+                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(allPostInfo);
+                context.Response.ContentType = "application/json";
+                context.Response.Write(jsonText);
             }
         }
 

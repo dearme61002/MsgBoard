@@ -843,6 +843,10 @@
       <Project>{83E8BFB3-62AE-4CD2-8300-963F6A2F92D1}</Project>
       <Name>SystemAuth</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SystemDBFunction\SystemDBFunction.csproj">
+      <Project>{F1B304DC-1808-44F2-969A-2F8D80CDAC6D}</Project>
+      <Name>SystemDBFunction</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
