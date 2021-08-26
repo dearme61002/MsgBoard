@@ -8,9 +8,9 @@
 //------------------------------------------------------------------------------
 
 
-namespace MsgBoardWebApp.PageMember
+namespace MsgBoardWebApp
 {
-    public partial class Page063ChangePW
+    public partial class Page061EditInfo
     {
     }
 }

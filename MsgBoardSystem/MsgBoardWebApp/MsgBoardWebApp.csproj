@@ -620,9 +620,9 @@
     <Content Include="Page041EditPost.aspx" />
     <Content Include="Page04PostingHall.aspx" />
     <Content Include="Page05PostMsg.aspx" />
-    <Content Include="PageMember\Page061Front.aspx" />
-    <Content Include="PageMember\Page062Back.aspx" />
-    <Content Include="PageMember\Page063ChangePW.aspx" />
+    <Content Include="Page061EditInfo.aspx" />
+    <Content Include="Page062EditPwd.aspx" />
+    <Content Include="Page06MemberCenter.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -760,26 +760,26 @@
     <Compile Include="Page05PostMsg.aspx.designer.cs">
       <DependentUpon>Page05PostMsg.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageMember\Page061Front.aspx.cs">
-      <DependentUpon>Page061Front.aspx</DependentUpon>
+    <Compile Include="Page061EditInfo.aspx.cs">
+      <DependentUpon>Page061EditInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PageMember\Page061Front.aspx.designer.cs">
-      <DependentUpon>Page061Front.aspx</DependentUpon>
+    <Compile Include="Page061EditInfo.aspx.designer.cs">
+      <DependentUpon>Page061EditInfo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageMember\Page062Back.aspx.cs">
-      <DependentUpon>Page062Back.aspx</DependentUpon>
+    <Compile Include="Page062EditPwd.aspx.cs">
+      <DependentUpon>Page062EditPwd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PageMember\Page062Back.aspx.designer.cs">
-      <DependentUpon>Page062Back.aspx</DependentUpon>
+    <Compile Include="Page062EditPwd.aspx.designer.cs">
+      <DependentUpon>Page062EditPwd.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageMember\Page063ChangePW.aspx.cs">
-      <DependentUpon>Page063ChangePW.aspx</DependentUpon>
+    <Compile Include="Page06MemberCenter.aspx.cs">
+      <DependentUpon>Page06MemberCenter.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PageMember\Page063ChangePW.aspx.designer.cs">
-      <DependentUpon>Page063ChangePW.aspx</DependentUpon>
+    <Compile Include="Page06MemberCenter.aspx.designer.cs">
+      <DependentUpon>Page06MemberCenter.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
