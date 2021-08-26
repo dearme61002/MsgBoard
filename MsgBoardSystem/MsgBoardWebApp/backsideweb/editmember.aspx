@@ -93,8 +93,12 @@
                     }
 
                 })
-
-
+                /*變回空值*/
+                document.getElementById("inputname").value = "";
+                document.getElementById("inputaccount").value = "";
+                document.getElementById("inputpassword").value = "";
+                document.getElementById("inputemail").value = "";
+                document.getElementById("date").value = "";
 
 
 
@@ -103,6 +107,13 @@
             })
             /*Modal js*/
 
+            $('#close').on('click', function () {
+                document.getElementById("inputname").value = "";
+                document.getElementById("inputaccount").value = "";
+                document.getElementById("inputpassword").value = "";
+                document.getElementById("inputemail").value = "";
+                document.getElementById("date").value = "";
+            });
 
 
 
@@ -160,7 +171,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close" >Close</button>
                     <button type="button" class="btn btn-primary" id="yesdo">確定</button>
                 </div>
             </div>
