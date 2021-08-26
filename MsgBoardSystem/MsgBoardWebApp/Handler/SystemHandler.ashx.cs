@@ -28,8 +28,6 @@ namespace MsgBoardWebApp.Handler
                 context.Response.End();
             }
 
-            string responseMsg = string.Empty;
-
             // 登入驗證
             if (actionName == "Login")
             {
@@ -82,12 +80,17 @@ namespace MsgBoardWebApp.Handler
             // 註冊會員功能
             else if (actionName == "Register")
             {
+                // Get value from ajax
                 string name = context.Request.Form["Name"];
                 string account = context.Request.Form["Account"];
                 string password = context.Request.Form["Password"];
                 string email = context.Request.Form["Email"];
                 DateTime birthday = Convert.ToDateTime(context.Request.Form["BirthDay"]);
 
+                // return status message
+                string responseMsg = string.Empty;
+
+                // set value to object and write into DB
                 try
                 {
                     Accounting accountInfo = new Accounting()
@@ -101,7 +104,20 @@ namespace MsgBoardWebApp.Handler
                         Email = email,
                         BirthDay = birthday
                     };
-                    responseMsg = AccountFunction.CreateAccount(accountInfo);
+
+                    // check account is already exist
+                    responseMsg = AccountFunction.CheckAccountExist(accountInfo.Account);
+                    
+                    if(responseMsg == string.Empty)
+                    {
+                        // check email is already exist
+                        responseMsg = AccountFunction.CheckEmailExist(accountInfo.Email);
+                        if (responseMsg == string.Empty)
+                        {
+                            // write account info into DB
+                            responseMsg = AccountFunction.CreateAccount(accountInfo);
+                        }
+                    }
 
                     string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
                     context.Response.ContentType = "application/json";
