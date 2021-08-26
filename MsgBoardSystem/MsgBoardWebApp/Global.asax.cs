@@ -69,7 +69,7 @@ namespace MsgBoardWebApp
             var response = HttpContext.Current.Response;
             string path = request.Url.PathAndQuery;
 
-            if (path.StartsWith("/PageMember", StringComparison.InvariantCultureIgnoreCase))
+            if (path.StartsWith("/Page06", StringComparison.InvariantCultureIgnoreCase))
             {
                 bool isAuth = HttpContext.Current.Request.IsAuthenticated;
                 var user = HttpContext.Current.User;
@@ -77,8 +77,7 @@ namespace MsgBoardWebApp
                 if (!isAuth || user == null)
                 {
                     response.StatusCode = 403;
-                    response.Redirect("~/Page02Login.aspx");
-                    response.Write("Please Login");
+                    response.Redirect("Page02Login.aspx");
                     response.End();
                     return;
                 }

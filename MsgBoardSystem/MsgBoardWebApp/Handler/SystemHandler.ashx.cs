@@ -1,16 +1,19 @@
-﻿using System;
+﻿using databaseORM.data;
+using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
 using System.Web;
-using System.Web.Security;
+using System.Web.SessionState;
+using SystemDBFunction;
+using WebAuth;
 
 namespace MsgBoardWebApp.Handler
 {
     /// <summary>
     /// SystemHandler 的摘要描述
     /// </summary>
-    public class SystemHandler : IHttpHandler
+    public class SystemHandler : IHttpHandler, IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)
@@ -25,21 +28,54 @@ namespace MsgBoardWebApp.Handler
                 context.Response.End();
             }
 
-            if (actionName == "Login")
+            // 登入驗證
+            if (actionName == "Login") 
             {
                 var get_acc = context.Request.Form["Account"];
                 var get_pwd = context.Request.Form["Password"];
                 string acc = Convert.ToString(get_acc);
                 string pwd = Convert.ToString(get_pwd);
-                
-                if(string.Compare(acc, "Admin", false) == 0)
+
+                List<UserInfoModel> userInfo = AuthManager.GetInfo(acc);
+
+                if(userInfo != null)
                 {
-                    if(string.Compare(pwd, "12345", false) == 0)
+                    if (string.Compare(pwd, userInfo[0].Password, false) == 0)
                     {
                         // 登入驗證
-                        LoginAuthentication();
+                        AuthManager.LoginAuthentication(userInfo[0]);
+                        context.Session["UID"] = userInfo[0].UserID;
+                        //string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(userInfo);
+                        //context.Response.ContentType = "application/json";
+                        //context.Response.Write(jsonText);
+                    }
+                    else
+                    {
+                        context.Response.Write("密碼錯誤");
+                        context.Response.End();
                     }
                 }
+                else
+                {
+                    context.Response.Write("用戶不存在");
+                    context.Response.End();
+                }
+            }
+            // 用Session傳送UID
+            else if (actionName == "GetSession")
+            {
+                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(context.Session["UID"]);
+                context.Response.ContentType = "application/json";
+                context.Response.Write(jsonText);
+            }
+            // 從DB取得貼文資料
+            else if(actionName == "GetAllPost")
+            {
+                List<PostInfoModel> allPostInfo = PostManager.GetAllPostInfo();
+
+                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(allPostInfo);
+                context.Response.ContentType = "application/json";
+                context.Response.Write(jsonText);
             }
         }
 
@@ -49,37 +85,6 @@ namespace MsgBoardWebApp.Handler
             {
                 return false;
             }
-        }
-
-        public void LoginAuthentication()
-        {
-            string account = "Will";
-            string userID = "S12345";
-            string[] roles = { "Admin" };
-            bool isPersistance = false;
-
-            FormsAuthentication.SetAuthCookie(account, isPersistance);
-            FormsAuthenticationTicket ticket =
-                new FormsAuthenticationTicket(
-                    1,
-                    account,
-                    DateTime.Now,
-                    DateTime.Now.AddHours(12),
-                    isPersistance,
-                    userID
-                );
-
-            FormsIdentity identity = new FormsIdentity(ticket);
-            HttpCookie cookie =
-                new HttpCookie(
-                    FormsAuthentication.FormsCookieName,
-                    FormsAuthentication.Encrypt(ticket)
-                );
-            cookie.HttpOnly = false;
-
-            GenericPrincipal gp = new GenericPrincipal(identity, roles);
-            HttpContext.Current.User = gp;
-            HttpContext.Current.Response.Cookies.Add(cookie);
         }
     }
 }
