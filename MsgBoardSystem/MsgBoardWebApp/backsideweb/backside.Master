@@ -24,4 +24,10 @@
         </div>
     
 </body>
+    <%--導入bootscriptjs--%>
+<script src="../Bootstrap/js/bootstrap.bundle.min.js"></script>
+    <%--導入bootscriptjs--%>
+     <%--導入bootscriptjs--%>
+<script src="../Bootstrap/js/bootstrap-datepicker.min.js"></script>
+    <%--導入bootscriptjs--%>
 </html>
