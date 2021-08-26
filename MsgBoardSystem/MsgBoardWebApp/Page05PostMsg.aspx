@@ -4,9 +4,13 @@
     <script>
         // 取得PostID
         const pageUrl = new URL(window.location.href);
-        var pid = pageUrl.searchParams.get("PID")
+        var pid = pageUrl.searchParams.get("PID");
+        var title = pageUrl.searchParams.get("Title");
 
         $(document).ready(function () {
+            $("#navText").text(title);
+            $("#headText").text(title);
+
             $('#msgTable').DataTable({
                 "scrollY": "200px",
                 "scrollCollapse": true,
@@ -19,6 +23,16 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div>
+        <p class="fs-2 fw-bold" id="headText"></p>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="Page01Default.aspx">首頁</a></li>
+                <li class="breadcrumb-item"><a href="Page04PostingHall.aspx">貼文區</a></li>
+                <li class="breadcrumb-item active" aria-current="page" id="navText"></li>
+            </ol>
+        </nav>
+    </div>
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Post Title</h5>
@@ -26,7 +40,6 @@
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         </div>
     </div>
-
     <table id="msgTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
         <thead>
             <tr>

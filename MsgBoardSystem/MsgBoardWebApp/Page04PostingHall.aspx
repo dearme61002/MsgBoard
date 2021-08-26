@@ -11,7 +11,7 @@
 
             function AddRow(obj) {
                 table.row.add([
-                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
+                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}&Title=${obj.Title}">${obj.Title}<a>`,
                     obj.Name,
                     obj.CreateDate
                 ]).draw(false);
@@ -31,10 +31,15 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h2>貼文區</h2>
-    <form runat="server" id="page04form">
-        <asp:Literal runat="server" ID="ltlMsg"></asp:Literal><br />
-    </form>
+    <div>
+        <p class="fs-2 fw-bold">貼文區</p>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="Page01Default.aspx">首頁</a></li>
+                <li class="breadcrumb-item active" aria-current="page">貼文區</li>
+            </ol>
+        </nav>
+    </div>
     <div class="list-group">
         <a href="#" class="list-group-item list-group-item-action list-group-item-info" aria-current="true">
             <div class="d-flex w-100 justify-content-between">
@@ -79,5 +84,9 @@
         </tfoot>
     </table>
     <hr class="my-4">
+    <form runat="server" id="page04form">
+        <p>測試用字串</p>
+        <asp:Literal runat="server" ID="ltlMsg"></asp:Literal><br />
+    </form>
     <script src="Bootstrap/js/bootstrap.bundle.min.js"></script>
 </asp:Content>

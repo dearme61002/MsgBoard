@@ -3,8 +3,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div>
+        <p class="fs-2 fw-bold">撰寫新貼文</p>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="Page01Default.aspx">首頁</a></li>
+                <li class="breadcrumb-item active" aria-current="page">撰寫新貼文</li>
+            </ol>
+        </nav>
+    </div>
     <form class="row g-3 needs-validation" novalidate>
-        <h2>撰寫新貼文</h2>
         <div class="mb-3">
             <label for="postTitle" class="form-label">貼文標題 : </label>
             <input type="text" class="form-control" id="postTitle" placeholder="" required>
@@ -25,10 +33,6 @@
         </div>
         <hr class="my-4">
     </form>
-
-
-
-
 
     <script>
         (function () {
