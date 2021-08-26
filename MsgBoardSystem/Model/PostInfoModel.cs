@@ -11,7 +11,7 @@ namespace Model
         public Guid PostID { get; set; }
         public Guid UserID { get; set; }
         public string Name { get; set; }
-        public DateTime CreateDate { get; set; }
+        public string CreateDate { get; set; }
         public string Title { get; set; }
         public string Body { get; set; }      
     }

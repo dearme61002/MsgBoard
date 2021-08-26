@@ -1,16 +1,30 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page04PostingHall.aspx.cs" Inherits="MsgBoardWebApp.Page04PostingHall" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" href="DataTableFrame/DataTables-1.10.25/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="DataTableFrame/OtherJS/select.bootstrap5.min.css" />
+    <script src="DataTableFrame/DataTables-1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="DataTableFrame/DataTables-1.10.25/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#dtBasicExample').DataTable();
+            var table = $('#PostTable').DataTable({});
 
+            function AddRow(obj) {
+                table.row.add([
+                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
+                    obj.Name,
+                    obj.CreateDate
+                ]).draw(false);
+            }
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllPost",
                 type: "GET",
                 data: {},
                 success: function (result) {
-                    alert(result);
+                    for (var i = 0; i < result.length; i++) {
+                        var obj = result[i];
+                        AddRow(obj);
+                    }
                 }
             });
         });
@@ -48,102 +62,19 @@
         </a>
     </div>
     <hr class="my-4">
-    <table id="dtBasicExample" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
+    <table id="PostTable" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th class="th-sm">標題
-
-                </th>
-                <th class="th-sm">發文者
-
-                </th>
-                <th class="th-sm">時間
-
-                </th>
+                <th class="th-sm">標題</th>
+                <th class="th-sm">發文者</th>
+                <th class="th-sm">時間</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <a href="../Page05PostMsg.aspx?PID=abc123">測試項目1</a>
-                </td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目2</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目3</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目4</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目5</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目6</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目7</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目8</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目9</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目10</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目11</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目12</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目13</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>測試項目14</td>
-                <td>Tiger Nixon</td>
-                <td>2021-01-01</td>
-            </tr>
-        </tbody>
         <tfoot>
             <tr>
-                <th>標題
-                </th>
-                <th>發文者
-                </th>
-                <th>時間
-                </th>
+                <th>標題</th>
+                <th>發文者</th>
+                <th>時間</th>
             </tr>
         </tfoot>
     </table>

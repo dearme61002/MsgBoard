@@ -69,7 +69,7 @@ namespace SystemDBFunction
                     {
                         PostID = obj.PostID,
                         UserID = obj.UserID,
-                        CreateDate = obj.CreateDate,
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
                         Title = obj.Title,
                         Body = obj.Body
                     }).ToList();
