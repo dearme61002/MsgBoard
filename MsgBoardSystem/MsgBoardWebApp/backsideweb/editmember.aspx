@@ -98,7 +98,7 @@
 
 
 
-                alert(name + account + password + email + date+dataID);
+              
                 $("#myModal").modal('hide');
             })
             /*Modal js*/
