@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page06MemberCenter.aspx.cs" Inherits="MsgBoardWebApp.Page06MemberCenter" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="DataTableFrame/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="DataTableFrame/DataTables-1.10.25/css/jquery.dataTables.min.css" />
+    <script src="DataTableFrame/DataTables-1.10.25/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
             var table = $('#example').DataTable();
