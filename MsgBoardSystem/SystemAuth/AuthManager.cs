@@ -50,6 +50,7 @@ namespace WebAuth
             bool isPersistance = false;
 
             FormsAuthentication.SetAuthCookie(userInfo.Account, isPersistance);
+
             FormsAuthenticationTicket ticket =
                 new FormsAuthenticationTicket(
                     1,
