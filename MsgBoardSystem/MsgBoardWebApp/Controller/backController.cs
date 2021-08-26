@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using databaseORM;
-
+using Newtonsoft.Json.Linq;
 
 namespace MsgBoardWebApp
 {
@@ -102,6 +102,49 @@ namespace MsgBoardWebApp
 
         }
 
+        [HttpPost]
+        public Model.ApiResult editMember([FromBody] string data)
+        {
+           
+            JObject myjsonData = JObject.Parse(data);
+           string name = myjsonData["name"].ToString();
+            string account = myjsonData["account"].ToString();
+            string password = myjsonData["password"].ToString();
+            string email = myjsonData["email"].ToString();
+            string date = myjsonData["date"].ToString();
+            string dataID = myjsonData["dataID"].ToString();
+            #region 從資料庫刪除ErrorLog紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+                Model.ApiResult apiResult = new Model.ApiResult();
+                try
+                {
+                    int id = Convert.ToInt32(dataID);
+                    Accounting accounting = context.Accountings.Where(x => x.ID == id).FirstOrDefault();
+                    accounting.Name = name;
+                    accounting.Account = account;
+                    accounting.Password = password;
+                    accounting.Email = email;
+                    accounting.BirthDay = Convert.ToDateTime(date);
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "更新成功";
+                    return apiResult;
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "刪除失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
 
 
 

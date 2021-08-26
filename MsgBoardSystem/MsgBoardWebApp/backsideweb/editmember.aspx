@@ -31,7 +31,6 @@
             /*為刪除綁上點擊功能用代理的方式*/
             $('#tb').on('click', '.del', function () {
                 var dataID = $(this).attr('dataID');
-                var data = { "dataID": dataID };
                 $.ajax({
                     type: 'POST',
                     url: 'api/back/DelMember',
@@ -67,6 +66,37 @@
                 var password = document.getElementById("inputpassword").value;
                 var email = document.getElementById("inputemail").value;
                 var date = document.getElementById("date").value;
+                const obj = {
+                    name: name,
+                    account: account,
+                    password: password,
+                    email: email,
+                    date: date,
+                    dataID: dataID
+                };
+                data = JSON.stringify(obj);
+                $.ajax({
+
+                    type: 'POST',
+                    url: 'api/back/editMember',
+       
+                    data: "=" + data,
+                    success: function (res) {
+                        if (res.state !== 200) {
+                            return alert('刪除資料失敗');
+                        }
+                        getAlldata();
+                        alert(res.msg);
+                    },
+                    error: function (res) {
+                        return alert('刪除資料失敗');
+                    }
+
+                })
+
+
+
+
 
                 alert(name + account + password + email + date+dataID);
                 $("#myModal").modal('hide');
