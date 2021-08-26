@@ -2,6 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script>
+        // 取得PostID
+        const pageUrl = new URL(window.location.href);
+        var pid = pageUrl.searchParams.get("PID")
+
         $(document).ready(function () {
             $('#msgTable').DataTable({
                 "scrollY": "200px",
