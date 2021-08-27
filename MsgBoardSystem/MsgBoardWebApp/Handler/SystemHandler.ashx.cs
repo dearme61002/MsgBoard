@@ -197,12 +197,68 @@ namespace MsgBoardWebApp.Handler
                     // check UID is correct and user is exist
                     var checkUID = PostManager.GetUserName(UID);
 
-                    if(checkUID != null)
+                    if (checkUID != null)
                     {
                         // write into DB
                         responseMsg = PostManager.CreateNewPost(postInfo);
                     }
-                    
+
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            // 建立留言
+            else if (actionName == "NewMsg")
+            {
+                // Get value from ajax
+                string body = context.Request.Form["Body"];
+                string strPID = context.Request.Form["PID"];
+                string strUID = context.Session["UID"].ToString();
+                string responseMsg = string.Empty;
+
+                // check guid
+                if (!Guid.TryParse(strUID, out Guid uid))
+                {
+                    responseMsg = "Session UID Error";
+                }
+
+                if (!Guid.TryParse(strPID, out Guid pid))
+                {
+                    responseMsg = "Param PID Error";
+                }
+
+                // set value to object and write into DB
+                try
+                {
+                    Message msgInfo = new Message()
+                    {
+                        MsgID = Guid.NewGuid(),
+                        PostID = pid,
+                        UserID = uid,
+                        CreateDate = DateTime.Now,
+                        Body = body,
+                    };
+
+                    // check UID and PID is correct and user is exist
+                    var checkUID = PostManager.GetUserName(uid);
+                    bool checkPID = PostManager.CheckPostExist(pid);
+
+                    if (checkUID != null && checkPID)
+                    {
+                        // write into DB
+                        responseMsg = PostManager.CreateNewMsg(msgInfo);
+                    }
+                    else
+                    {
+                        // Have error
+                        responseMsg = "Exception Error";
+                    }
+
                     string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(jsonText);

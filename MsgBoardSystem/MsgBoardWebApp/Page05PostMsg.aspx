@@ -115,9 +115,21 @@
                             event.stopPropagation();
                         }
                         else {
-                            alert("成功");
+                            var body = $("#msgText").val();
+
                             event.preventDefault();
-                            window.location.reload();
+                            $.ajax({
+                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=NewMsg",
+                                type: "POST",
+                                data: {
+                                    "PID": pid,
+                                    "Body": body
+                                },
+                                success: function (result) {
+                                    alert(result);
+                                    window.location.reload();
+                                }
+                            });
                         }
 
                         form.classList.add('was-validated')

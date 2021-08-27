@@ -220,5 +220,57 @@ namespace SystemDBFunction
                 return null;
             }
         }
+
+        /// <summary> 用PID檢查貼文是否存在 </summary>
+        /// <param name="pid"></param>
+        /// <returns>true : 存在, false : 不存在</returns>
+        public static bool CheckPostExist(Guid pid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Postings
+                         where item.PostID == pid
+                         select item);
+
+                    var list = query.ToList();
+
+                    if (list.Count() != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary> 建立留言寫入DB </summary>
+        /// <param name="msgInfo"></param>
+        /// <returns></returns>
+        public static string CreateNewMsg(Message msgInfo)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    context.Messages.Add(msgInfo);
+                    context.SaveChanges();
+                }
+                return "Success";
+            }
+            catch (Exception)
+            {
+                return "Create Exception Error";
+            }
+        }
     }
 }
