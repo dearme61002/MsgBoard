@@ -163,24 +163,24 @@
                         <span class="input-group-text">姓名</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputname"required>
 
-                        <div class="invalid-feedback">username can`t username cannot be blank or have space</div>
-                    <div class="valid-feedback">Looks Good</div>
+                        <div class="invalid-feedback">姓名不能有空白</div>
+                    <div class="valid-feedback">OK</div>
 
                     </div>
                     <div class="input-group input-group-lg form-group p-1">
                         <span class="input-group-text">帳號</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputaccount" required>
 
-                    <div class="invalid-feedback">account can`t username cannot be blank or have space</div>
-                    <div class="valid-feedback">Looks Good</div>
+                    <div class="invalid-feedback">帳號不能有空白</div>
+                    <div class="valid-feedback">OK</div>
 
                     </div>
                     <div class="input-group input-group-lg form-group p-1">
                         <span class="input-group-text">密碼</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputpassword" required>
 
-                        <div class="invalid-feedback">password an`t username cannot be blank or have space</div>
-                    <div class="valid-feedback">Looks Good</div>
+                        <div class="invalid-feedback">密碼格式不對</div>
+                    <div class="valid-feedback">OK</div>
 
 
 
@@ -189,7 +189,7 @@
                         <span class="input-group-text">Email</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputemail" required>
 
-                      <div id="email-validation" class="invalid-feedback">Please Check Mail again.</div>
+                      <div id="email-validation" class="invalid-feedback">請再次檢查電子郵件是否正確</div>
 
                     </div>
 
