@@ -11,7 +11,7 @@
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetPostInfo",
                 type: "POST",
-                data: {"PID" : pid},
+                data: { "PID": pid},
                 success: function (result) {
                     getPost = result[0];
                     $("#navText").text(getPost["Title"]);
@@ -21,13 +21,34 @@
                 }
             });
 
-            $('#msgTable').DataTable({
-                "scrollY": "200px",
-                "scrollCollapse": true,
-                "paging": false,
-                "sorting": false,
-                "info": false,
-                "searching": false
+            var msgTable = $('#msgTable').DataTable(
+                {
+                    "scrollY": "200px",
+                    "scrollCollapse": true,
+                    "paging": false,
+                    "sorting": false,
+                    "info": false,
+                    "searching": false
+                });
+
+            function AddRow(obj) {
+                msgTable.row.add([
+                    obj.Body,
+                    obj.Name,
+                    obj.CreateDate
+                ]).draw(false);
+            }
+
+            $.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllMsg",
+                type: "POST",
+                data: { "PID": pid},
+                success: function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        var obj = result[i];
+                        AddRow(obj);
+                    }
+                }
             });
         });
     </script>
@@ -63,73 +84,6 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>a測試留言123123123123123131323123123123123132</td>
-                <td>Alan3</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>b測試留言123</td>
-                <td>Alan2</td>
-                <td>2021-01-02</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-        </tbody>
     </table>
     <hr class="my-4">
 

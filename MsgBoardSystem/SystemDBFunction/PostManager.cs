@@ -32,6 +32,29 @@ namespace SystemDBFunction
             }
         }
 
+        /// <summary> 從資料庫取得所有DB </summary>
+        /// <returns></returns>
+        public static List<Message> GetAllMsgFromDB(Guid pid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Messages
+                         where item.PostID == pid
+                         select item);
+
+                    var list = query.ToList();
+                    return list;
+                }
+            }
+            catch (Exception)
+            {
+                throw null;
+            }
+        }
+
         /// <summary> 從資料庫取得特定Post資料 </summary>
         /// <returns></returns>
         public static List<Posting> GetOnePostInfoFromDB(Guid pid)
@@ -87,7 +110,7 @@ namespace SystemDBFunction
             }
         }
 
-        /// <summary> 轉換Model後送回Handler </summary>
+        /// <summary> 全部貼文資料轉換Model後送回Handler </summary>
         /// <returns></returns>
         public static List<PostInfoModel> GetAllPostInfo()
         {
@@ -159,6 +182,38 @@ namespace SystemDBFunction
                     }).ToList();
 
                 return postInfo;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary> 全部貼文資料轉換Model後送回Handler </summary>
+        /// <returns></returns>
+        public static List<MsgInfoModel> GetAllPostMsg(Guid pid)
+        {
+            // get all msg by post id
+            List<Message> sourceList = GetAllMsgFromDB(pid);
+
+            if (sourceList != null)
+            {
+                List<MsgInfoModel> MsgSource =
+                    sourceList.Select(obj => new MsgInfoModel()
+                    {
+                        UserID = obj.UserID,
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        Body = obj.Body
+                    }).ToList();
+
+                // 用UID比對查詢，並寫入User Name
+                foreach (var obj in MsgSource)
+                {
+                    List<Accounting> posterName = GetUserName(obj.UserID);
+                    obj.Name = posterName[0].Name;
+                }
+
+                return MsgSource;
             }
             else
             {

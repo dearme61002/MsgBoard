@@ -81,8 +81,9 @@ namespace MsgBoardWebApp.Handler
                 context.Response.Write(jsonText);
             }
             // 取得貼文內容
-            else if(actionName == "GetPostInfo")
+            else if (actionName == "GetPostInfo")
             {
+                // 從ajax取得PID
                 var ajaxPID = context.Request.Form["PID"];
                 if (!Guid.TryParse(ajaxPID, out Guid pid))
                 {
@@ -91,9 +92,30 @@ namespace MsgBoardWebApp.Handler
                     return;
                 }
 
+                // 取得貼文資料
                 List<PostInfoModel> postInfo = PostManager.GetOnePostInfo(pid);
 
+                // 寫入Response
                 string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(postInfo);
+                context.Response.ContentType = "application/json";
+                context.Response.Write(jsonText);
+            }
+            // 取得貼文的全部留言
+            else if (actionName == "GetAllMsg")
+            {
+                // 從ajax取得PID
+                var ajaxPID = context.Request.Form["PID"];
+                if (!Guid.TryParse(ajaxPID, out Guid pid))
+                {
+                    context.Response.Write("Pid Error");
+                    context.Response.End();
+                    return;
+                }
+
+                // 取得貼文的全部留言
+                List<MsgInfoModel> allMsg = PostManager.GetAllPostMsg(pid);
+
+                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(allMsg);
                 context.Response.ContentType = "application/json";
                 context.Response.Write(jsonText);
             }
