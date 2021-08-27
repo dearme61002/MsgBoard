@@ -2,12 +2,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="DataTableFrame/DataTables-1.10.25/css/dataTables.bootstrap5.min.css" />
-    <link rel="stylesheet" href="DataTableFrame/OtherJS/select.bootstrap5.min.css" />
     <script src="DataTableFrame/DataTables-1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="DataTableFrame/DataTables-1.10.25/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function () {
-            var table = $('#PostTable').DataTable({});
+            var table = $('#PostTable').DataTable();
 
             function AddRow(obj) {
                 table.row.add([

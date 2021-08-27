@@ -1,7 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page041EditPost.aspx.cs" Inherits="MsgBoardWebApp.Page041EditPost" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
         <p class="fs-2 fw-bold">撰寫新貼文</p>
@@ -48,11 +50,30 @@
                             event.stopPropagation()
                         }
                         else {
-                            alert("建立成功");
-                            event.preventDefault();
+                            /*
+                            $.ajax({
+                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=NewPost",
+                                type: "POST",
+                                data: {
+                                    "Name": name,
+                                    "Account": account,
+                                    "Password": password,
+                                    "Email": email,
+                                    "BirthDay": birthday
+                                },
+                                success: function (result) {
+                                    if ("Success" == result) {
+                                        alert("註冊成功!! 轉跳至首頁")
+                                        window.location.href = "http://localhost:49461/Page01Default.aspx";
+                                    }
+                                    else {
+                                        alert(result);
+                                    }
+                                }
+                            });
                             window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+                            */
                         }
-
                         form.classList.add('was-validated')
                     }, false),
                         form.addEventListener('reset', function (resetEvn) {

@@ -36,6 +36,8 @@ namespace MsgBoardWebApp.Handler
                 string acc = Convert.ToString(get_acc);
                 string pwd = Convert.ToString(get_pwd);
 
+                string statusMsg = string.Empty;
+
                 List<UserInfoModel> userInfo = AuthManager.GetInfo(acc);
 
                 if (userInfo != null)
@@ -45,23 +47,24 @@ namespace MsgBoardWebApp.Handler
                         // 登入驗證
                         AuthManager.LoginAuthentication(userInfo[0]);
                         context.Session["UID"] = userInfo[0].UserID;
-                        //string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(userInfo);
-                        //context.Response.ContentType = "application/json";
-                        //context.Response.Write(jsonText);
+                        statusMsg = "Success";
                     }
                     else
                     {
-                        context.Response.Write("密碼錯誤");
-                        context.Response.End();
+                        statusMsg = "密碼錯誤";
                     }
                 }
                 else
                 {
-                    context.Response.Write("用戶不存在");
-                    context.Response.End();
+                    statusMsg = "用戶不存在";
                 }
+
+                // throw statusMsg
+                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(statusMsg);
+                context.Response.ContentType = "application/json";
+                context.Response.Write(jsonText);
             }
-            // 用Session傳送UID
+            // ajax呼叫後傳送Session UID
             else if (actionName == "GetSession")
             {
                 string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(context.Session["UID"]);
@@ -107,8 +110,8 @@ namespace MsgBoardWebApp.Handler
 
                     // check account is already exist
                     responseMsg = AccountFunction.CheckAccountExist(accountInfo.Account);
-                    
-                    if(responseMsg == string.Empty)
+
+                    if (responseMsg == string.Empty)
                     {
                         // check email is already exist
                         responseMsg = AccountFunction.CheckEmailExist(accountInfo.Email);
@@ -128,8 +131,8 @@ namespace MsgBoardWebApp.Handler
                     throw ex;
                 }
             }
-            // 確認註冊成功
-            else if (actionName == "Register_re")
+            // 建立貼文
+            else if (actionName == "NewPost")
             {
 
             }

@@ -11,6 +11,7 @@
     <script src="Bootstrap/js/bootstrap.js"></script>
     <script src="DataTableFrame/jquery-3.5.1.js"></script>
     <script src="DataTableFrame/datatables.min.js"></script>
+    <script src="DataTableFrame/jquery.session.js"></script>
     <style>
         div {
             //border: 1px solid #000000;
