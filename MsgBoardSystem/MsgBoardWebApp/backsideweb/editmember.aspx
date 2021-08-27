@@ -100,7 +100,10 @@
                 document.getElementById("inputemail").value = "";
                 document.getElementById("date").value = "";
 
-
+                validatePassword()
+                validateEmail()
+                validateUsername()
+                validateaccount()
 
               
                 $("#myModal").modal('hide');
@@ -113,9 +116,13 @@
                 document.getElementById("inputpassword").value = "";
                 document.getElementById("inputemail").value = "";
                 document.getElementById("date").value = "";
+                validatePassword()
+                validateEmail()
+                validateUsername()
+                validateaccount()
             });
 
-
+            
 
 
         })
@@ -147,25 +154,47 @@
                     <h5 class="modal-title" id="exampleModalLabel">編輯會員</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
+       <form id="newform" action="#" class="needs-validation" novalidate>
+
                 <div class="modal-body">
                     <h1 style="text-align: center;">輸入你想編輯的內容</h1>
-                    <div class="input-group input-group-lg">
+                    <div class="input-group input-group-lg form-group p-1">
                         <span class="input-group-text">姓名</span>
-                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputname">
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputname"required>
+
+                        <div class="invalid-feedback">username can`t username cannot be blank or have space</div>
+                    <div class="valid-feedback">Looks Good</div>
+
                     </div>
-                    <div class="input-group input-group-lg">
+                    <div class="input-group input-group-lg form-group p-1">
                         <span class="input-group-text">帳號</span>
-                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputaccount">
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputaccount" required>
+
+                    <div class="invalid-feedback">account can`t username cannot be blank or have space</div>
+                    <div class="valid-feedback">Looks Good</div>
+
                     </div>
-                    <div class="input-group input-group-lg">
+                    <div class="input-group input-group-lg form-group p-1">
                         <span class="input-group-text">密碼</span>
-                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputpassword">
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputpassword" required>
+
+                        <div class="invalid-feedback">password an`t username cannot be blank or have space</div>
+                    <div class="valid-feedback">Looks Good</div>
+
+
+
                     </div>
-                    <div class="input-group input-group-lg">
+                    <div class="input-group input-group-lg form-group p-1">
                         <span class="input-group-text">Email</span>
-                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputemail">
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputemail" required>
+
+                      <div id="email-validation" class="invalid-feedback">Please Check Mail again.</div>
+
                     </div>
-                    <div class="input-group input-group-lg">
+
+
+                    <div class="input-group input-group-lg form-group p-1">
                         <span class="input-group-text">生日</span>
                         <input type="date" class="form-control" id="date" name="date">
                     </div>
@@ -174,6 +203,8 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close" >Close</button>
                     <button type="button" class="btn btn-primary" id="yesdo">確定</button>
                 </div>
+
+      </form>
             </div>
         </div>
     </div>

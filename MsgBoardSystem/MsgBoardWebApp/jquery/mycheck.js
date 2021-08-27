@@ -2,12 +2,37 @@
 
 document.querySelector('#inputpassword').addEventListener('blur', validatePassword);
 
-document.querySelector('#username').addEventListener('blur', validateUsername);
+document.querySelector('#inputname').addEventListener('blur', validateUsername);
 
-const reSpaces = /^\S*$/;
+document.querySelector('#inputaccount').addEventListener('blur', validateaccount);
+
+
+const reSpaces = /^\S+$/;
+
+
+function validateaccount() {
+    const password = document.querySelector('#inputaccount');
+    const re = /^\w+$/;
+    if (re.test(password.value) && reSpaces.test(password.value)) {
+        password.classList.remove('is-invalid');
+        password.classList.add('is-valid');
+
+        return true;
+    } else {
+        password.classList.add('is-invalid');
+        password.classList.remove('is-valid');
+
+        return false;
+    }
+}
+
+
+
+
+
 
 function validateUsername(e) {
-    const username = document.querySelector('#username');
+    const username = document.querySelector('#inputname');
     if (reSpaces.test(username.value)) {
         username.classList.remove('is-invalid');
         username.classList.add('is-valid');
@@ -38,8 +63,8 @@ function validateEmail(e) {
 }
 
 function validatePassword() {
-    const password = document.querySelector('#password');
-    const re = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})(?=.*[!@#$%^&*])/;
+    const password = document.querySelector('#inputpassword');
+    const re = /^\w+$/;
     if (re.test(password.value) && reSpaces.test(password.value)) {
         password.classList.remove('is-invalid');
         password.classList.add('is-valid');
@@ -53,26 +78,35 @@ function validatePassword() {
     }
 }
 
-(function () {
-    const forms = document.querySelectorAll('.needs-validation');
 
-    for (let form of forms) {
-        form.addEventListener(
-            'submit',
-            function (event) {
-                if (
-                    !form.checkValidity() ||
-                    !validateEmail() ||
-                    !validateUsername() ||
-                    !validatePassword()
-                ) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else {
-                    form.classList.add('was-validated');
-                }
-            },
-            false
-        );
-    }
-})();
+
+
+
+
+
+
+
+
+//(function () {
+//    const forms = document.querySelectorAll('.needs-validation');
+
+//    for (let form of forms) {
+//        form.addEventListener(
+//            'submit',
+//            function (event) {
+//                if (
+//                    !form.checkValidity() ||
+//                    !validateEmail() ||
+//                    !validateUsername() ||
+//                    !validatePassword()
+//                ) {
+//                    event.preventDefault();
+//                    event.stopPropagation();
+//                } else {
+//                    form.classList.add('was-validated');
+//                }
+//            },
+//            false
+//        );
+//    }
+//})();
