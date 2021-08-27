@@ -1,7 +1,26 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page061EditInfo.aspx.cs" Inherits="MsgBoardWebApp.Page061EditInfo" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script>
+        var testVal;
+        $(document).ready(function () {
+            $.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetEditInfo",
+                type: "GET",
+                data: {},
+                success: function (result) {
+                    $("#staticAcc").val(result.Account);
+                    $("#editName").val(result.Name);
+                    $("#staticLevel").val(result.Level);
+                    $("#editEmail").val(result.Email);
+                    $("#editBirthday").val(result.Birthday);
+                    $("#staticCreateDate").val(result.CreateDate);
+                }
+            });
+        });
+    </script>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
         <p class="fs-2 fw-bold">編輯會員資料</p>
@@ -13,18 +32,54 @@
             </ol>
         </nav>
     </div>
+    <hr class="my-4">
     <form class="row g-3 needs-validation" novalidate>
-        <div class="col-9 form-floating mb-3">
-            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
-            <div class="invalid-feedback">
-                請填入正確格式Email!
+         <div class="mb-3 row">
+            <label for="staticAcc" class="col-sm-2 col-form-label">帳號</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="staticAcc" value="-">
             </div>
-            <label for="floatingEmail">請在此填入 Email</label>
         </div>
-        <div class="col-9 form-floating mb-3">
-            <input type="date" class="form-control" id="floatingBirthDate" placeholder="2000-1-1">
-            <label for="floatingBirthDate">請在此填入生日</label>
+         <div class="mb-3 row">
+            <label for="editName" class="col-sm-2 col-form-label">使用者名稱</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="editName" placeholder="-" required>
+                    <div class="invalid-feedback">
+                        請填入使用者名稱!
+                    </div>
+            </div>
         </div>
+        <div class="mb-3 row">
+            <label for="staticLevel" class="col-sm-2 col-form-label">帳號權限</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="staticLevel" value="-">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="editEmail" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="editEmail" placeholder="-" required>
+                    <div class="invalid-feedback">
+                        請填入Email或格式錯誤!
+                    </div>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="editBirthday" class="col-sm-2 col-form-label">生日</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="editBirthday" placeholder="" required>
+                    <div class="invalid-feedback">
+                        生日日期錯誤!
+                    </div>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticCreateDate" class="col-sm-2 col-form-label">建立日期</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="staticCreateDate" value="-">
+            </div>
+        </div>
+
         <div class="col-12">
             <button class="btn btn-outline-primary" type="submit">送出</button>
             <button class="btn btn-outline-danger" type="reset">清除</button>
@@ -42,13 +97,15 @@
                 .forEach(function (form) {
                     form.addEventListener('submit', function (event) {
                         if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
+                            event.preventDefault();
+                            event.stopPropagation();
                         }
                         form.classList.add('was-validated')
                     }, false),
                         form.addEventListener('reset', function (resetEvn) {
-                            $("input:text").val("");
+                            event.preventDefault();
+                            $('[id^="edit"]').val("");
+                            event.preventDefault();
                         }, false)
                 })
         })()

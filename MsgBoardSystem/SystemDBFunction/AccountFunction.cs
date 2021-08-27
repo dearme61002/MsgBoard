@@ -1,4 +1,5 @@
 ﻿using databaseORM.data;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace SystemDBFunction
 {
     public class AccountFunction
     {
+        #region RegisterFunctions
+
         /// <summary> 檢查帳號是否已經存在 </summary>
         /// <param name="account"></param>
         /// <returns></returns>
@@ -35,7 +38,7 @@ namespace SystemDBFunction
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "Check account exception error";
             }
@@ -67,7 +70,7 @@ namespace SystemDBFunction
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "Check email exception error";
             }
@@ -87,10 +90,73 @@ namespace SystemDBFunction
                 }
                 return "Success";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "Excrption Error";
             }
         }
+        #endregion
+
+        #region EditUserInfoFunctions
+
+        /// <summary> 從資料庫抓取使用者資料 </summary>
+        /// <param name="uid"></param>
+        /// <returns> List Accounting 資料 </returns>
+        public static List<Accounting> GetUserInfo(Guid uid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Accountings
+                         where item.UserID == uid
+                         select item);
+
+                    var list = query.ToList();
+
+                    if (list.Count == 1)
+                        return list;
+                    else
+                        return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary> 取得使用者資料 </summary>
+        /// <param name="uid"></param>
+        /// <returns> EditInfoModel 格式資料 </returns>
+        public static List<EditInfoModel> GetEditInfo(Guid uid)
+        {
+            List<Accounting> sourceList = GetUserInfo(uid);
+
+            // Check exist
+            if (sourceList != null)
+            {
+                List<EditInfoModel> editSource =
+                    sourceList.Select(obj => new EditInfoModel()
+                    {
+                        Name = obj.Name,
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd"),
+                        Account = obj.Account,
+                        Password = obj.Password,
+                        Level = (obj.Level == "Admin") ? "管理者" : "一般會員",
+                        Email = obj.Email,
+                        Birthday = obj.BirthDay.ToString("yyyy-MM-dd")
+                    }).ToList();
+
+                return editSource;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        #endregion
+
     }
 }

@@ -224,7 +224,7 @@ namespace MsgBoardWebApp.Handler
                 // check guid
                 if (!Guid.TryParse(strUID, out Guid uid))
                 {
-                    responseMsg = "Session UID Error";
+                    responseMsg = "Param UID Error";
                 }
 
                 if (!Guid.TryParse(strPID, out Guid pid))
@@ -258,8 +258,35 @@ namespace MsgBoardWebApp.Handler
                         // Have error
                         responseMsg = "Exception Error";
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
 
-                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
+                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
+                context.Response.ContentType = "application/json";
+                context.Response.Write(jsonText);
+            }
+            // 取得會員資料
+            else if(actionName == "GetEditInfo")
+            {
+                string strUID = context.Session["UID"].ToString();
+
+                // check guid
+                if (!Guid.TryParse(strUID, out Guid uid))
+                {
+                    context.Response.Write("Param UID Error");
+                    context.Response.End();
+                }
+
+                try
+                {
+                    // get user infomation
+                    List<EditInfoModel> editInfo = AccountFunction.GetEditInfo(uid);
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(editInfo[0]);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(jsonText);
                 }
@@ -267,6 +294,11 @@ namespace MsgBoardWebApp.Handler
                 {
                     throw ex;
                 }
+            }
+            // 更新會員資料
+            else if (actionName == "UpdateInfo")
+            {
+
             }
         }
 

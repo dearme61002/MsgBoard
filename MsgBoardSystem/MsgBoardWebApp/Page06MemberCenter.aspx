@@ -35,6 +35,11 @@
     </div>
     <div class="d-grid gap-3">
         <div class="p-2 bg-light border">
+            <p class="fs-4">主要功能</p>
+            <a class="btn btn-outline-secondary" href="Page061EditInfo.aspx">編輯會員資料</a>
+            <a class="btn btn-outline-secondary" href="Page062EditPwd.aspx">修改會員密碼</a>
+        </div>
+        <div class="p-2 bg-light border">
             <p class="fs-4">
                 刪除貼文
                 <button class="fs-5 btn btn-outline-danger" id="deleteBtn">點此刪除所選貼文</button>
@@ -253,11 +258,6 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="p-2 bg-light border">
-            <p class="fs-4">其他功能</p>
-            <a class="btn btn-outline-secondary" href="Page061EditInfo.aspx">編輯會員資料</a>
-            <a class="btn btn-outline-secondary" href="Page062EditPwd.aspx">修改會員密碼</a>
         </div>
     </div>
     <hr class="my-4">
