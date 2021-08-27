@@ -15,32 +15,25 @@
     </div>
     <form class="row g-3 needs-validation" novalidate>
         <div class="col-9 form-floating mb-3">
-            <input type="password" class="form-control" id="oldPwd" placeholder="123" required>
+            <input type="password" class="form-control" id="oldPwd" placeholder="00000" required>
             <div class="invalid-feedback">
                 請填入舊密碼!
             </div>
             <label for="oldPwd">請在此填入舊密碼</label>
         </div>
         <div class="col-9 form-floating mb-3">
-            <input type="password" class="form-control" id="newPwd" placeholder="123" required>
+            <input type="password" class="form-control" id="newPwd" placeholder="00000" required>
             <div class="invalid-feedback">
                 請填入新密碼!
             </div>
             <label for="newPwd">請在此填入新密碼</label>
         </div>
         <div class="col-9 form-floating mb-3">
-            <input type="password" class="form-control" id="newPwdAgain" placeholder="123" required>
+            <input type="password" class="form-control" id="newPwdAgain" placeholder="00000" required>
             <div class="invalid-feedback">
                 請填入新密碼!
             </div>
             <label for="newPwdAgain">請在此再次填入新密碼</label>
-        </div>
-        <div class="col-9 form-floating mb-3">
-            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
-            <div class="invalid-feedback">
-                請填入正確格式Email!
-            </div>
-            <label for="floatingEmail">請在此填入 Email</label>
         </div>
         <div class="col-12">
             <button class="btn btn-outline-primary" type="submit">送出</button>
@@ -59,8 +52,34 @@
                 .forEach(function (form) {
                     form.addEventListener('submit', function (event) {
                         if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        else {
+                            var oldPwd = $("#oldPwd").val();
+                            var newPwd = $("#newPwd").val();
+                            var newPwdAgain = $("#newPwdAgain").val();
+
+                            event.preventDefault();
+                            $.ajax({
+                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UpdatePwd",
+                                type: "POST",
+                                data: {
+                                    "OldPwd": oldPwd,
+                                    "NewPwd": newPwd,
+                                    "NewPwdAgain": newPwdAgain
+                                },
+                                success: function (result) {
+                                    if ("Success" == result) {
+                                        alert("密碼修改成功! 請重新登入會員");
+                                        document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+                                        window.location.href = "http://localhost:49461/Page01Default.aspx";
+                                    }
+                                    else {
+                                        alert(result);
+                                    }
+                                }
+                            });
                         }
                         form.classList.add('was-validated')
                     }, false),

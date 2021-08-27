@@ -143,7 +143,6 @@ namespace SystemDBFunction
                         Name = obj.Name,
                         CreateDate = obj.CreateDate.ToString("yyyy-MM-dd"),
                         Account = obj.Account,
-                        Password = obj.Password,
                         Level = (obj.Level == "Admin") ? "管理者" : "一般會員",
                         Email = obj.Email,
                         Birthday = obj.BirthDay.ToString("yyyy-MM-dd")
@@ -159,6 +158,7 @@ namespace SystemDBFunction
 
         /// <summary> 更新使用者資料 </summary>
         /// <param name="editSource"></param>
+        /// <param name="userID"></param>
         /// <returns> Success : 成功, Others string : 失敗的錯誤訊息 </returns>
         public static string UpdateUserInfo(EditInfoModel editSource, Guid userID)
         {
@@ -193,5 +193,61 @@ namespace SystemDBFunction
         }
         #endregion
 
+        #region ChangePasswordFunctions
+
+        /// <summary> 取得使用者密碼 </summary>
+        /// <param name="uid"></param>
+        /// <returns> PwdInfoModel 格式資料 </returns>
+        public static List<PwdInfoModel> GetUserPwd(Guid uid)
+        {
+            List<Accounting> sourceList = GetUserInfo(uid);
+
+            // Check exist
+            if (sourceList != null)
+            {
+                List<PwdInfoModel> pwdSource =
+                    sourceList.Select(obj => new PwdInfoModel()
+                    {
+                        Account = obj.Account,
+                        Password = obj.Password
+                    }).ToList();
+
+                return pwdSource;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary> 更新使用者密碼 </summary>
+        /// <param name="userID"></param>
+        /// <param name="account"></param>
+        /// <param name="newPwd"></param>
+        /// <returns> Success : 成功, Others string : 失敗的錯誤訊息 </returns>
+        public static string UpdateUserPwd(Guid userID, string account, string newPwd)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        $@"
+                            UPDATE [dbo].[Accounting]
+                            SET [Password] = '{newPwd}'
+                            WHERE [Account] = '{account}' and [UserID] = '{userID}'
+                        ";
+
+                    context.Database.ExecuteSqlCommand(query);
+
+                    return "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
+        #endregion
     }
 }

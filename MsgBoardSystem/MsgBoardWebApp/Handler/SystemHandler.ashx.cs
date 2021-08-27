@@ -344,6 +344,57 @@ namespace MsgBoardWebApp.Handler
                     throw ex;
                 }
             }
+            // 更改會員密碼
+            else if (actionName == "UpdatePwd")
+            {                
+                try
+                {
+                    string strUID = context.Session["UID"].ToString();
+                    string oldPwd = context.Request.Form["OldPwd"];
+                    string newPwd = context.Request.Form["NewPwd"];
+                    string newPwdAgain = context.Request.Form["NewPwdAgain"];
+                    string resultMsg = string.Empty;
+
+                    // check guid
+                    if (Guid.TryParse(strUID, out Guid uid))
+                    {
+                        // get password from DB
+                        List<PwdInfoModel> pwdInfo = AccountFunction.GetUserPwd(uid);
+
+                        // Check new password
+                        if (string.Compare(newPwd, newPwdAgain, false) == 0)
+                        {
+                            // Check input password and DB password
+                            if (string.Compare(oldPwd, pwdInfo[0].Password, false) == 0)
+                            {
+                                // Update password
+                                resultMsg = AccountFunction.UpdateUserPwd(uid, pwdInfo[0].Account, newPwd);
+                            }
+                            else
+                            {
+                                resultMsg = "舊密碼輸入錯誤";
+                            }
+                        }
+                        else
+                        {
+                            resultMsg = "輸入的兩次新密碼不相同";
+                        }
+                    }
+                    else
+                    {
+                        resultMsg = "Param UID Error";
+                    }
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
         }
 
         public bool IsReusable
