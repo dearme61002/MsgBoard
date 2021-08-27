@@ -92,13 +92,20 @@ namespace MsgBoardWebApp.Handler
                     return;
                 }
 
-                // 取得貼文資料
-                List<PostInfoModel> postInfo = PostManager.GetOnePostInfo(pid);
+                try
+                {
+                    // 取得貼文資料
+                    List<PostInfoModel> postInfo = PostManager.GetOnePostInfo(pid);
 
-                // 寫入Response
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(postInfo);
-                context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
+                    // 寫入Response
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(postInfo);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
             // 取得貼文的全部留言
             else if (actionName == "GetAllMsg")
@@ -112,12 +119,20 @@ namespace MsgBoardWebApp.Handler
                     return;
                 }
 
-                // 取得貼文的全部留言
-                List<MsgInfoModel> allMsg = PostManager.GetAllPostMsg(pid);
+                try
+                {
+                    // 取得貼文的全部留言
+                    List<MsgInfoModel> allMsg = PostManager.GetAllPostMsg(pid);
 
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(allMsg);
-                context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(allMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
             }
             // 註冊會員功能
             else if (actionName == "Register")
