@@ -617,6 +617,7 @@
     <Content Include="Img\Logo.png" />
     <Content Include="Img\udon.png" />
     <Content Include="jquery\jquery.min.js" />
+    <Content Include="jquery\mycheck.js" />
     <Content Include="Page01Default.aspx" />
     <Content Include="Page021ForgetPW.aspx" />
     <Content Include="Page02Login.aspx" />

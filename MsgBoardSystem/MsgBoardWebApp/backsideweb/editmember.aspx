@@ -83,18 +83,22 @@
                     data: "=" + data,
                     success: function (res) {
                         if (res.state !== 200) {
-                            return alert('刪除資料失敗');
+                            return alert('更新資料失敗連線問題');
                         }
                         getAlldata();
                         alert(res.msg);
                     },
                     error: function (res) {
-                        return alert('刪除資料失敗');
+                        return alert('更新資料失敗連線問題');
                     }
 
                 })
-
-
+                /*變回空值*/
+                document.getElementById("inputname").value = "";
+                document.getElementById("inputaccount").value = "";
+                document.getElementById("inputpassword").value = "";
+                document.getElementById("inputemail").value = "";
+                document.getElementById("date").value = "";
 
 
 
@@ -103,6 +107,13 @@
             })
             /*Modal js*/
 
+            $('#close').on('click', function () {
+                document.getElementById("inputname").value = "";
+                document.getElementById("inputaccount").value = "";
+                document.getElementById("inputpassword").value = "";
+                document.getElementById("inputemail").value = "";
+                document.getElementById("date").value = "";
+            });
 
 
 
@@ -160,12 +171,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close" >Close</button>
                     <button type="button" class="btn btn-primary" id="yesdo">確定</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal -->
-
+    <script src="../jquery/mycheck.js"></script>
 </asp:Content>

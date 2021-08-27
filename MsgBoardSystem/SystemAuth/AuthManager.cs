@@ -14,9 +14,7 @@ namespace WebAuth
 {
     public class AuthManager
     {
-        /// <summary>
-        /// 從資料庫抓取使用者資料
-        /// </summary>
+        /// <summary> 從資料庫抓取使用者資料 </summary>
         /// <param name="account"></param>
         /// <returns></returns>
         public static List<Accounting> GetAccountInfo(string account)
@@ -31,7 +29,11 @@ namespace WebAuth
                          select item);
 
                     var list = query.ToList();
-                    return list;
+
+                    if (list.Count == 1)
+                        return list;
+                    else
+                        return null;
                 }
             }
             catch (Exception ex)
@@ -41,38 +43,6 @@ namespace WebAuth
             }
         }
 
-        /// <summary> 驗證Cookie </summary>
-        /// <param name="userInfo"></param>
-        public static void LoginAuthentication(UserInfoModel userInfo)
-        {
-            string userID = userInfo.UserID.ToString();
-            string[] roles = { userInfo.Level };
-            bool isPersistance = false;
-
-            FormsAuthentication.SetAuthCookie(userInfo.Account, isPersistance);
-            FormsAuthenticationTicket ticket =
-                new FormsAuthenticationTicket(
-                    1,
-                    userInfo.Account,
-                    DateTime.Now,
-                    DateTime.Now.AddHours(1),
-                    isPersistance,
-                    userID
-                );
-
-            FormsIdentity identity = new FormsIdentity(ticket);
-            HttpCookie cookie =
-                new HttpCookie(
-                    FormsAuthentication.FormsCookieName,
-                    FormsAuthentication.Encrypt(ticket)
-                );
-            cookie.HttpOnly = false;
-
-            GenericPrincipal gp = new GenericPrincipal(identity, roles);
-            HttpContext.Current.User = gp;
-            HttpContext.Current.Response.Cookies.Add(cookie);
-        }
-
         /// <summary> 取得使用者資料 </summary>
         /// <param name="account"></param>
         /// <returns></returns>
@@ -80,6 +50,7 @@ namespace WebAuth
         {
             List<Accounting> sourceList = GetAccountInfo(account);
 
+            // Check account exist
             if (sourceList != null)
             {
                 List<UserInfoModel> userSource =
@@ -103,6 +74,39 @@ namespace WebAuth
             {
                 return null;
             }
+        }
+
+        /// <summary> 驗證Cookie </summary>
+        /// <param name="userInfo"></param>
+        public static void LoginAuthentication(UserInfoModel userInfo)
+        {
+            string userID = userInfo.UserID.ToString();
+            string[] roles = { userInfo.Level };
+            bool isPersistance = false;
+
+            FormsAuthentication.SetAuthCookie(userInfo.Account, isPersistance);
+
+            FormsAuthenticationTicket ticket =
+                new FormsAuthenticationTicket(
+                    1,
+                    userInfo.Account,
+                    DateTime.Now,
+                    DateTime.Now.AddHours(1),
+                    isPersistance,
+                    userID
+                );
+
+            FormsIdentity identity = new FormsIdentity(ticket);
+            HttpCookie cookie =
+                new HttpCookie(
+                    FormsAuthentication.FormsCookieName,
+                    FormsAuthentication.Encrypt(ticket)
+                );
+            cookie.HttpOnly = false;
+
+            GenericPrincipal gp = new GenericPrincipal(identity, roles);
+            HttpContext.Current.User = gp;
+            HttpContext.Current.Response.Cookies.Add(cookie);
         }
     }
 }
