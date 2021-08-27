@@ -100,13 +100,40 @@
                             event.preventDefault();
                             event.stopPropagation();
                         }
+                        else {
+                            var name = $("#editName").val();
+                            var email = $("#editEmail").val();
+                            var birthday = $("#editBirthday").val();
+                            var account = $("#staticAcc").val();
+
+                            event.preventDefault();
+                            $.ajax({
+                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UpdateInfo",
+                                type: "POST",
+                                data: {
+                                    "Name": name,
+                                    "Email": email,
+                                    "Birthday": birthday,
+                                    "Account": account
+                                },
+                                success: function (result) {
+                                    if ("Success" == result) {
+                                        alert("更改成功! 轉跳至會員中心...");
+                                        window.location.href = "Page06MemberCenter.aspx";
+                                    }
+                                    else {
+                                        alert(result);
+                                    }
+                                }
+                            });
+                        }
                         form.classList.add('was-validated')
                     }, false),
-                        form.addEventListener('reset', function (resetEvn) {
-                            event.preventDefault();
-                            $('[id^="edit"]').val("");
-                            event.preventDefault();
-                        }, false)
+                    form.addEventListener('reset', function (resetEvn) {
+                        event.preventDefault();
+                        $('[id^="edit"]').val("");
+                        event.preventDefault();
+                    }, false)
                 })
         })()
     </script>

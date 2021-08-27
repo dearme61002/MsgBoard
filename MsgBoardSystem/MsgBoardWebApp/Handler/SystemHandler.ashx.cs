@@ -313,7 +313,36 @@ namespace MsgBoardWebApp.Handler
             // 更新會員資料
             else if (actionName == "UpdateInfo")
             {
+                string strUID = context.Session["UID"].ToString();
 
+                // check guid
+                if (!Guid.TryParse(strUID, out Guid uid))
+                {
+                    context.Response.Write("Param UID Error");
+                    context.Response.End();
+                }
+
+                try
+                {
+                    EditInfoModel editSource = new EditInfoModel()
+                    {
+                        Name = context.Request.Form["Name"],
+                        Email = context.Request.Form["Email"],
+                        Birthday = context.Request.Form["Birthday"],
+                        Account = context.Request.Form["Account"]
+                    };
+
+                    string resultMsg = AccountFunction.UpdateUserInfo(editSource, uid);
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
 

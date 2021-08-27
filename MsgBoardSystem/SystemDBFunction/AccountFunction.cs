@@ -156,6 +156,41 @@ namespace SystemDBFunction
                 return null;
             }
         }
+
+        /// <summary> 更新使用者資料 </summary>
+        /// <param name="editSource"></param>
+        /// <returns> Success : 成功, Others string : 失敗的錯誤訊息 </returns>
+        public static string UpdateUserInfo(EditInfoModel editSource, Guid userID)
+        {
+            string name = editSource.Name;
+            string email = editSource.Email;
+            string birthday = editSource.Birthday;
+            string account = editSource.Account;
+
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        $@"
+                            UPDATE [dbo].[Accounting]
+                            SET 
+                                [Name] = '{name}',
+                                [Email] = '{email}',
+                                [BirthDay] = '{birthday}'
+                            WHERE [Account] = '{account}' and [UserID] = '{userID}'
+                        ";
+
+                    context.Database.ExecuteSqlCommand(query);
+
+                    return "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
         #endregion
 
     }
