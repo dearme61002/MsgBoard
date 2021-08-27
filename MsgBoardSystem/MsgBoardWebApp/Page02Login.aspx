@@ -60,14 +60,20 @@
                             },
                             success: function (result) {                                
                                 var authx = document.cookie.indexOf(".ASPXAUTH");
-                                if (authx == 0) {
-                                    alert("Success");
-                                    $('#funcList').show();
-                                    window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+
+                                if ("Success" == result) {
+                                    if (authx == 0) {
+                                        $('#funcList').show();
+                                        window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+                                    }
+                                    else {
+                                        alert("Auth cookie fail");
+                                        $('#funcList').hide();
+                                    }
                                 }
                                 else {
-                                    alert("Fail");
                                     $('#funcList').hide();
+                                    alert(result);
                                 }
                             }
                         });

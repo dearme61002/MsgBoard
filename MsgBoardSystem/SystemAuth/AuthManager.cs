@@ -14,9 +14,7 @@ namespace WebAuth
 {
     public class AuthManager
     {
-        /// <summary>
-        /// 從資料庫抓取使用者資料
-        /// </summary>
+        /// <summary> 從資料庫抓取使用者資料 </summary>
         /// <param name="account"></param>
         /// <returns></returns>
         public static List<Accounting> GetAccountInfo(string account)
@@ -31,12 +29,49 @@ namespace WebAuth
                          select item);
 
                     var list = query.ToList();
-                    return list;
+
+                    if (list.Count == 1)
+                        return list;
+                    else
+                        return null;
                 }
             }
             catch (Exception ex)
             {               
                 //Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary> 取得使用者資料 </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public static List<UserInfoModel> GetInfo(string account)
+        {
+            List<Accounting> sourceList = GetAccountInfo(account);
+
+            // Check account exist
+            if (sourceList != null)
+            {
+                List<UserInfoModel> userSource =
+                    sourceList.Select(obj => new UserInfoModel()
+                    {
+                        ID = obj.ID,
+                        UserID = obj.UserID,
+                        Name = obj.Name,
+                        CreateDate = obj.CreateDate,
+                        Account = obj.Account,
+                        Password = obj.Password,
+                        Level = obj.Level,
+                        Email = obj.Email,
+                        Bucket = obj.Bucket,
+                        Birthday = obj.BirthDay
+                    }).ToList();
+
+                return userSource;
+            }
+            else
+            {
                 return null;
             }
         }
@@ -72,38 +107,6 @@ namespace WebAuth
             GenericPrincipal gp = new GenericPrincipal(identity, roles);
             HttpContext.Current.User = gp;
             HttpContext.Current.Response.Cookies.Add(cookie);
-        }
-
-        /// <summary> 取得使用者資料 </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
-        public static List<UserInfoModel> GetInfo(string account)
-        {
-            List<Accounting> sourceList = GetAccountInfo(account);
-
-            if (sourceList != null)
-            {
-                List<UserInfoModel> userSource =
-                    sourceList.Select(obj => new UserInfoModel()
-                    {
-                        ID = obj.ID,
-                        UserID = obj.UserID,
-                        Name = obj.Name,
-                        CreateDate = obj.CreateDate,
-                        Account = obj.Account,
-                        Password = obj.Password,
-                        Level = obj.Level,
-                        Email = obj.Email,
-                        Bucket = obj.Bucket,
-                        Birthday = obj.BirthDay
-                    }).ToList();
-
-                return userSource;
-            }
-            else
-            {
-                return null;
-            }
         }
     }
 }

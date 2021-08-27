@@ -5,19 +5,50 @@
         // 取得PostID
         const pageUrl = new URL(window.location.href);
         var pid = pageUrl.searchParams.get("PID");
-        var title = pageUrl.searchParams.get("Title");
+        var getPost;
 
         $(document).ready(function () {
-            $("#navText").text(title);
-            $("#headText").text(title);
+            $.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetPostInfo",
+                type: "POST",
+                data: { "PID": pid},
+                success: function (result) {
+                    getPost = result[0];
+                    $("#navText").text(getPost["Title"]);
+                    $("#headText").text(getPost["Title"]);
+                    $("#cardTitle").text(getPost["Title"]);
+                    $("#cardBody").text(getPost["Body"]);
+                }
+            });
 
-            $('#msgTable').DataTable({
-                "scrollY": "200px",
-                "scrollCollapse": true,
-                "paging": false,
-                "sorting": false,
-                "info": false,
-                "searching": false
+            var msgTable = $('#msgTable').DataTable(
+                {
+                    "scrollY": "200px",
+                    "scrollCollapse": true,
+                    "paging": false,
+                    "sorting": false,
+                    "info": false,
+                    "searching": false
+                });
+
+            function AddRow(obj) {
+                msgTable.row.add([
+                    obj.Body,
+                    obj.Name,
+                    obj.CreateDate
+                ]).draw(false);
+            }
+
+            $.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllMsg",
+                type: "POST",
+                data: { "PID": pid},
+                success: function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        var obj = result[i];
+                        AddRow(obj);
+                    }
+                }
             });
         });
     </script>
@@ -35,9 +66,8 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Post Title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Post subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h5 class="card-title" id="cardTitle">Post Title</h5>
+            <p class="card-text" id="cardBody">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         </div>
     </div>
     <table id="msgTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
@@ -54,73 +84,6 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>a測試留言123123123123123131323123123123123132</td>
-                <td>Alan3</td>
-                <td>2021-01-01</td>
-            </tr>
-            <tr>
-                <td>b測試留言123</td>
-                <td>Alan2</td>
-                <td>2021-01-02</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-            <tr>
-                <td>c測試留言123</td>
-                <td>Alan1</td>
-                <td>2021-01-03</td>
-            </tr>
-        </tbody>
     </table>
     <hr class="my-4">
 
@@ -159,9 +122,9 @@
 
                         form.classList.add('was-validated')
                     }, false),
-                        form.addEventListener('reset', function (resetEvn) {
-                            $("input:text").val("");
-                        }, false)
+                    form.addEventListener('reset', function (resetEvn) {
+                        $("input:text").val("");
+                    }, false)
                 })
         })()
     </script>

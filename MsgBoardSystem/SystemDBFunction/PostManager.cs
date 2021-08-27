@@ -32,6 +32,56 @@ namespace SystemDBFunction
             }
         }
 
+        /// <summary> 從資料庫取得所有DB </summary>
+        /// <returns></returns>
+        public static List<Message> GetAllMsgFromDB(Guid pid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Messages
+                         where item.PostID == pid
+                         select item);
+
+                    var list = query.ToList();
+                    return list;
+                }
+            }
+            catch (Exception)
+            {
+                throw null;
+            }
+        }
+
+        /// <summary> 從資料庫取得特定Post資料 </summary>
+        /// <returns></returns>
+        public static List<Posting> GetOnePostInfoFromDB(Guid pid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Postings
+                         where item.PostID == pid
+                         select item);
+
+                    var list = query.ToList();
+
+                    if (list.Count != 0)
+                        return list;
+                    else
+                        return null;
+                }
+            }
+            catch (Exception)
+            {
+                throw null;
+            }
+        }
+
         /// <summary> 從UserID尋找使用者名稱: Name </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -47,7 +97,11 @@ namespace SystemDBFunction
                          select item);
 
                     var list = query.ToList();
-                    return list;
+
+                    if (list.Count != 0)
+                        return list;
+                    else
+                        return null;
                 }
             }
             catch (Exception)
@@ -56,7 +110,7 @@ namespace SystemDBFunction
             }
         }
 
-        /// <summary> 轉換Model後送回Handler </summary>
+        /// <summary> 全部貼文資料轉換Model後送回Handler </summary>
         /// <returns></returns>
         public static List<PostInfoModel> GetAllPostInfo()
         {
@@ -82,6 +136,84 @@ namespace SystemDBFunction
                 }
 
                 return postSource;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary> 建立貼文寫入DB </summary>
+        /// <param name="postInfo"></param>
+        /// <returns></returns>
+        public static string CreateNewPost(Posting postInfo)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    context.Postings.Add(postInfo);
+                    context.SaveChanges();
+                }
+                return "Success";
+            }
+            catch (Exception)
+            {
+                return "Create Exception Error";
+            }
+        }
+
+        /// <summary> 取得貼文資訊 </summary>
+        /// <returns></returns>
+        public static List<PostInfoModel> GetOnePostInfo(Guid pid)
+        {
+            // get info by post guid
+            List<Posting> sourceList = GetOnePostInfoFromDB(pid);
+
+            if (sourceList != null)
+            {
+                // write into model
+                List<PostInfoModel> postInfo =
+                    sourceList.Select(obj => new PostInfoModel()
+                    {
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        Title = obj.Title,
+                        Body = obj.Body
+                    }).ToList();
+
+                return postInfo;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary> 全部貼文資料轉換Model後送回Handler </summary>
+        /// <returns></returns>
+        public static List<MsgInfoModel> GetAllPostMsg(Guid pid)
+        {
+            // get all msg by post id
+            List<Message> sourceList = GetAllMsgFromDB(pid);
+
+            if (sourceList != null)
+            {
+                List<MsgInfoModel> MsgSource =
+                    sourceList.Select(obj => new MsgInfoModel()
+                    {
+                        UserID = obj.UserID,
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        Body = obj.Body
+                    }).ToList();
+
+                // 用UID比對查詢，並寫入User Name
+                foreach (var obj in MsgSource)
+                {
+                    List<Accounting> posterName = GetUserName(obj.UserID);
+                    obj.Name = posterName[0].Name;
+                }
+
+                return MsgSource;
             }
             else
             {

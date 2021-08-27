@@ -1,7 +1,23 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page041EditPost.aspx.cs" Inherits="MsgBoardWebApp.Page041EditPost" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script>
+        // This is for session test record, you can delete this script
+        /*
+        var uid;
+        $(document).ready(function () {
+            $.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetSession",
+                type: "GET",
+                success: function (result) {
+                    uid = result;
+                }
+            });
+        });
+        */
+    </script>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
         <p class="fs-2 fw-bold">撰寫新貼文</p>
@@ -48,16 +64,33 @@
                             event.stopPropagation()
                         }
                         else {
-                            alert("建立成功");
-                            event.preventDefault();
-                            window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
-                        }
+                            var title = $("#postTitle").val();
+                            var body = $("#postContext").val();
 
+                            event.preventDefault();
+                            $.ajax({
+                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=NewPost",
+                                type: "POST",
+                                data: {
+                                    "Title": title,
+                                    "Body": body,
+                                },
+                                success: function (result) {
+                                    if ("Success" == result) {
+                                        alert("貼文建立成功!")
+                                        window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+                                    }
+                                    else {
+                                        alert(result);
+                                    }
+                                }
+                            });
+                        }
                         form.classList.add('was-validated')
                     }, false),
-                        form.addEventListener('reset', function (resetEvn) {
-                            $("input:text").val("");
-                        }, false)
+                    form.addEventListener('reset', function (resetEvn) {
+                        $("input:text").val("");
+                    }, false)
                 })
         })()
     </script>
