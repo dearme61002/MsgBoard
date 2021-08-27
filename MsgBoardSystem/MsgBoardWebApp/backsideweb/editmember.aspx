@@ -83,13 +83,13 @@
                     data: "=" + data,
                     success: function (res) {
                         if (res.state !== 200) {
-                            return alert('刪除資料失敗');
+                            return alert('更新資料失敗連線問題');
                         }
                         getAlldata();
                         alert(res.msg);
                     },
                     error: function (res) {
-                        return alert('刪除資料失敗');
+                        return alert('更新資料失敗連線問題');
                     }
 
                 })
@@ -178,5 +178,5 @@
         </div>
     </div>
     <!-- Modal -->
-
+    <script src="../jquery/mycheck.js"></script>
 </asp:Content>
