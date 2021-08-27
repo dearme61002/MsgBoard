@@ -90,9 +90,6 @@ namespace MsgBoardWebApp.Handler
                 string email = context.Request.Form["Email"];
                 DateTime birthday = Convert.ToDateTime(context.Request.Form["BirthDay"]);
 
-                // return status message
-                string responseMsg = string.Empty;
-
                 // set value to object and write into DB
                 try
                 {
@@ -109,7 +106,7 @@ namespace MsgBoardWebApp.Handler
                     };
 
                     // check account is already exist
-                    responseMsg = AccountFunction.CheckAccountExist(accountInfo.Account);
+                    string responseMsg = AccountFunction.CheckAccountExist(accountInfo.Account);
 
                     if (responseMsg == string.Empty)
                     {
@@ -134,7 +131,47 @@ namespace MsgBoardWebApp.Handler
             // 建立貼文
             else if (actionName == "NewPost")
             {
+                // Get value from ajax
+                string title = context.Request.Form["Title"];
+                string body = context.Request.Form["Body"];
+                string strUID = context.Session["UID"].ToString();
+                string responseMsg = string.Empty;
 
+                if (!Guid.TryParse(strUID, out Guid UID))
+                {
+                    responseMsg = "Session UID Error";
+                }
+
+                // set value to object and write into DB
+                try
+                {
+                    Posting postInfo = new Posting()
+                    {
+                        PostID = Guid.NewGuid(),
+                        UserID = UID,
+                        CreateDate = DateTime.Now,
+                        Title = title,
+                        Body = body,
+                        ismaincontent = false
+                    };
+
+                    // check UID is correct and user is exist
+                    var checkUID = PostManager.GetUserName(UID);
+
+                    if(checkUID != null)
+                    {
+                        // write into DB
+                        responseMsg = PostManager.CreateNewPost(postInfo);
+                    }
+                    
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
 

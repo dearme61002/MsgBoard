@@ -82,7 +82,6 @@ namespace SystemDBFunction
             {
                 using (databaseEF context = new databaseEF())
                 {
-                    accounting.CreateDate = DateTime.Now;
                     context.Accountings.Add(accounting);
                     context.SaveChanges();
                 }

@@ -2,8 +2,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script>
+        // This is for session test record, you can delete this script
+        /*
         var uid;
-        var uidText
         $(document).ready(function () {
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetSession",
@@ -13,6 +14,7 @@
                 }
             });
         });
+        */
     </script>
 </asp:Content>
 
@@ -62,37 +64,33 @@
                             event.stopPropagation()
                         }
                         else {
+                            var title = $("#postTitle").val();
+                            var body = $("#postBody").val();
+
                             event.preventDefault();
-                            alert(uid);
-                            /*
                             $.ajax({
                                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=NewPost",
                                 type: "POST",
                                 data: {
-                                    "Name": name,
-                                    "Account": account,
-                                    "Password": password,
-                                    "Email": email,
-                                    "BirthDay": birthday
+                                    "Title": title,
+                                    "Body": body,
                                 },
                                 success: function (result) {
                                     if ("Success" == result) {
                                         alert("註冊成功!! 轉跳至首頁")
-                                        window.location.href = "http://localhost:49461/Page01Default.aspx";
+                                        window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
                                     }
                                     else {
                                         alert(result);
                                     }
                                 }
                             });
-                            window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
-                            */
                         }
                         form.classList.add('was-validated')
                     }, false),
-                        form.addEventListener('reset', function (resetEvn) {
-                            $("input:text").val("");
-                        }, false)
+                    form.addEventListener('reset', function (resetEvn) {
+                        $("input:text").val("");
+                    }, false)
                 })
         })()
     </script>

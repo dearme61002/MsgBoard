@@ -47,7 +47,11 @@ namespace SystemDBFunction
                          select item);
 
                     var list = query.ToList();
-                    return list;
+
+                    if (list.Count != 0)
+                        return list;
+                    else
+                        return null;
                 }
             }
             catch (Exception)
@@ -86,6 +90,26 @@ namespace SystemDBFunction
             else
             {
                 return null;
+            }
+        }
+
+        /// <summary> 建立貼文寫入DB </summary>
+        /// <param name="postInfo"></param>
+        /// <returns></returns>
+        public static string CreateNewPost(Posting postInfo)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    context.Postings.Add(postInfo);
+                    context.SaveChanges();
+                }
+                return "Success";
+            }
+            catch (Exception)
+            {
+                return "Create Exception Error";
             }
         }
     }
