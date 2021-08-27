@@ -216,7 +216,120 @@ var gg = regexdate.IsMatch(date);
 
         }
 
+        [HttpPost]
+        public Model.ApiResult editmydata([FromBody] string data)
+        {
 
+            JObject myjsonData = JObject.Parse(data);
+            string name = myjsonData["name"].ToString();
+            string account = myjsonData["account"].ToString();
+            string password = myjsonData["password"].ToString();
+            string email = myjsonData["email"].ToString();
+            string date = myjsonData["date"].ToString();
+            string dataID = myjsonData["dataID"].ToString();
+
+            Model.ApiResult apiResult = new Model.ApiResult();
+            Regex rgxemail = new Regex(@"^([a-zA-Z0-9_\-?\.?]){3,}@([a-zA-Z]){3,}\.([a-zA-Z]){2,5}$");
+            Regex rgxeaccount = new Regex(@"^[\w\S]+$");
+            Regex replace = new Regex(@"^\S+$");
+            Regex regxpassworld = new Regex(@"^\w+$");
+            Regex regexdate = new Regex(@"^((19|20)?[0-9]{2}[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01]))*$");
+            Regex regexdata = new Regex(@"^\d{4}-\d{2}-\d{2}$");
+
+            
+
+            if (!regexdata.IsMatch(date))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+
+            
+            if (!rgxemail.IsMatch(email))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+            
+            if (!rgxeaccount.IsMatch(account))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+            
+            if (!replace.IsMatch(name))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+            
+            if (!regexdate.IsMatch(date))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+
+            }
+
+            
+
+
+            if (!regexdate.IsMatch(date))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+
+
+            //if (rgxemail.IsMatch(email)  & rgxeaccount.IsMatch(account) &replace.IsMatch(name)&regexdate.IsMatch(date)&regxpassworld.IsMatch(password))
+            //{
+            //    apiResult.state = 404;
+            //    apiResult.msg = "資料格式錯誤";
+            //    return apiResult;
+
+            //}
+
+
+
+            #region 從資料庫紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+
+                try
+                {
+                   // string id =    dataID;
+
+                    Guid id=   Guid.Parse(dataID);
+                    Accounting accounting = context.Accountings.Where(x => x.UserID == id ).FirstOrDefault();
+                    accounting.Name = name;
+                    accounting.Account = account;
+                    accounting.Password = password;
+                    accounting.Email = email;
+                    accounting.BirthDay = Convert.ToDateTime(date);
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "更新成功";
+                    return apiResult;
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "刪除失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
 
         // GET api/<controller>/5
         [HttpGet]

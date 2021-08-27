@@ -8,23 +8,31 @@ using System.Web.UI.WebControls;
 namespace MsgBoardWebApp.backsideweb
 {
 
-
+    
     public partial class passwordchange : System.Web.UI.Page
     {
-        //public string ishaveCookie;
+        public string dataID;
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
-
-            if (Session["UID"] != null)
+            try
             {
+             if (Session["UID"] != null)
+            {
+                dataID = Session["UID"].ToString();
             }
             else
             {
                 Response.Cookies[".ASPXAUTH"].Expires = DateTime.Now.AddDays(-1);
                 Response.Redirect(@"~/Page02Login.aspx");
             }
+            }
+            catch (Exception)
+            {
+
+            }
+
+            
        
 
             
