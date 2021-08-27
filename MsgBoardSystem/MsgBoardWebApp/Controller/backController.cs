@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using databaseORM;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace MsgBoardWebApp
 {
@@ -113,10 +114,79 @@ namespace MsgBoardWebApp
             string email = myjsonData["email"].ToString();
             string date = myjsonData["date"].ToString();
             string dataID = myjsonData["dataID"].ToString();
-            #region 從資料庫刪除ErrorLog紀錄透過dataID
+
+            Model.ApiResult apiResult = new Model.ApiResult();
+            Regex rgxemail = new Regex(@"^([a-zA-Z0-9_\-?\.?]){3,}@([a-zA-Z]){3,}\.([a-zA-Z]){2,5}$");
+            Regex rgxeaccount = new Regex(@"^[\w\S]+$");
+            Regex replace = new Regex(@"^\S+$");
+            Regex regxpassworld = new Regex(@"^\w+$");
+            Regex regexdate = new Regex(@"^((19|20)?[0-9]{2}[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01]))*$");
+            Regex regexdata = new Regex(@"^\d{4}-\d{2}-\d{2}$");
+
+            var dddate = regexdata.IsMatch(date);
+
+            if (!regexdata.IsMatch(date))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+            
+            var cc = rgxemail.IsMatch(email);
+            if (!rgxemail.IsMatch(email))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+            var tt = rgxeaccount.IsMatch(account);
+            if (!rgxeaccount.IsMatch(account))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+ var ba = replace.IsMatch(name);
+            if (!replace.IsMatch(name))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+var gg = regexdate.IsMatch(date);
+            if (!regexdate.IsMatch(date))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+
+            }
+            
+            var ttc = regxpassworld.IsMatch(password);
+
+
+            if (!regexdate.IsMatch(date))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+
+
+            //if (rgxemail.IsMatch(email)  & rgxeaccount.IsMatch(account) &replace.IsMatch(name)&regexdate.IsMatch(date)&regxpassworld.IsMatch(password))
+            //{
+            //    apiResult.state = 404;
+            //    apiResult.msg = "資料格式錯誤";
+            //    return apiResult;
+              
+            //}
+
+
+
+            #region 從資料庫紀錄透過dataID
             using (databaseEF context = new databaseEF())
             {
-                Model.ApiResult apiResult = new Model.ApiResult();
+                
                 try
                 {
                     int id = Convert.ToInt32(dataID);

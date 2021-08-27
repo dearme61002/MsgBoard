@@ -83,13 +83,13 @@
                     data: "=" + data,
                     success: function (res) {
                         if (res.state !== 200) {
-                            return alert('更新資料失敗連線問題');
+                            return alert(res.msg);
                         }
                         getAlldata();
                         alert(res.msg);
                     },
                     error: function (res) {
-                        return alert('更新資料失敗連線問題');
+                        return alert(res.msg);
                     }
 
                 })
