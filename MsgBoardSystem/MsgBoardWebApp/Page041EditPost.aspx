@@ -1,7 +1,19 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page041EditPost.aspx.cs" Inherits="MsgBoardWebApp.Page041EditPost" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
+    <script>
+        var uid;
+        var uidText
+        $(document).ready(function () {
+            $.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetSession",
+                type: "GET",
+                success: function (result) {
+                    uid = result;
+                }
+            });
+        });
+    </script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -50,6 +62,8 @@
                             event.stopPropagation()
                         }
                         else {
+                            event.preventDefault();
+                            alert(uid);
                             /*
                             $.ajax({
                                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=NewPost",
