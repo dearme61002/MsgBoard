@@ -32,6 +32,33 @@ namespace SystemDBFunction
             }
         }
 
+        /// <summary> 從資料庫取得特定Post資料 </summary>
+        /// <returns></returns>
+        public static List<Posting> GetOnePostInfoFromDB(Guid pid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Postings
+                         where item.PostID == pid
+                         select item);
+
+                    var list = query.ToList();
+
+                    if (list.Count != 0)
+                        return list;
+                    else
+                        return null;
+                }
+            }
+            catch (Exception)
+            {
+                throw null;
+            }
+        }
+
         /// <summary> 從UserID尋找使用者名稱: Name </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -110,6 +137,32 @@ namespace SystemDBFunction
             catch (Exception)
             {
                 return "Create Exception Error";
+            }
+        }
+
+        /// <summary> 取得貼文資訊 </summary>
+        /// <returns></returns>
+        public static List<PostInfoModel> GetOnePostInfo(Guid pid)
+        {
+            // get info by post guid
+            List<Posting> sourceList = GetOnePostInfoFromDB(pid);
+
+            if (sourceList != null)
+            {
+                // write into model
+                List<PostInfoModel> postInfo =
+                    sourceList.Select(obj => new PostInfoModel()
+                    {
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        Title = obj.Title,
+                        Body = obj.Body
+                    }).ToList();
+
+                return postInfo;
+            }
+            else
+            {
+                return null;
             }
         }
     }

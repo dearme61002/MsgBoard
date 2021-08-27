@@ -65,7 +65,7 @@
                         }
                         else {
                             var title = $("#postTitle").val();
-                            var body = $("#postBody").val();
+                            var body = $("#postContext").val();
 
                             event.preventDefault();
                             $.ajax({
@@ -77,7 +77,7 @@
                                 },
                                 success: function (result) {
                                     if ("Success" == result) {
-                                        alert("註冊成功!! 轉跳至首頁")
+                                        alert("貼文建立成功!")
                                         window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
                                     }
                                     else {

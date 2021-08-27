@@ -80,6 +80,23 @@ namespace MsgBoardWebApp.Handler
                 context.Response.ContentType = "application/json";
                 context.Response.Write(jsonText);
             }
+            // 取得貼文內容
+            else if(actionName == "GetPostInfo")
+            {
+                var ajaxPID = context.Request.Form["PID"];
+                if (!Guid.TryParse(ajaxPID, out Guid pid))
+                {
+                    context.Response.Write("Pid Error");
+                    context.Response.End();
+                    return;
+                }
+
+                List<PostInfoModel> postInfo = PostManager.GetOnePostInfo(pid);
+
+                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(postInfo);
+                context.Response.ContentType = "application/json";
+                context.Response.Write(jsonText);
+            }
             // 註冊會員功能
             else if (actionName == "Register")
             {

@@ -10,7 +10,7 @@
 
             function AddRow(obj) {
                 table.row.add([
-                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}&Title=${obj.Title}">${obj.Title}<a>`,
+                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
                     obj.Name,
                     obj.CreateDate
                 ]).draw(false);
