@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="col-12">
-            <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#noticeModal">送出</button>
+            <button class="btn btn-primary" type="submit">送出</button>
             <a class="btn btn btn-outline-info" type="button" href="Page021ForgetPW.aspx">忘記密碼</a>
             <input class="btn btn-warning" type="reset" value="登出" id="logoutBtn">
         </div>
@@ -43,6 +43,7 @@
             var redirect = function () {
                 window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
             }
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'))
 
             Array.prototype.slice.call(forms).forEach(function (form) {
                 form.addEventListener('submit', function (login) {
@@ -63,6 +64,7 @@
                             },
                             success: function (result) {                                
                                 var authx = document.cookie.indexOf(".ASPXAUTH");
+                                noticeModal.show();
                                 if ("Success" == result) {
                                     $("#modelText").text("登入成功!");
                                     if (authx == 0) {
