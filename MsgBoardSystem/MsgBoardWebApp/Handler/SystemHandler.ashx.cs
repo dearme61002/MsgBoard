@@ -98,7 +98,7 @@ namespace MsgBoardWebApp.Handler
                     List<PostInfoModel> postInfo = PostManager.GetOnePostInfo(pid);
 
                     // 寫入Response
-                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(postInfo);
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(postInfo[0]);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(jsonText);
                 }
@@ -394,6 +394,11 @@ namespace MsgBoardWebApp.Handler
                 {
                     throw ex;
                 }
+            }
+            // 獲取會員貼文
+            else if (actionName == "GetUserPost")
+            {
+
             }
         }
 

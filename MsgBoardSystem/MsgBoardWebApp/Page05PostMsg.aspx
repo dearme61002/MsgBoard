@@ -13,11 +13,11 @@
                 type: "POST",
                 data: { "PID": pid },
                 success: function (result) {
-                    getPost = result[0];
-                    $("#navText").text(getPost["Title"]);
-                    $("#headText").text(getPost["Title"]);
-                    $("#cardTitle").text(getPost["Title"]);
-                    $("#cardBody").text(getPost["Body"]);
+                    getPost = result;
+                    $("#navText").text(result.Title);
+                    $("#headText").text(result.Title);
+                    $("#cardTitle").text(result.Title);
+                    $("#cardBody").text(result.Body);
                 }
             });
 

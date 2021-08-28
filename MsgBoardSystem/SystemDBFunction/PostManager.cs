@@ -10,6 +10,8 @@ namespace SystemDBFunction
 {
     public class PostManager
     {
+        #region Posting Hall and Post Message Page Functions
+
         /// <summary> 從資料庫取得所有DB </summary>
         /// <returns></returns>
         public static List<Posting> GetAllPostingFromDB()
@@ -142,6 +144,9 @@ namespace SystemDBFunction
                 return null;
             }
         }
+        #endregion
+
+        #region Create Post Functions
 
         /// <summary> 建立貼文寫入DB </summary>
         /// <param name="postInfo"></param>
@@ -220,6 +225,9 @@ namespace SystemDBFunction
                 return null;
             }
         }
+        #endregion
+
+        #region Create Post Message Functions
 
         /// <summary> 用PID檢查貼文是否存在 </summary>
         /// <param name="pid"></param>
@@ -272,5 +280,11 @@ namespace SystemDBFunction
                 return "Create Exception Error";
             }
         }
+        #endregion
+
+        #region Delete User Own Post Functions
+
+
+        #endregion
     }
 }
