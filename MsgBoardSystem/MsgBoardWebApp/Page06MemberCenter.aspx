@@ -15,7 +15,7 @@
                 ]).draw(false);
             }
             $.ajax({
-                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllPost",
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetUserPost",
                 type: "GET",
                 data: {},
                 success: function (result) {

@@ -13,7 +13,7 @@ namespace SystemDBFunction
         #region Posting Hall and Post Message Page Functions
 
         /// <summary> 從資料庫取得所有DB </summary>
-        /// <returns></returns>
+        /// <returns>List Posting</returns>
         public static List<Posting> GetAllPostingFromDB()
         {
             try
@@ -34,8 +34,9 @@ namespace SystemDBFunction
             }
         }
 
-        /// <summary> 從資料庫取得所有DB </summary>
-        /// <returns></returns>
+        /// <summary> 從資料庫取得所有貼文 </summary>
+        /// <param name="pid"> 貼文Post Guid </param>
+        /// <returns>List Message</returns>
         public static List<Message> GetAllMsgFromDB(Guid pid)
         {
             try
@@ -85,7 +86,7 @@ namespace SystemDBFunction
         }
 
         /// <summary> 從UserID尋找使用者名稱: Name </summary>
-        /// <param name="uid"></param>
+        /// <param name="uid"> 會員User Guid </param>
         /// <returns></returns>
         public static List<Accounting> GetUserName(Guid uid)
         {
@@ -282,9 +283,65 @@ namespace SystemDBFunction
         }
         #endregion
 
-        #region Delete User Own Post Functions
+        #region Edit User Own Post Functions
 
+        /// <summary> 從資料庫取得使用者貼文 </summary>
+        /// <param name="uid"> 會員User Guid </param>
+        /// <returns> List Posting 格式 </returns>
+        public static List<Posting> GetAllUserPostFromDB(Guid uid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Postings
+                         where item.UserID == uid
+                         select item);
 
+                    var list = query.ToList();
+                    return list;
+                }
+            }
+            catch (Exception)
+            {
+                throw null;
+            }
+        }
+
+        /// <summary> 回傳會員貼文資料給Handler </summary>
+        /// <param name="uid"></param>
+        /// <returns> List PostInfoModel </returns>
+        public static List<PostInfoModel> GetAllUserPostInfo(Guid uid)
+        {
+            List<Posting> sourceList = GetAllUserPostFromDB(uid);
+
+            if (sourceList != null)
+            {
+                List<PostInfoModel> postSource =
+                    sourceList.Select(obj => new PostInfoModel()
+                    {
+                        PostID = obj.PostID,
+                        UserID = obj.UserID,
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        Title = obj.Title,
+                        Body = obj.Body
+                    }).ToList();
+
+                // 用UID比對查詢，並寫入User Name
+                foreach (var item in postSource)
+                {
+                    List<Accounting> posterName = GetUserName(item.UserID);
+                    item.Name = posterName[0].Name;
+                }
+
+                return postSource;
+            }
+            else
+            {
+                return null;
+            }
+        }
         #endregion
     }
 }

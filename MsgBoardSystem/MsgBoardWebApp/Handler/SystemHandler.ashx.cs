@@ -398,7 +398,28 @@ namespace MsgBoardWebApp.Handler
             // 獲取會員貼文
             else if (actionName == "GetUserPost")
             {
+                try
+                {
+                    // 從Session取得UID並轉型
+                    if (!Guid.TryParse(context.Session["UID"].ToString(), out Guid userID))
+                    {
+                        context.Response.Write("Session UID Error");
+                        context.Response.End();
+                        return;
+                    }
 
+                    // 取得貼文資料
+                    List<PostInfoModel> userPostInfo = PostManager.GetAllUserPostInfo(userID);
+
+                    // 寫入Response
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(userPostInfo);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
 
