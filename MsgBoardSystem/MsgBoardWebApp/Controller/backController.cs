@@ -541,6 +541,63 @@ var gg = regexdate.IsMatch(date);
 
         }
 
+
+        [HttpPost]
+        public Model.ApiResult addBoard([FromBody] string data)
+        {
+
+            JObject myjsonData = JObject.Parse(data);
+            string Title = myjsonData["Title"].ToString();
+            string Textarea = myjsonData["Textarea"].ToString();
+           string userID= myjsonData["dataID"].ToString();
+
+            Model.ApiResult apiResult = new Model.ApiResult();
+            
+            Regex replace = new Regex(@"^\S+$");
+            
+            if (!replace.IsMatch(Title))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "標題資料格式錯誤";
+                return apiResult;
+            }
+
+            #region 從資料庫紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+
+                try
+                {
+                    Guid guidUserId = Guid.Parse(userID);
+                    Posting posting = new Posting();
+                    posting.Title = Title;
+                    posting.Body = Textarea;
+                    posting.UserID = guidUserId;
+
+                    context.Postings.Add(posting);
+
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "更新成功";
+                    return apiResult;
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "刪除失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
+
+
+
         // GET api/<controller>/5
         [HttpGet]
         public string Get(int id)

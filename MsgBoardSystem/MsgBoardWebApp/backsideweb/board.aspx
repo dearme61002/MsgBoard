@@ -65,12 +65,12 @@
                 })
             });
             var dataID = ""; /*選得資料唯一參數*/
-            /*為刪除綁上點擊功能用代理的方式 編輯功能*/
+            /*為編輯綁上點擊功能用代理的方式 編輯功能*/
             $('#tb').on('click', '.edit', function () {
                 dataID = $(this).attr('dataID');
 
             });
-            /*為刪除綁上點擊功能用代理的方式 編輯功能*/
+            /*為編輯綁上點擊功能用代理的方式 編輯功能*/
 
 
             /* Modal js*/
@@ -120,11 +120,55 @@
             })
             /*Modal js*/
 
+            var addData = ""; /*選得資料唯一參數*/
+            /*為增加綁上點擊功能 編輯功能*/
+            $('#topAdd').on('click', function () {
+                addData = document.getElementById("topTitle").value;
+
+            });
+            /*為增加綁上點擊功能編輯功能*/
 
 
 
 
+          /*  Topadd Modal js*/
+            $("#topbuttom").on("click", function () {
 
+                var topTitle = addData;
+                var topTextarea = document.getElementById("topTextarea").value;
+
+                const obj = {
+                    Title: topTitle,
+                    Textarea: topTextarea,
+                    dataID: getdataID
+                };
+                data = JSON.stringify(obj);
+                $.ajax({
+
+                    type: 'POST',
+                    url: 'api/back/addBoard',
+
+                    data: "=" + data,
+                    success: function (res) {
+                        if (res.state !== 200) {
+                            return alert(res.msg);
+                        }
+                        getAlldata();
+                        alert(res.msg);
+                    },
+                    error: function (res) {
+                        if (res === undefined) {
+                            return alert("更新失敗");
+                        }
+                        return alert(res.msg);
+                    }
+                })
+                document.getElementById("topTextarea").value = "";
+                $("#myModaltop").modal('hide');
+
+                })
+
+            /*  Topadd Modal js*/
 
             /*驗證表單*/
             document.querySelector('#modalTitle').addEventListener('blur', validatemodalTitle);
@@ -171,6 +215,14 @@
                 }
             }
             /*驗證表單增加按鈕*/
+
+            /*變為空值*/
+            $('#topAdd').on('click', function () {
+                document.getElementById("topTitle").value = "";
+              
+
+                validatetopTitle()
+            });
         })
        
     </script>
@@ -190,7 +242,8 @@
         <div class="invalid-feedback">不有空白</div>
     </div>
     <div class="col-2">
-     <button type="button" class="btn btn-primary">增加</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModaltop" id="topAdd">增加</button>
+    
     </div>
   </div>
             </form>
@@ -256,4 +309,26 @@
 </div>
     <!-- Modal -->
 
+    <!-- Modal top -->
+<div class="modal fade" id="myModaltop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticTopTitle">增加公告</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <div class="form-floating">
+            <textarea class="form-control"  id="topTextarea" style="height: 350px"></textarea>
+                <label for="floatingTextarea2">內文</label>
+                  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="topbuttom">增加</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- Modal top -->
 </asp:Content>
