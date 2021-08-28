@@ -4,12 +4,18 @@
     <script>
         $(function () {
             /*取得資料*/
-            var dataID = '<%=dataID %>'
-            const obj = {
-                dataID: dataID
-            };
-            data = JSON.stringify(obj);
+            var getdataID = '<%=dataID %>'
+            //const obj = {
+            //    dataID: getdataID
+            //};
+            //data = JSON.stringify(obj);
             function getAlldata() {
+
+                const obj = {
+                    dataID: getdataID
+                };
+                data = JSON.stringify(obj);
+
                 $.ajax({
                     type: 'POST',
                     url: 'api/back/Getbord',
@@ -67,6 +73,56 @@
             /*為刪除綁上點擊功能用代理的方式 編輯功能*/
 
 
+            /* Modal js*/
+
+            $("#yesdo").on("click", function () {
+
+                var modalTitle = document.getElementById("modalTitle").value;
+                var modalTextarea = document.getElementById("modalTextarea").value;
+              
+                const obj = {
+                    Title: modalTitle,
+                    Textarea: modalTextarea,
+                    dataID: dataID
+                };
+                data = JSON.stringify(obj);
+                $.ajax({
+
+                    type: 'POST',
+                    url: 'api/back/editPosting',
+
+                    data: "=" + data,
+                    success: function (res) {
+                        if (res.state !== 200) {
+                            return alert(res.msg);
+                        }
+                        getAlldata();
+                        alert(res.msg);
+                    },
+                    error: function (res) {
+                        if (res === undefined) {
+                            return alert("更新失敗");
+                        }
+                        return alert(res.msg);
+                    }
+
+                })
+                /*變回空值*/
+                document.getElementById("modalTitle").value = "";
+                document.getElementById("modalTextarea").value = "";
+
+                validatemodalTitle()
+
+               
+
+
+                $("#myModal").modal('hide');
+            })
+            /*Modal js*/
+
+
+
+
 
 
 
@@ -107,7 +163,7 @@
   <div class="row">
     <div class="col-2">
         
-      <div type="text" class="btn alert-dark" style="width:100%">標題</div>
+      <div type="text" class="btn alert-dark" style="width:100%;cursor:default">標題</div>
     </div>
     <div class="col-8">
       <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
@@ -156,7 +212,7 @@
 
                 <input type="text" class="form-control" id="modalTitle" name="username" required />
 
-                <div class="invalid-feedback">不能為空</div>
+                <div class="invalid-feedback">不能有空白</div>
                 
 
             </div>
@@ -171,7 +227,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary myisNull" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">更正</button>
+        <button type="button" class="btn btn-primary" id="yesdo">更正</button>
       </div>
     </div>
   </div>
