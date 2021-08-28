@@ -283,7 +283,7 @@ namespace SystemDBFunction
         }
         #endregion
 
-        #region Edit User Own Post Functions
+        #region Show User's Post Functions
 
         /// <summary> 從資料庫取得使用者貼文 </summary>
         /// <param name="uid"> 會員User Guid </param>
@@ -340,6 +340,100 @@ namespace SystemDBFunction
             else
             {
                 return null;
+            }
+        }
+        #endregion
+
+        #region Show User's Message Functions
+
+        /// <summary> 從資料庫取得使用者留言 </summary>
+        /// <param name="uid"> 會員User Guid </param>
+        /// <returns> List Message 格式 </returns>
+        public static List<Message> GetUserAllMsgFromDB(Guid uid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Messages
+                         where item.UserID == uid
+                         select item);
+
+                    var list = query.ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary> 取得貼文標題 </summary>
+        /// <param name="pid"> 貼文Post Guid </param>
+        /// <returns> String 標題Title </returns>
+        public static string GetPostTitle(Guid pid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Postings
+                         where item.PostID == pid
+                         select item);
+
+                    var list = query.ToList();
+                    return list[0].Title;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary> 回傳會員留言資料給Handler </summary>
+        /// <param name="uid"></param>
+        /// <returns> List UserMsgInfo </returns>
+        public static List<UserMsgInfo> GetUserAllMsgInfo(Guid uid)
+        {
+            try
+            {
+                List<Message> sourceList = GetUserAllMsgFromDB(uid);
+
+                // Check exist in DB
+                if (sourceList != null)
+                {
+                    List<UserMsgInfo> msgSource =
+                        sourceList.Select(obj => new UserMsgInfo()
+                        {
+                            MsgID = obj.MsgID,
+                            PostID = obj.PostID,
+                            UserID = obj.UserID,
+                            CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                            Body = obj.Body
+                        }).ToList();
+
+                    // 用UID比對查詢，並寫入User Name
+                    foreach (var item in msgSource)
+                    {
+                        List<Accounting> posterName = GetUserName(item.UserID);
+                        item.Name = posterName[0].Name;
+                        item.PostTile = GetPostTitle(item.PostID);
+                    }
+
+                    return msgSource;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
         #endregion

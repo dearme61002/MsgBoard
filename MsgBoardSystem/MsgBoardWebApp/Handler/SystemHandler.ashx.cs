@@ -421,6 +421,32 @@ namespace MsgBoardWebApp.Handler
                     throw ex;
                 }
             }
+            // 獲取會員留言
+            else if (actionName == "GetUserMsg")
+            {
+                try
+                {
+                    // 從Session取得UID並轉型
+                    if (!Guid.TryParse(context.Session["UID"].ToString(), out Guid userID))
+                    {
+                        context.Response.Write("Session UID Error");
+                        context.Response.End();
+                        return;
+                    }
+
+                    // 取得留言資料
+                    List<UserMsgInfo> userPostInfo = PostManager.GetUserAllMsgInfo(userID);
+
+                    // 寫入Response
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(userPostInfo);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
             // 會員自己刪除貼文
             else if (actionName == "UserDeletePost")
             {

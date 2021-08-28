@@ -6,8 +6,9 @@
     <script>
         $(document).ready(function () {
             var userPostTable = $('#UserPostTable').DataTable();
+            var userMsgTable = $('#UserMsgTable').DataTable();
 
-            function AddRow(obj) {
+            function AddPostRow(obj) {
                 userPostTable.row.add([
                     obj.PostID,
                     `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
@@ -15,6 +16,17 @@
                     obj.CreateDate
                 ]).draw(false);
             }
+
+            function AddMsgRow(obj) {
+                userMsgTable.row.add([
+                    obj.MsgID,
+                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.PostTile}<a>`,
+                    obj.Body,
+                    obj.Name,
+                    obj.CreateDate
+                ]).draw(false);
+            }
+
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetUserPost",
                 type: "GET",
@@ -22,12 +34,25 @@
                 success: function (result) {
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
-                        AddRow(obj);
+                        AddPostRow(obj);
+                    }
+                }
+            });
+
+            $.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetUserMsg",
+                type: "GET",
+                data: {},
+                success: function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        var obj = result[i];
+                        AddMsgRow(obj);
                     }
                 }
             });
 
             userPostTable.column(0).visible(false);
+            userMsgTable.column(0).visible(false);
 
             $('#UserPostTable tbody').on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
@@ -39,7 +64,7 @@
                 }
             });
 
-            $('#deleteBtn').click(function () {
+            $('#deletePostBtn').click(function () {
                 var rowData = userPostTable.rows('.selected').data().toArray();
                 $.ajax({
                     url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeletePost",
@@ -80,13 +105,30 @@
         <div class="p-2 bg-light border">
             <p class="fs-4">
                 刪除貼文
-                <button class="fs-5 btn btn-outline-danger" id="deleteBtn">點此刪除所選貼文</button>
+                <button class="fs-7 btn btn-outline-danger" id="deletePostBtn">點此刪除所選貼文</button>
             </p>
             <table id="UserPostTable" class="display" style="width: 100%">
                 <thead>
                     <tr>
                         <th>PostID</th>
                         <th>標題</th>
+                        <th>發文者</th>
+                        <th>建立時間</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="p-2 bg-light border">
+            <p class="fs-4">
+                刪除留言
+                <button class="fs-7 btn btn-outline-danger" id="deleteMsgBtn">點此刪除所選留言</button>
+            </p>
+            <table id="UserMsgTable" class="display" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>MsgID</th>
+                        <th>貼文標題</th>
+                        <th>留言內容</th>
                         <th>發文者</th>
                         <th>建立時間</th>
                     </tr>
