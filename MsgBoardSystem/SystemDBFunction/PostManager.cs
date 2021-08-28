@@ -343,5 +343,33 @@ namespace SystemDBFunction
             }
         }
         #endregion
+
+        #region Delete User Post Functions
+
+        /// <summary> 從資料庫刪除會員貼文 </summary>
+        /// <param name="uid"> 使用者Guid </param>
+        /// <param name="pid"> 貼文Guid </param>
+        /// <returns> Success : 成功, Other : 錯誤訊息</returns>
+        public static string UserDeletePost(Guid uid, Guid pid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        $@"
+                            DELETE FROM [dbo].[Posting]
+                            WHERE [PostID] = '{pid}' and [UserID] = '{uid}'
+                        ";
+                    context.Database.ExecuteSqlCommand(query);
+                    return "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
+        #endregion
     }
 }

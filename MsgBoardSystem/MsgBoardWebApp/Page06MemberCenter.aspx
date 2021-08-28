@@ -5,10 +5,11 @@
     <script src="DataTableFrame/DataTables-1.10.25/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
-            var table = $('#PostTable').DataTable();
+            var userPostTable = $('#UserPostTable').DataTable();
 
             function AddRow(obj) {
-                table.row.add([
+                userPostTable.row.add([
+                    obj.PostID,
                     `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
                     obj.Name,
                     obj.CreateDate
@@ -26,18 +27,36 @@
                 }
             });
 
-            $('#PostTable tbody').on('click', 'tr', function () {
+            userPostTable.column(0).visible(false);
+
+            $('#UserPostTable tbody').on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
                 }
                 else {
-                    table.$('tr.selected').removeClass('selected');
+                    userPostTable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                 }
             });
 
             $('#deleteBtn').click(function () {
-                table.row('.selected').remove().draw(false);
+                var rowData = userPostTable.rows('.selected').data().toArray();
+                $.ajax({
+                    url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeletePost",
+                    type: "POST",
+                    data: {
+                        "PID": rowData[0][0]
+                    },
+                    success: function (result) {
+                        if ("Success" == result) {
+                            alert("刪除成功!");
+                        }
+                        else {
+                            alert(result);
+                        }
+                    }
+                });
+                userPostTable.row('.selected').remove().draw(false);
             });
         });
     </script>
@@ -63,9 +82,10 @@
                 刪除貼文
                 <button class="fs-5 btn btn-outline-danger" id="deleteBtn">點此刪除所選貼文</button>
             </p>
-            <table id="PostTable" class="display" style="width: 100%">
+            <table id="UserPostTable" class="display" style="width: 100%">
                 <thead>
                     <tr>
+                        <th>PostID</th>
                         <th>標題</th>
                         <th>發文者</th>
                         <th>建立時間</th>
