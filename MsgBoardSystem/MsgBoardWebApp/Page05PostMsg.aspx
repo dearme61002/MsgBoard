@@ -105,7 +105,9 @@
     <script>
         (function () {
             'use strict'
-            var forms = document.querySelectorAll('.needs-validation')
+            var forms = document.querySelectorAll('.needs-validation');
+            var redirect = function () { window.location.reload(); };
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms)
                 .forEach(function (form) {
@@ -126,12 +128,13 @@
                                     "Body": body
                                 },
                                 success: function (result) {
+                                    noticeModal.show();
                                     if ("Success" == result) {
-                                        alert("成功!");
-                                        window.location.reload();
+                                        $("#modelText").text("留言成功!");
+                                        $(".closeBtn").click(function () { redirect(); });                                      
                                     }
                                     else {
-                                        alert(result);
+                                        $("#modelText").text(result);
                                     }                                  
                                 }
                             });

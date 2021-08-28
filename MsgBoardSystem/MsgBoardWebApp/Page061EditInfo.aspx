@@ -90,8 +90,9 @@
     <script>
         (function () {
             'use strict'
-
-            var forms = document.querySelectorAll('.needs-validation')
+            var forms = document.querySelectorAll('.needs-validation');
+            var redirect = function () { window.location.href = "http://localhost:49461/Page06MemberCenter.aspx"; }
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms)
                 .forEach(function (form) {
@@ -117,12 +118,13 @@
                                     "Account": account
                                 },
                                 success: function (result) {
+                                    noticeModal.show();
                                     if ("Success" == result) {
-                                        alert("更改成功! 轉跳至會員中心...");
-                                        window.location.href = "Page06MemberCenter.aspx";
+                                        $("#modelText").text("更改成功! 轉跳至會員中心!");
+                                        $(".closeBtn").click(function () { redirect(); });
                                     }
                                     else {
-                                        alert(result);
+                                        $("#modelText").text(result);
                                     }
                                 }
                             });

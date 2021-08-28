@@ -126,7 +126,7 @@ namespace SystemDBFunction
                     {
                         PostID = obj.PostID,
                         UserID = obj.UserID,
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                         Title = obj.Title,
                         Body = obj.Body
                     }).ToList();
@@ -181,7 +181,7 @@ namespace SystemDBFunction
                 List<PostInfoModel> postInfo =
                     sourceList.Select(obj => new PostInfoModel()
                     {
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                         Title = obj.Title,
                         Body = obj.Body
                     }).ToList();
@@ -207,7 +207,7 @@ namespace SystemDBFunction
                     sourceList.Select(obj => new MsgInfoModel()
                     {
                         UserID = obj.UserID,
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                         Body = obj.Body
                     }).ToList();
 
@@ -321,7 +321,7 @@ namespace SystemDBFunction
                     {
                         PostID = obj.PostID,
                         UserID = obj.UserID,
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                         Title = obj.Title,
                         Body = obj.Body
                     }).ToList();
@@ -409,7 +409,7 @@ namespace SystemDBFunction
                             MsgID = obj.MsgID,
                             PostID = obj.PostID,
                             UserID = obj.UserID,
-                            CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                            CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                             Body = obj.Body
                         }).ToList();
 

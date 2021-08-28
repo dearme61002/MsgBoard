@@ -54,7 +54,9 @@
         (function () {
             'use strict'
 
-            var forms = document.querySelectorAll('.needs-validation')
+            var forms = document.querySelectorAll('.needs-validation');
+            var redirect = function () { window.location.href = "http://localhost:49461/Page04PostingHall.aspx"; };
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms)
                 .forEach(function (form) {
@@ -76,12 +78,13 @@
                                     "Body": body,
                                 },
                                 success: function (result) {
+                                    noticeModal.show();
                                     if ("Success" == result) {
-                                        alert("貼文建立成功!")
-                                        window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+                                        $("#modelText").text("貼文建立成功!");
+                                        $(".closeBtn").click(function () { redirect(); });
                                     }
                                     else {
-                                        alert(result);
+                                        $("#modelText").text(result);
                                     }
                                 }
                             });

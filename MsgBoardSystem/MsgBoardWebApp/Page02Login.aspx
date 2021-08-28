@@ -40,10 +40,8 @@
             'use strict'
 
             var forms = document.querySelectorAll('.needs-validation')
-            var redirect = function () {
-                window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
-            }
-            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'))
+            var redirect = function () { window.location.href = "http://localhost:49461/Page04PostingHall.aspx"; }
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms).forEach(function (form) {
                 form.addEventListener('submit', function (login) {
@@ -65,9 +63,10 @@
                             success: function (result) {                                
                                 var authx = document.cookie.indexOf(".ASPXAUTH");
                                 noticeModal.show();
+
                                 if ("Success" == result) {
-                                    $("#modelText").text("登入成功!");
                                     if (authx == 0) {
+                                        $("#modelText").text("登入成功!");
                                         $(".closeBtn").click(function () {
                                             $('#funcList').show();
                                             redirect();
@@ -75,7 +74,7 @@
                                     }
                                     else {
                                         alert("Auth cookie fail");
-                                        $("#modelText").text(result);
+                                        $("#modelText").text(result);                                    
                                     }
                                 }
                                 else {

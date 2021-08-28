@@ -71,7 +71,7 @@ namespace MsgBoardWebApp.Handler
                 context.Response.ContentType = "application/json";
                 context.Response.Write(jsonText);
             }
-            // 從DB取得貼文資料
+            // 從DB取得全部貼文資料
             else if (actionName == "GetAllPost")
             {
                 List<PostInfoModel> allPostInfo = PostManager.GetAllPostInfo();

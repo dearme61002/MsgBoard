@@ -45,8 +45,9 @@
     <script>
         (function () {
             'use strict'
-
-            var forms = document.querySelectorAll('.needs-validation')
+            var forms = document.querySelectorAll('.needs-validation');
+            var redirect = function () { window.location.href = "http://localhost:49461/Page01Default.aspx"; };
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms)
                 .forEach(function (form) {
@@ -70,13 +71,14 @@
                                     "NewPwdAgain": newPwdAgain
                                 },
                                 success: function (result) {
+                                    noticeModal.show();
                                     if ("Success" == result) {
-                                        alert("密碼修改成功! 請重新登入會員");
-                                        document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-                                        window.location.href = "http://localhost:49461/Page01Default.aspx";
+                                        $("#modelText").text("密碼修改成功! 請重新登入會員");
+                                        document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';                                       
+                                        $(".closeBtn").click(function () { redirect(); });
                                     }
                                     else {
-                                        alert(result);
+                                        $("#modelText").text(result);
                                     }
                                 }
                             });
