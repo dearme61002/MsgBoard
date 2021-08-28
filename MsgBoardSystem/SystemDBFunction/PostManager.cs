@@ -87,8 +87,8 @@ namespace SystemDBFunction
 
         /// <summary> 從UserID尋找使用者名稱: Name </summary>
         /// <param name="uid"> 會員User Guid </param>
-        /// <returns></returns>
-        public static List<Accounting> GetUserName(Guid uid)
+        /// <returns> String: 使用者名稱 Name</returns>
+        public static string GetUserName(Guid uid)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace SystemDBFunction
                     var list = query.ToList();
 
                     if (list.Count != 0)
-                        return list;
+                        return list[0].Name;
                     else
                         return null;
                 }
@@ -134,8 +134,7 @@ namespace SystemDBFunction
                 // 用UID比對查詢，並寫入User Name
                 foreach (var item in postSource)
                 {
-                    List<Accounting> posterName = GetUserName(item.UserID);
-                    item.Name = posterName[0].Name;
+                    item.Name = GetUserName(item.UserID);
                 }
 
                 return postSource;
@@ -215,8 +214,7 @@ namespace SystemDBFunction
                 // 用UID比對查詢，並寫入User Name
                 foreach (var obj in MsgSource)
                 {
-                    List<Accounting> posterName = GetUserName(obj.UserID);
-                    obj.Name = posterName[0].Name;
+                    obj.Name = GetUserName(obj.UserID);
                 }
 
                 return MsgSource;
@@ -331,8 +329,7 @@ namespace SystemDBFunction
                 // 用UID比對查詢，並寫入User Name
                 foreach (var item in postSource)
                 {
-                    List<Accounting> posterName = GetUserName(item.UserID);
-                    item.Name = posterName[0].Name;
+                    item.Name = GetUserName(item.UserID);
                 }
 
                 return postSource;
@@ -419,8 +416,7 @@ namespace SystemDBFunction
                     // 用UID比對查詢，並寫入User Name
                     foreach (var item in msgSource)
                     {
-                        List<Accounting> posterName = GetUserName(item.UserID);
-                        item.Name = posterName[0].Name;
+                        item.Name = GetUserName(item.UserID);
                         item.PostTile = GetPostTitle(item.PostID);
                     }
 
