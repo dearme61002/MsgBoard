@@ -14,14 +14,14 @@ namespace MsgBoardWebApp
     public class backController : ApiController
     {
         // GET api/<controller>[TypeFilter(type)]
-      
+
         [HttpPost]
         public List<databaseORM.data.ErrorLog> GetErrorLogs()
         {
             #region 從資料庫取出ErrorLog紀錄
             using (databaseEF context = new databaseEF())
             {
-                List<databaseORM.data.ErrorLog> cc =  context.ErrorLogs.ToList();
+                List<databaseORM.data.ErrorLog> cc = context.ErrorLogs.ToList();
                 return cc;
             }
             #endregion
@@ -59,17 +59,17 @@ namespace MsgBoardWebApp
         [HttpPost]
         public Model.ApiResult DelErrorLogs([FromBody] string dataID)
         {
-           
+
             #region 從資料庫刪除ErrorLog紀錄透過dataID
             using (databaseEF context = new databaseEF())
             {
                 Model.ApiResult apiResult = new Model.ApiResult();
                 try
-                {           
-                ErrorLog log = new ErrorLog() { ID = Convert.ToInt32(dataID)};
-                context.ErrorLogs.Attach(log);
-                context.ErrorLogs.Remove(log);
-                context.SaveChanges();
+                {
+                    ErrorLog log = new ErrorLog() { ID = Convert.ToInt32(dataID) };
+                    context.ErrorLogs.Attach(log);
+                    context.ErrorLogs.Remove(log);
+                    context.SaveChanges();
                     apiResult.state = 200;
                     apiResult.msg = "刪除成功";
                     return apiResult;
@@ -82,7 +82,7 @@ namespace MsgBoardWebApp
                     return apiResult;
 
                 }
-                
+
             }
             #endregion
 
@@ -99,7 +99,7 @@ namespace MsgBoardWebApp
                 Model.ApiResult apiResult = new Model.ApiResult();
                 try
                 {
-                    
+
                     Posting posting = new Posting() { ID = Convert.ToInt32(dataID) };
                     context.Postings.Attach(posting);
                     context.Postings.Remove(posting);
@@ -206,9 +206,9 @@ namespace MsgBoardWebApp
         [HttpPost]
         public Model.ApiResult editMember([FromBody] string data)
         {
-           
+
             JObject myjsonData = JObject.Parse(data);
-           string name = myjsonData["name"].ToString();
+            string name = myjsonData["name"].ToString();
             string account = myjsonData["account"].ToString();
             string password = myjsonData["password"].ToString();
             string email = myjsonData["email"].ToString();
@@ -231,7 +231,7 @@ namespace MsgBoardWebApp
                 apiResult.msg = "資料格式錯誤";
                 return apiResult;
             }
-            
+
             var cc = rgxemail.IsMatch(email);
             if (!rgxemail.IsMatch(email))
             {
@@ -246,14 +246,14 @@ namespace MsgBoardWebApp
                 apiResult.msg = "資料格式錯誤";
                 return apiResult;
             }
- var ba = replace.IsMatch(name);
+            var ba = replace.IsMatch(name);
             if (!replace.IsMatch(name))
             {
                 apiResult.state = 404;
                 apiResult.msg = "資料格式錯誤";
                 return apiResult;
             }
-var gg = regexdate.IsMatch(date);
+            var gg = regexdate.IsMatch(date);
             if (!regexdate.IsMatch(date))
             {
                 apiResult.state = 404;
@@ -261,7 +261,7 @@ var gg = regexdate.IsMatch(date);
                 return apiResult;
 
             }
-            
+
             var ttc = regxpassworld.IsMatch(password);
 
 
@@ -278,15 +278,44 @@ var gg = regexdate.IsMatch(date);
             //    apiResult.state = 404;
             //    apiResult.msg = "資料格式錯誤";
             //    return apiResult;
-              
+
             //}
+
+            //檢查帳號是否重複
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query = context.Accountings.Where(x => x.Account == account);
+                    var ddd = query.Count();
+                    if (query.Count() > 0)
+                    {
+                        apiResult.state = 404;
+                        apiResult.msg = "更新失敗,已存在帳號";
+                        return apiResult;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e);
+                apiResult.state = 404;
+                apiResult.msg = "更新失敗";
+                return apiResult;
+            }
+            //檢查帳號是否重複
+
+
+
 
 
 
             #region 從資料庫紀錄透過dataID
             using (databaseEF context = new databaseEF())
             {
-                
+
                 try
                 {
                     int id = Convert.ToInt32(dataID);
@@ -328,9 +357,9 @@ var gg = regexdate.IsMatch(date);
             string dataID = myjsonData["dataID"].ToString();
 
             Model.ApiResult apiResult = new Model.ApiResult();
-            
+
             Regex replace = new Regex(@"^\S+$");
-         
+
 
             if (!replace.IsMatch(Title))
             {
@@ -375,17 +404,17 @@ var gg = regexdate.IsMatch(date);
         [HttpPost]
         public Model.ApiResult editBucket([FromBody] string data)
         {
-           
+
             JObject myjsonData = JObject.Parse(data);
-           
+
             string MybucketDate = myjsonData["MybucketDate"].ToString();
             string dataID = myjsonData["dataID"].ToString();
 
             Model.ApiResult apiResult = new Model.ApiResult();
-        
+
             Regex regexdata = new Regex(@"^\d{4}-\d{2}-\d{2}$");
 
-       
+
 
             if (!regexdata.IsMatch(MybucketDate))
             {
@@ -393,17 +422,17 @@ var gg = regexdate.IsMatch(date);
                 apiResult.msg = "資料格式錯誤";
                 return apiResult;
             }
- 
+
 
             #region 從資料庫紀錄透過dataID
             using (databaseEF context = new databaseEF())
             {
-                
+
                 try
                 {
                     int id = Convert.ToInt32(dataID);
                     Accounting accounting = context.Accountings.Where(x => x.ID == id).FirstOrDefault();
-                    
+
                     accounting.Bucket = Convert.ToDateTime(MybucketDate);
                     context.SaveChanges();
                     apiResult.state = 200;
@@ -446,7 +475,7 @@ var gg = regexdate.IsMatch(date);
             Regex regexdate = new Regex(@"^((19|20)?[0-9]{2}[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01]))*$");
             Regex regexdata = new Regex(@"^\d{4}-\d{2}-\d{2}$");
 
-            
+
 
             if (!regexdata.IsMatch(date))
             {
@@ -455,28 +484,28 @@ var gg = regexdate.IsMatch(date);
                 return apiResult;
             }
 
-            
+
             if (!rgxemail.IsMatch(email))
             {
                 apiResult.state = 404;
                 apiResult.msg = "資料格式錯誤";
                 return apiResult;
             }
-            
+
             if (!rgxeaccount.IsMatch(account))
             {
                 apiResult.state = 404;
                 apiResult.msg = "資料格式錯誤";
                 return apiResult;
             }
-            
+
             if (!replace.IsMatch(name))
             {
                 apiResult.state = 404;
                 apiResult.msg = "資料格式錯誤";
                 return apiResult;
             }
-            
+
             if (!regexdate.IsMatch(date))
             {
                 apiResult.state = 404;
@@ -485,7 +514,7 @@ var gg = regexdate.IsMatch(date);
 
             }
 
-            
+
 
 
             if (!regexdate.IsMatch(date))
@@ -504,6 +533,33 @@ var gg = regexdate.IsMatch(date);
 
             //}
 
+            //檢查帳號是否重複
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query = context.Accountings.Where(x => x.Account == account);
+                    var ddd = query.Count();
+                    if (query.Count() > 0)
+                    {
+                        apiResult.state = 404;
+                        apiResult.msg = "更新失敗,已存在帳號";
+                        return apiResult;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e);
+                apiResult.state = 404;
+                apiResult.msg = "更新失敗";
+                return apiResult;
+            }
+            //檢查帳號是否重複
+
+
 
 
             #region 從資料庫紀錄透過dataID
@@ -512,10 +568,10 @@ var gg = regexdate.IsMatch(date);
 
                 try
                 {
-                   // string id =    dataID;
+                    // string id =    dataID;
 
-                    Guid id=   Guid.Parse(dataID);
-                    Accounting accounting = context.Accountings.Where(x => x.UserID == id ).FirstOrDefault();
+                    Guid id = Guid.Parse(dataID);
+                    Accounting accounting = context.Accountings.Where(x => x.UserID == id).FirstOrDefault();
                     accounting.Name = name;
                     accounting.Account = account;
                     accounting.Password = password;
@@ -531,7 +587,7 @@ var gg = regexdate.IsMatch(date);
                 {
                     Console.WriteLine(e);
                     apiResult.state = 404;
-                    apiResult.msg = "刪除失敗";
+                    apiResult.msg = "更新失敗";
                     return apiResult;
 
                 }
@@ -549,12 +605,12 @@ var gg = regexdate.IsMatch(date);
             JObject myjsonData = JObject.Parse(data);
             string Title = myjsonData["Title"].ToString();
             string Textarea = myjsonData["Textarea"].ToString();
-           string userID= myjsonData["dataID"].ToString();
+            string userID = myjsonData["dataID"].ToString();
 
             Model.ApiResult apiResult = new Model.ApiResult();
-            
+
             Regex replace = new Regex(@"^\S+$");
-            
+
             if (!replace.IsMatch(Title))
             {
                 apiResult.state = 404;
