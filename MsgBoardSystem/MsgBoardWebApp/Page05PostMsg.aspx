@@ -87,7 +87,7 @@
     </table>
     <hr class="my-4">
 
-    <form class="row g-3 needs-validation" novalidate>
+    <form class="row g-3 needs-validation loginFunc" style="display:none" novalidate>
         <div class="mb-3">
             <label for="msgText" class="form-label">留下留言 : </label>
             <textarea class="form-control" id="msgText" rows="3" required placeholder="寫點什麼...."></textarea>
@@ -99,9 +99,9 @@
             <button class="btn btn-outline-primary" type="submit">送出</button>
             <button class="btn btn-outline-secondary" type="reset">清除</button>
         </div>
+        <hr class="my-4">
     </form>
-    <hr class="my-4">
-
+    
     <script>
         (function () {
             'use strict'

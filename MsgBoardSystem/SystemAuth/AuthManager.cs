@@ -14,6 +14,8 @@ namespace WebAuth
 {
     public class AuthManager
     {
+        #region User Authentication Functions
+
         /// <summary> 從資料庫抓取使用者資料 </summary>
         /// <param name="account"></param>
         /// <returns></returns>
@@ -46,7 +48,7 @@ namespace WebAuth
         /// <summary> 取得使用者資料 </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        public static List<UserInfoModel> GetInfo(string account)
+        public static UserInfoModel GetInfo(string account)
         {
             List<Accounting> sourceList = GetAccountInfo(account);
 
@@ -68,7 +70,7 @@ namespace WebAuth
                         Birthday = obj.BirthDay
                     }).ToList();
 
-                return userSource;
+                return userSource[0];
             }
             else
             {
@@ -108,5 +110,6 @@ namespace WebAuth
             HttpContext.Current.User = gp;
             HttpContext.Current.Response.Cookies.Add(cookie);
         }
+        #endregion
     }
 }

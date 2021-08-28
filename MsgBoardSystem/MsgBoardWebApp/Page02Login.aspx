@@ -30,7 +30,6 @@
         <div class="col-12">
             <button class="btn btn-primary" type="submit">送出</button>
             <a class="btn btn btn-outline-info" type="button" href="Page021ForgetPW.aspx">忘記密碼</a>
-            <input class="btn btn-warning" type="reset" value="登出" id="logoutBtn">
         </div>
         <hr class="my-4">
     </form>
@@ -64,9 +63,10 @@
                                 var authx = document.cookie.indexOf(".ASPXAUTH");
                                 noticeModal.show();
 
-                                if ("Success" == result) {
+                                if ("Success" == result[0]) {
                                     if (authx == 0) {
                                         $("#modalText").text("登入成功!");
+                                        sessionStorage.setItem("Name", result[1]);
                                         $(".closeBtn").click(function () {
                                             $('#funcList').show();
                                             redirect();
@@ -77,18 +77,12 @@
                                     }
                                 }
                                 else {
-                                    $('#funcList').hide();
-                                    $("#modalText").text(result);
+                                    $("#modalText").text(result[0]);
                                 }
                             }
                         });
                     }
                     form.classList.add('was-validated')
-                }, false)
-                form.addEventListener('reset', function (resetEvn) {
-                    document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-                    alert("登出成功");
-                    window.location.href = "http://localhost:49461/Page01Default.aspx";
                 }, false)
             });
         })()
