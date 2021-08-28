@@ -41,6 +41,22 @@ namespace MsgBoardWebApp
         }
 
         [HttpPost]
+        public List<databaseORM.data.Posting> Getbord([FromBody] string data)
+        {
+            JObject myjsonData = JObject.Parse(data);
+            string mydataID = myjsonData["dataID"].ToString();
+            #region 從資料庫取出EditAccounting紀錄
+            using (databaseEF context = new databaseEF())
+            {
+                Guid guiduserID = Guid.Parse(mydataID);
+                List<databaseORM.data.Posting> cc = context.Postings.Where(x => x.UserID == guiduserID).ToList();
+                return cc;
+            }
+            #endregion
+
+        }
+
+        [HttpPost]
         public Model.ApiResult DelErrorLogs([FromBody] string dataID)
         {
            
@@ -71,6 +87,43 @@ namespace MsgBoardWebApp
             #endregion
 
         }
+
+
+        [HttpPost]
+        public Model.ApiResult DelPosting([FromBody] string dataID)
+        {
+
+            #region 從資料庫刪除Posting紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+                Model.ApiResult apiResult = new Model.ApiResult();
+                try
+                {
+                    
+                    Posting posting = new Posting() { ID = Convert.ToInt32(dataID) };
+                    context.Postings.Attach(posting);
+                    context.Postings.Remove(posting);
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "刪除成功";
+                    return apiResult;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "刪除失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
+
+
+
         [HttpPost]
         public Model.ApiResult DelMember([FromBody] string dataID)
         {

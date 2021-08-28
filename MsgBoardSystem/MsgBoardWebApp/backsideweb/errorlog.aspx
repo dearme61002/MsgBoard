@@ -29,7 +29,7 @@
             /*為刪除綁上點擊功能用代理的方式*/
             $('#tb').on('click', '.del', function () {
                 var dataID = $(this).attr('dataID');
-                var data = { "dataID": dataID };
+                /*var data = { "dataID": dataID };*/
                 $.ajax({
                     type: 'POST',
                     url: 'api/back/DelErrorLogs',
