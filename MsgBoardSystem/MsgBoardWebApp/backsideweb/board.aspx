@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <%--開始製作增加標題按鈕--%>
-    <div class="container">
+    <div class="container mb-4">
   <div class="row">
     <div class="col-2">
         
@@ -17,8 +17,24 @@
     </div>
   </div>
 </div>
+    <%--開始製作增加標題按鈕--%>
+
+    <%--檢視資料--%>
+    <%--圖表--%>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>PostID</th>
+                <th>標題</th>
+                <th>創建日期</th>              
+                <th>內文</th>
+                <th>刪除</th>
+                <th>編輯</th>
+            </tr>
+        </thead>
+        <tbody id="tb"></tbody>
+    </table>
 
 
-
-
+    <%--檢視資料--%>
 </asp:Content>
