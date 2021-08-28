@@ -35,24 +35,6 @@
         <hr class="my-4">
     </form>
 
-    <!-- Modal -->
-    <div class="modal fade" id="noticeModal" tabindex="-1" aria-labelledby="noticeModalLable" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="noticeModalLable">提示訊息</h5>
-            <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close" ></button>
-          </div>
-          <div class="modal-body">
-            <p id="modelText"></p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary closeBtn" data-bs-dismiss="modal" >Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <script>
         (function () {
             'use strict'

@@ -73,6 +73,24 @@
                 </div>
             </div>
             <div class="col-9">
+                <!-- Modal Component -->
+                <div class="modal fade" id="noticeModal" tabindex="-1" aria-labelledby="noticeModalLable" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color:#F8DC81;height:40px">
+                            <h5 class="modal-title fw-bold fs-4" id="noticeModalLable">提示訊息</h5>
+                            <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close" ></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="modelText"></p>
+                        </div>
+                        <div class="modal-footer" style="background-color:#214151;height:55px">
+                            <input type="button" class="btn btn-outline-light btn-sm closeBtn" data-bs-dismiss="modal" value="Close"/>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- Function Page Area-->
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>
