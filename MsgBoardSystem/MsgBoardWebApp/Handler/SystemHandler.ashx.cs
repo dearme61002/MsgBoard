@@ -505,6 +505,50 @@ namespace MsgBoardWebApp.Handler
                     throw ex;
                 }
             }
+            // 忘記密碼
+            else if (actionName == "ForgetPW")
+            {
+                try
+                {
+                    // set values
+                    string account = context.Request.Form["Account"];
+                    string email = context.Request.Form["Email"];
+                    string birthday = context.Request.Form["Birthday"];
+                    string newPwd = AccountFunction.CreateRandomCode(5, 5, 10);
+                    string[] resultMsg = new string[2];
+
+                    // check info is correct
+                    UserInfoModel userInfo = AuthManager.GetInfo(account);
+                    int checkEmail = string.Compare(email, userInfo.Email, false);
+                    int checkDate = string.Compare(birthday, userInfo.Birthday.ToString("yyyy-MM-dd"), false);
+                    int checkResult = checkEmail + checkDate;
+
+                    if(checkResult == 0)
+                    {
+                        // write random string into password
+                        string updateResult = AccountFunction.UpdateUserPwd(userInfo.UserID, account, newPwd);
+                        if (string.Compare(updateResult, "Success", false) == 0)
+                        {
+                            resultMsg[0] = "Success";
+                            resultMsg[1] = "新密碼 : " + newPwd + "，請登入後盡快修改會員密碼"; 
+                        }
+                        else
+                            resultMsg[0] = updateResult;
+                    }
+                    else
+                        resultMsg[0] = "Email 或 生日日期不符，請重新輸入";
+                    
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
         }
 
         public bool IsReusable
