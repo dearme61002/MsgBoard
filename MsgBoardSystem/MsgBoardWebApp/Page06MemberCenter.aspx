@@ -5,9 +5,11 @@
     <script src="DataTableFrame/DataTables-1.10.25/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
+            // Set Table
             var userPostTable = $('#UserPostTable').DataTable();
             var userMsgTable = $('#UserMsgTable').DataTable();
 
+            // Add Row Function
             function AddPostRow(obj) {
                 userPostTable.row.add([
                     obj.PostID,
@@ -16,7 +18,6 @@
                     obj.CreateDate
                 ]).draw(false);
             }
-
             function AddMsgRow(obj) {
                 userMsgTable.row.add([
                     obj.MsgID,
@@ -27,6 +28,7 @@
                 ]).draw(false);
             }
 
+            // Load Post data Ajax
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetUserPost",
                 type: "GET",
@@ -39,6 +41,7 @@
                 }
             });
 
+            // Load Msg data Ajax
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetUserMsg",
                 type: "GET",
@@ -51,9 +54,11 @@
                 }
             });
 
+            // Hide First Column
             userPostTable.column(0).visible(false);
             userMsgTable.column(0).visible(false);
 
+            // msg select method
             $('#UserPostTable tbody').on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
@@ -63,7 +68,17 @@
                     $(this).addClass('selected');
                 }
             });
+            $('#UserMsgTable tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    userMsgTable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
 
+            // delete msg function
             $('#deletePostBtn').click(function () {
                 var rowData = userPostTable.rows('.selected').data().toArray();
                 $.ajax({
@@ -82,6 +97,25 @@
                     }
                 });
                 userPostTable.row('.selected').remove().draw(false);
+            });
+            $('#deleteMsgBtn').click(function () {
+                var rowData = userMsgTable.rows('.selected').data().toArray();              
+                $.ajax({
+                    url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeleteMsg",
+                    type: "POST",
+                    data: {
+                        "MID": rowData[0][0]
+                    },
+                    success: function (result) {
+                        if ("Success" == result) {
+                            alert("刪除成功!");
+                        }
+                        else {
+                            alert(result);
+                        }
+                    }
+                });
+                userMsgTable.row('.selected').remove().draw(false);
             });
         });
     </script>

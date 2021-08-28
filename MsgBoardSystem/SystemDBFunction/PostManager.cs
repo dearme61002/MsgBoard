@@ -434,7 +434,7 @@ namespace SystemDBFunction
         }
         #endregion
 
-        #region Delete User Post Functions
+        #region Delete User Post And User Message Functions
 
         /// <summary> 從資料庫刪除會員貼文 </summary>
         /// <param name="uid"> 使用者Guid </param>
@@ -450,6 +450,31 @@ namespace SystemDBFunction
                         $@"
                             DELETE FROM [dbo].[Posting]
                             WHERE [PostID] = '{pid}' and [UserID] = '{uid}'
+                        ";
+                    context.Database.ExecuteSqlCommand(query);
+                    return "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
+
+        /// <summary> 從資料庫刪除會員留言 </summary>
+        /// <param name="uid"> 使用者Guid </param>
+        /// <param name="mid"> 留言Guid </param>
+        /// <returns> Success : 成功, Other : 錯誤訊息</returns>
+        public static string UserDeleteMsg(Guid uid, Guid mid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        $@"
+                            DELETE FROM [dbo].[Message]
+                            WHERE [MsgID] = '{mid}' and [UserID] = '{uid}'
                         ";
                     context.Database.ExecuteSqlCommand(query);
                     return "Success";

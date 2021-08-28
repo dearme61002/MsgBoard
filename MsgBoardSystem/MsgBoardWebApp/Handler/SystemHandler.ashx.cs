@@ -472,6 +472,31 @@ namespace MsgBoardWebApp.Handler
                     throw ex;
                 }
             }
+            // 會員自己刪除留言
+            else if (actionName == "UserDeleteMsg")
+            {
+                try
+                {
+                    string strUID = context.Session["UID"].ToString();
+                    string strMID = context.Request.Form["MID"];
+                    string resultMsg = string.Empty;
+
+                    // check guid
+                    if (Guid.TryParse(strUID, out Guid uid) && Guid.TryParse(strMID, out Guid mid))
+                        resultMsg = PostManager.UserDeleteMsg(uid, mid);
+                    else
+                        resultMsg = "Param UID or Ajax MID Error";
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
         }
 
         public bool IsReusable
