@@ -11,13 +11,13 @@
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetPostInfo",
                 type: "POST",
-                data: { "PID": pid},
+                data: { "PID": pid },
                 success: function (result) {
-                    getPost = result[0];
-                    $("#navText").text(getPost["Title"]);
-                    $("#headText").text(getPost["Title"]);
-                    $("#cardTitle").text(getPost["Title"]);
-                    $("#cardBody").text(getPost["Body"]);
+                    getPost = result;
+                    $("#navText").text(result.Title);
+                    $("#headText").text(result.Title);
+                    $("#cardTitle").text(result.Title);
+                    $("#cardBody").text(result.Body);
                 }
             });
 
@@ -42,7 +42,7 @@
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllMsg",
                 type: "POST",
-                data: { "PID": pid},
+                data: { "PID": pid },
                 success: function (result) {
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
@@ -115,14 +115,31 @@
                             event.stopPropagation();
                         }
                         else {
-                            alert("成功");
-                            event.preventDefault();
-                            window.location.reload();
-                        }
+                            var body = $("#msgText").val();
 
+                            event.preventDefault();
+                            $.ajax({
+                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=NewMsg",
+                                type: "POST",
+                                data: {
+                                    "PID": pid,
+                                    "Body": body
+                                },
+                                success: function (result) {
+                                    if ("Success" == result) {
+                                        alert("成功!");
+                                        window.location.reload();
+                                    }
+                                    else {
+                                        alert(result);
+                                    }                                  
+                                }
+                            });
+                        }
                         form.classList.add('was-validated')
                     }, false),
                     form.addEventListener('reset', function (resetEvn) {
+                        event.preventDefault();
                         $("input:text").val("");
                     }, false)
                 })

@@ -5,20 +5,117 @@
     <script src="DataTableFrame/DataTables-1.10.25/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
-            var table = $('#PostTable').DataTable();
+            // Set Table
+            var userPostTable = $('#UserPostTable').DataTable();
+            var userMsgTable = $('#UserMsgTable').DataTable();
 
-            $('#PostTable tbody').on('click', 'tr', function () {
+            // Add Row Function
+            function AddPostRow(obj) {
+                userPostTable.row.add([
+                    obj.PostID,
+                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
+                    obj.Name,
+                    obj.CreateDate
+                ]).draw(false);
+            }
+            function AddMsgRow(obj) {
+                userMsgTable.row.add([
+                    obj.MsgID,
+                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.PostTile}<a>`,
+                    obj.Body,
+                    obj.Name,
+                    obj.CreateDate
+                ]).draw(false);
+            }
+
+            // Load Post data Ajax
+            $.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetUserPost",
+                type: "GET",
+                data: {},
+                success: function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        var obj = result[i];
+                        AddPostRow(obj);
+                    }
+                }
+            });
+
+            // Load Msg data Ajax
+            $.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetUserMsg",
+                type: "GET",
+                data: {},
+                success: function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        var obj = result[i];
+                        AddMsgRow(obj);
+                    }
+                }
+            });
+
+            // Hide First Column
+            userPostTable.column(0).visible(false);
+            userMsgTable.column(0).visible(false);
+
+            // msg select method
+            $('#UserPostTable tbody').on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
                 }
                 else {
-                    table.$('tr.selected').removeClass('selected');
+                    userPostTable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+            $('#UserMsgTable tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    userMsgTable.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                 }
             });
 
-            $('#deleteBtn').click(function () {
-                table.row('.selected').remove().draw(false);
+            // delete msg function
+            $('#deletePostBtn').click(function () {
+                var rowData = userPostTable.rows('.selected').data().toArray();
+                $.ajax({
+                    url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeletePost",
+                    type: "POST",
+                    data: {
+                        "PID": rowData[0][0]
+                    },
+                    success: function (result) {
+                        if ("Success" == result) {
+                            alert("刪除成功!");
+                        }
+                        else {
+                            alert(result);
+                        }
+                    }
+                });
+                userPostTable.row('.selected').remove().draw(false);
+            });
+            $('#deleteMsgBtn').click(function () {
+                var rowData = userMsgTable.rows('.selected').data().toArray();              
+                $.ajax({
+                    url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeleteMsg",
+                    type: "POST",
+                    data: {
+                        "MID": rowData[0][0]
+                    },
+                    success: function (result) {
+                        if ("Success" == result) {
+                            alert("刪除成功!");
+                        }
+                        else {
+                            alert(result);
+                        }
+                    }
+                });
+                userMsgTable.row('.selected').remove().draw(false);
             });
         });
     </script>
@@ -35,229 +132,42 @@
     </div>
     <div class="d-grid gap-3">
         <div class="p-2 bg-light border">
+            <p class="fs-4">主要功能</p>
+            <a class="btn btn-outline-secondary" href="Page061EditInfo.aspx">編輯會員資料</a>
+            <a class="btn btn-outline-secondary" href="Page062EditPwd.aspx">修改會員密碼</a>
+        </div>
+        <div class="p-2 bg-light border">
             <p class="fs-4">
-                刪除貼文
-                <button class="fs-5 btn btn-outline-danger" id="deleteBtn">點此刪除所選貼文</button>
+                刪除貼文&nbsp;
+                <button class="fs-7 btn btn-outline-danger" id="deletePostBtn">點此刪除所選貼文</button>
             </p>
-            <table id="PostTable" class="display" style="width: 100%">
+            <table id="UserPostTable" class="display" style="width: 100%">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th>PostID</th>
+                        <th>標題</th>
+                        <th>發文者</th>
+                        <th>建立時間</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                    <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td>2011/07/25</td>
-                        <td>$170,750</td>
-                    </tr>
-                    <tr>
-                        <td>Ashton Cox</td>
-                        <td>Junior Technical Author</td>
-                        <td>San Francisco</td>
-                        <td>66</td>
-                        <td>2009/01/12</td>
-                        <td>$86,000</td>
-                    </tr>
-                    <tr>
-                        <td>Cedric Kelly</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>Edinburgh</td>
-                        <td>22</td>
-                        <td>2012/03/29</td>
-                        <td>$433,060</td>
-                    </tr>
-                    <tr>
-                        <td>Airi Satou</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>33</td>
-                        <td>2008/11/28</td>
-                        <td>$162,700</td>
-                    </tr>
-                    <tr>
-                        <td>Brielle Williamson</td>
-                        <td>Integration Specialist</td>
-                        <td>New York</td>
-                        <td>61</td>
-                        <td>2012/12/02</td>
-                        <td>$372,000</td>
-                    </tr>
-                    <tr>
-                        <td>Herrod Chandler</td>
-                        <td>Sales Assistant</td>
-                        <td>San Francisco</td>
-                        <td>59</td>
-                        <td>2012/08/06</td>
-                        <td>$137,500</td>
-                    </tr>
-                    <tr>
-                        <td>Rhona Davidson</td>
-                        <td>Integration Specialist</td>
-                        <td>Tokyo</td>
-                        <td>55</td>
-                        <td>2010/10/14</td>
-                        <td>$327,900</td>
-                    </tr>
-                    <tr>
-                        <td>Colleen Hurst</td>
-                        <td>Javascript Developer</td>
-                        <td>San Francisco</td>
-                        <td>39</td>
-                        <td>2009/09/15</td>
-                        <td>$205,500</td>
-                    </tr>
-                    <tr>
-                        <td>Sonya Frost</td>
-                        <td>Software Engineer</td>
-                        <td>Edinburgh</td>
-                        <td>23</td>
-                        <td>2008/12/13</td>
-                        <td>$103,600</td>
-                    </tr>
-                    <tr>
-                        <td>Jena Gaines</td>
-                        <td>Office Manager</td>
-                        <td>London</td>
-                        <td>30</td>
-                        <td>2008/12/19</td>
-                        <td>$90,560</td>
-                    </tr>
-                    <tr>
-                        <td>Quinn Flynn</td>
-                        <td>Support Lead</td>
-                        <td>Edinburgh</td>
-                        <td>22</td>
-                        <td>2013/03/03</td>
-                        <td>$342,000</td>
-                    </tr>
-                    <tr>
-                        <td>Charde Marshall</td>
-                        <td>Regional Director</td>
-                        <td>San Francisco</td>
-                        <td>36</td>
-                        <td>2008/10/16</td>
-                        <td>$470,600</td>
-                    </tr>
-                    <tr>
-                        <td>Haley Kennedy</td>
-                        <td>Senior Marketing Designer</td>
-                        <td>London</td>
-                        <td>43</td>
-                        <td>2012/12/18</td>
-                        <td>$313,500</td>
-                    </tr>
-                    <tr>
-                        <td>Tatyana Fitzpatrick</td>
-                        <td>Regional Director</td>
-                        <td>London</td>
-                        <td>19</td>
-                        <td>2010/03/17</td>
-                        <td>$385,750</td>
-                    </tr>
-                    <tr>
-                        <td>Michael Silva</td>
-                        <td>Marketing Designer</td>
-                        <td>London</td>
-                        <td>66</td>
-                        <td>2012/11/27</td>
-                        <td>$198,500</td>
-                    </tr>
-                    <tr>
-                        <td>Paul Byrd</td>
-                        <td>Chief Financial Officer (CFO)</td>
-                        <td>New York</td>
-                        <td>64</td>
-                        <td>2010/06/09</td>
-                        <td>$725,000</td>
-                    </tr>
-                    <tr>
-                        <td>Gloria Little</td>
-                        <td>Systems Administrator</td>
-                        <td>New York</td>
-                        <td>59</td>
-                        <td>2009/04/10</td>
-                        <td>$237,500</td>
-                    </tr>
-                    <tr>
-                        <td>Bradley Greer</td>
-                        <td>Software Engineer</td>
-                        <td>London</td>
-                        <td>41</td>
-                        <td>2012/10/13</td>
-                        <td>$132,000</td>
-                    </tr>
-                    <tr>
-                        <td>Dai Rios</td>
-                        <td>Personnel Lead</td>
-                        <td>Edinburgh</td>
-                        <td>35</td>
-                        <td>2012/09/26</td>
-                        <td>$217,500</td>
-                    </tr>
-                    <tr>
-                        <td>Jenette Caldwell</td>
-                        <td>Development Lead</td>
-                        <td>New York</td>
-                        <td>30</td>
-                        <td>2011/09/03</td>
-                        <td>$345,000</td>
-                    </tr>
-                    <tr>
-                        <td>Yuri Berry</td>
-                        <td>Chief Marketing Officer (CMO)</td>
-                        <td>New York</td>
-                        <td>40</td>
-                        <td>2009/06/25</td>
-                        <td>$675,000</td>
-                    </tr>
-                    <tr>
-                        <td>Caesar Vance</td>
-                        <td>Pre-Sales Support</td>
-                        <td>New York</td>
-                        <td>21</td>
-                        <td>2011/12/12</td>
-                        <td>$106,450</td>
-                    </tr>
-                    <tr>
-                        <td>Doris Wilder</td>
-                        <td>Sales Assistant</td>
-                        <td>Sydney</td>
-                        <td>23</td>
-                        <td>2010/09/20</td>
-                        <td>$85,600</td>
-                    </tr>
-                    <tr>
-                        <td>Angelica Ramos</td>
-                        <td>Chief Executive Officer (CEO)</td>
-                        <td>London</td>
-                        <td>47</td>
-                        <td>2009/10/09</td>
-                        <td>$1,200,000</td>
-                    </tr>
-                </tbody>
             </table>
         </div>
         <div class="p-2 bg-light border">
-            <p class="fs-4">其他功能</p>
-            <a class="btn btn-outline-secondary" href="Page061EditInfo.aspx">編輯會員資料</a>
-            <a class="btn btn-outline-secondary" href="Page062EditPwd.aspx">修改會員密碼</a>
+            <p class="fs-4">
+                刪除留言&nbsp;
+                <button class="fs-7 btn btn-outline-danger" id="deleteMsgBtn">點此刪除所選留言</button>
+            </p>
+            <table id="UserMsgTable" class="display" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>MsgID</th>
+                        <th>貼文標題</th>
+                        <th>留言內容</th>
+                        <th>發文者</th>
+                        <th>建立時間</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
     <hr class="my-4">

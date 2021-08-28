@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="col-12">
-            <button class="btn btn-primary" type="submit">送出</button>
-            <a class="btn btn btn-outline-info" type="button" href="../Page021ForgetPW.aspx">忘記密碼</a>
+            <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#noticeModal">送出</button>
+            <a class="btn btn btn-outline-info" type="button" href="Page021ForgetPW.aspx">忘記密碼</a>
             <input class="btn btn-warning" type="reset" value="登出" id="logoutBtn">
         </div>
         <hr class="my-4">
@@ -40,6 +40,9 @@
             'use strict'
 
             var forms = document.querySelectorAll('.needs-validation')
+            var redirect = function () {
+                window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+            }
 
             Array.prototype.slice.call(forms).forEach(function (form) {
                 form.addEventListener('submit', function (login) {
@@ -60,20 +63,22 @@
                             },
                             success: function (result) {                                
                                 var authx = document.cookie.indexOf(".ASPXAUTH");
-
                                 if ("Success" == result) {
+                                    $("#modelText").text("登入成功!");
                                     if (authx == 0) {
-                                        $('#funcList').show();
-                                        window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+                                        $(".closeBtn").click(function () {
+                                            $('#funcList').show();
+                                            redirect();
+                                        });
                                     }
                                     else {
                                         alert("Auth cookie fail");
-                                        $('#funcList').hide();
+                                        $("#modelText").text(result);
                                     }
                                 }
                                 else {
                                     $('#funcList').hide();
-                                    alert(result);
+                                    $("#modelText").text(result);
                                 }
                             }
                         });

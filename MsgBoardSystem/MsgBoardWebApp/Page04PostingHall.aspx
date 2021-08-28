@@ -71,14 +71,14 @@
             <tr>
                 <th class="th-sm">標題</th>
                 <th class="th-sm">發文者</th>
-                <th class="th-sm">時間</th>
+                <th class="th-sm">建立時間</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
                 <th>標題</th>
                 <th>發文者</th>
-                <th>時間</th>
+                <th>建立時間</th>
             </tr>
         </tfoot>
     </table>

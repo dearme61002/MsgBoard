@@ -92,13 +92,20 @@ namespace MsgBoardWebApp.Handler
                     return;
                 }
 
-                // 取得貼文資料
-                List<PostInfoModel> postInfo = PostManager.GetOnePostInfo(pid);
+                try
+                {
+                    // 取得貼文資料
+                    List<PostInfoModel> postInfo = PostManager.GetOnePostInfo(pid);
 
-                // 寫入Response
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(postInfo);
-                context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
+                    // 寫入Response
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(postInfo[0]);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
             // 取得貼文的全部留言
             else if (actionName == "GetAllMsg")
@@ -112,12 +119,20 @@ namespace MsgBoardWebApp.Handler
                     return;
                 }
 
-                // 取得貼文的全部留言
-                List<MsgInfoModel> allMsg = PostManager.GetAllPostMsg(pid);
+                try
+                {
+                    // 取得貼文的全部留言
+                    List<MsgInfoModel> allMsg = PostManager.GetAllPostMsg(pid);
 
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(allMsg);
-                context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(allMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
             }
             // 註冊會員功能
             else if (actionName == "Register")
@@ -197,13 +212,283 @@ namespace MsgBoardWebApp.Handler
                     // check UID is correct and user is exist
                     var checkUID = PostManager.GetUserName(UID);
 
-                    if(checkUID != null)
+                    if (checkUID != null)
                     {
                         // write into DB
                         responseMsg = PostManager.CreateNewPost(postInfo);
                     }
-                    
+
                     string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            // 建立留言
+            else if (actionName == "NewMsg")
+            {
+                // Get value from ajax
+                string body = context.Request.Form["Body"];
+                string strPID = context.Request.Form["PID"];
+                string strUID = context.Session["UID"].ToString();
+                string responseMsg = string.Empty;
+
+                // check guid
+                if (!Guid.TryParse(strUID, out Guid uid))
+                {
+                    responseMsg = "Param UID Error";
+                }
+
+                if (!Guid.TryParse(strPID, out Guid pid))
+                {
+                    responseMsg = "Param PID Error";
+                }
+
+                // set value to object and write into DB
+                try
+                {
+                    Message msgInfo = new Message()
+                    {
+                        MsgID = Guid.NewGuid(),
+                        PostID = pid,
+                        UserID = uid,
+                        CreateDate = DateTime.Now,
+                        Body = body,
+                    };
+
+                    // check UID and PID is correct and user is exist
+                    var checkUID = PostManager.GetUserName(uid);
+                    bool checkPID = PostManager.CheckPostExist(pid);
+
+                    if (checkUID != null && checkPID)
+                    {
+                        // write into DB
+                        responseMsg = PostManager.CreateNewMsg(msgInfo);
+                    }
+                    else
+                    {
+                        // Have error
+                        responseMsg = "Exception Error";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
+                context.Response.ContentType = "application/json";
+                context.Response.Write(jsonText);
+            }
+            // 取得會員資料
+            else if(actionName == "GetEditInfo")
+            {
+                string strUID = context.Session["UID"].ToString();
+
+                // check guid
+                if (!Guid.TryParse(strUID, out Guid uid))
+                {
+                    context.Response.Write("Param UID Error");
+                    context.Response.End();
+                }
+
+                try
+                {
+                    // get user infomation
+                    List<EditInfoModel> editInfo = AccountFunction.GetEditInfo(uid);
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(editInfo[0]);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            // 更新會員資料
+            else if (actionName == "UpdateInfo")
+            {
+                string strUID = context.Session["UID"].ToString();
+
+                // check guid
+                if (!Guid.TryParse(strUID, out Guid uid))
+                {
+                    context.Response.Write("Param UID Error");
+                    context.Response.End();
+                }
+
+                try
+                {
+                    EditInfoModel editSource = new EditInfoModel()
+                    {
+                        Name = context.Request.Form["Name"],
+                        Email = context.Request.Form["Email"],
+                        Birthday = context.Request.Form["Birthday"],
+                        Account = context.Request.Form["Account"]
+                    };
+
+                    string resultMsg = AccountFunction.UpdateUserInfo(editSource, uid);
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            // 更改會員密碼
+            else if (actionName == "UpdatePwd")
+            {                
+                try
+                {
+                    string strUID = context.Session["UID"].ToString();
+                    string oldPwd = context.Request.Form["OldPwd"];
+                    string newPwd = context.Request.Form["NewPwd"];
+                    string newPwdAgain = context.Request.Form["NewPwdAgain"];
+                    string resultMsg = string.Empty;
+
+                    // check guid
+                    if (Guid.TryParse(strUID, out Guid uid))
+                    {
+                        // get password from DB
+                        List<PwdInfoModel> pwdInfo = AccountFunction.GetUserPwd(uid);
+
+                        // Check new password
+                        if (string.Compare(newPwd, newPwdAgain, false) == 0)
+                        {
+                            // Check input password and DB password
+                            if (string.Compare(oldPwd, pwdInfo[0].Password, false) == 0)
+                            {
+                                // Update password
+                                resultMsg = AccountFunction.UpdateUserPwd(uid, pwdInfo[0].Account, newPwd);
+                            }
+                            else
+                            {
+                                resultMsg = "舊密碼輸入錯誤";
+                            }
+                        }
+                        else
+                        {
+                            resultMsg = "輸入的兩次新密碼不相同";
+                        }
+                    }
+                    else
+                    {
+                        resultMsg = "Param UID Error";
+                    }
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            // 獲取會員貼文
+            else if (actionName == "GetUserPost")
+            {
+                try
+                {
+                    // 從Session取得UID並轉型
+                    if (!Guid.TryParse(context.Session["UID"].ToString(), out Guid userID))
+                    {
+                        context.Response.Write("Session UID Error");
+                        context.Response.End();
+                        return;
+                    }
+
+                    // 取得貼文資料
+                    List<PostInfoModel> userPostInfo = PostManager.GetAllUserPostInfo(userID);
+
+                    // 寫入Response
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(userPostInfo);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            // 獲取會員留言
+            else if (actionName == "GetUserMsg")
+            {
+                try
+                {
+                    // 從Session取得UID並轉型
+                    if (!Guid.TryParse(context.Session["UID"].ToString(), out Guid userID))
+                    {
+                        context.Response.Write("Session UID Error");
+                        context.Response.End();
+                        return;
+                    }
+
+                    // 取得留言資料
+                    List<UserMsgInfo> userPostInfo = PostManager.GetUserAllMsgInfo(userID);
+
+                    // 寫入Response
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(userPostInfo);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            // 會員自己刪除貼文
+            else if (actionName == "UserDeletePost")
+            {
+                try
+                {
+                    string strUID = context.Session["UID"].ToString();
+                    string strPID = context.Request.Form["PID"];
+                    string resultMsg = string.Empty;
+
+                    // check guid
+                    if (Guid.TryParse(strUID, out Guid uid) && Guid.TryParse(strPID, out Guid pid))
+                        resultMsg = PostManager.UserDeletePost(uid, pid);
+                    else
+                        resultMsg = "Param UID or Ajax PID Error";
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            // 會員自己刪除留言
+            else if (actionName == "UserDeleteMsg")
+            {
+                try
+                {
+                    string strUID = context.Session["UID"].ToString();
+                    string strMID = context.Request.Form["MID"];
+                    string resultMsg = string.Empty;
+
+                    // check guid
+                    if (Guid.TryParse(strUID, out Guid uid) && Guid.TryParse(strMID, out Guid mid))
+                        resultMsg = PostManager.UserDeleteMsg(uid, mid);
+                    else
+                        resultMsg = "Param UID or Ajax MID Error";
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(jsonText);
                 }

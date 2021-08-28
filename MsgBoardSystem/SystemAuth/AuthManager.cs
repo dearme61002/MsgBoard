@@ -36,7 +36,7 @@ namespace WebAuth
                         return null;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {               
                 //Logger.WriteLog(ex);
                 return null;
