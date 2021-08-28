@@ -33,7 +33,7 @@ namespace MsgBoardWebApp
             #region 從資料庫取出EditAccounting紀錄
             using (databaseEF context = new databaseEF())
             {
-                List<databaseORM.data.Accounting> cc = context.Accountings.Where(x => x.Level == "Number").ToList();
+                List<databaseORM.data.Accounting> cc = context.Accountings.Where(x => x.Level == "Member").ToList();
                 return cc;
             }
             #endregion
