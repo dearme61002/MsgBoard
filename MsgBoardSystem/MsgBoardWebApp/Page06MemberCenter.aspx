@@ -138,7 +138,7 @@
         </div>
         <div class="p-2 bg-light border">
             <p class="fs-4">
-                刪除貼文
+                刪除貼文&nbsp;
                 <button class="fs-7 btn btn-outline-danger" id="deletePostBtn">點此刪除所選貼文</button>
             </p>
             <table id="UserPostTable" class="display" style="width: 100%">
@@ -154,7 +154,7 @@
         </div>
         <div class="p-2 bg-light border">
             <p class="fs-4">
-                刪除留言
+                刪除留言&nbsp;
                 <button class="fs-7 btn btn-outline-danger" id="deleteMsgBtn">點此刪除所選留言</button>
             </p>
             <table id="UserMsgTable" class="display" style="width: 100%">
