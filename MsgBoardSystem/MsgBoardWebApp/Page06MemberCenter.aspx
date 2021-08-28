@@ -9,10 +9,15 @@
             var userPostTable = $('#UserPostTable').DataTable();
             var userMsgTable = $('#UserMsgTable').DataTable();
 
+            // Set Modals
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
+            var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
             // Add Row Function
             function AddPostRow(obj) {
                 userPostTable.row.add([
                     obj.PostID,
+                    obj.Title,
                     `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
                     obj.Name,
                     obj.CreateDate
@@ -56,6 +61,7 @@
 
             // Hide First Column
             userPostTable.column(0).visible(false);
+            userPostTable.column(1).visible(false);
             userMsgTable.column(0).visible(false);
 
             // msg select method
@@ -78,45 +84,65 @@
                 }
             });
 
-            // delete msg function
-            $('#deletePostBtn').click(function () {
+            // Delete Functions            
+            var deletePost = function () {
                 var rowData = userPostTable.rows('.selected').data().toArray();
-                $.ajax({
-                    url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeletePost",
-                    type: "POST",
-                    data: {
-                        "PID": rowData[0][0]
-                    },
-                    success: function (result) {
-                        if ("Success" == result) {
-                            alert("刪除成功!");
+                $('#confirmModalText').text(`確認刪除貼文 : "${rowData[0][1]}" 嗎?`);
+                confirmModal.show();
+                $('#confirmBtn').click(function () {
+                    confirmModal.hide();
+                    $.ajax({
+                        url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeletePost",
+                        type: "POST",
+                        data: {
+                            "PID": rowData[0][0]
+                        },
+                        success: function (result) {
+                            noticeModal.show();
+                            if ("Success" == result) {
+                                $("#modalText").text("刪除成功");
+                                userPostTable.row('.selected').remove().draw(false);
+                            }
+                            else {
+                                $("#modalText").text(result);
+                            }
                         }
-                        else {
-                            alert(result);
-                        }
-                    }
+                    });
                 });
-                userPostTable.row('.selected').remove().draw(false);
+            };
+            var deleteMsg = function () {
+                var rowData = userMsgTable.rows('.selected').data().toArray();
+                $('#confirmModalText').text(`確認刪除留言 : "${rowData[0][2]}" 嗎?`);
+                confirmModal.show();
+                $('#confirmBtn').click(function () {
+                    $.ajax({
+                        url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeleteMsg",
+                        type: "POST",
+                        data: {
+                            "MID": rowData[0][0]
+                        },
+                        success: function (result) {
+                            confirmModal.hide();
+                            noticeModal.show();
+                            if ("Success" == result) {
+                                $("#modalText").text("刪除成功");
+                                userMsgTable.row('.selected').remove().draw(false);
+                            }
+                            else {
+                                $("#modalText").text(result);
+                            }
+                        }
+                    });
+                });
+            };
+
+            // Buttons
+            $('#deletePostBtn').click(function () {
+                deletePost();
             });
             $('#deleteMsgBtn').click(function () {
-                var rowData = userMsgTable.rows('.selected').data().toArray();              
-                $.ajax({
-                    url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeleteMsg",
-                    type: "POST",
-                    data: {
-                        "MID": rowData[0][0]
-                    },
-                    success: function (result) {
-                        if ("Success" == result) {
-                            alert("刪除成功!");
-                        }
-                        else {
-                            alert(result);
-                        }
-                    }
-                });
-                userMsgTable.row('.selected').remove().draw(false);
-            });
+                deleteMsg();
+            });            
         });
     </script>
 </asp:Content>
@@ -134,6 +160,7 @@
         <div class="p-2 bg-light border">
             <p class="fs-4">主要功能</p>
             <a class="btn btn-outline-secondary" href="Page061EditInfo.aspx">編輯會員資料</a>
+            &nbsp;
             <a class="btn btn-outline-secondary" href="Page062EditPwd.aspx">修改會員密碼</a>
         </div>
         <div class="p-2 bg-light border">
@@ -145,6 +172,7 @@
                 <thead>
                     <tr>
                         <th>PostID</th>
+                        <th>PostTitle</th>
                         <th>標題</th>
                         <th>發文者</th>
                         <th>建立時間</th>
@@ -171,4 +199,24 @@
         </div>
     </div>
     <hr class="my-4">
+
+    <!-- Modal Component -->  
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLable" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#F8DC81;height:40px">
+                <h5 class="modal-title fw-bold fs-4" id="confirmModalLable">請確認是否刪除</h5>
+                <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close" ></button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmModalText"></p>
+            </div>
+            <div class="modal-footer d-flex">
+                <button type="button" class="btn btn-primary btn-sm" id="confirmBtn">確認</button>
+                <input type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" value="取消"/>
+            </div>
+        </div>
+        </div>
+    </div>
+    
 </asp:Content>

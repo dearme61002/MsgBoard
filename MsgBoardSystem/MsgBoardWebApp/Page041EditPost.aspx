@@ -80,11 +80,11 @@
                                 success: function (result) {
                                     noticeModal.show();
                                     if ("Success" == result) {
-                                        $("#modelText").text("貼文建立成功!");
+                                        $("#modalText").text("貼文建立成功!");
                                         $(".closeBtn").click(function () { redirect(); });
                                     }
                                     else {
-                                        $("#modelText").text(result);
+                                        $("#modalText").text(result);
                                     }
                                 }
                             });

@@ -73,12 +73,12 @@
                                 success: function (result) {
                                     noticeModal.show();
                                     if ("Success" == result) {
-                                        $("#modelText").text("密碼修改成功! 請重新登入會員");
+                                        $("#modalText").text("密碼修改成功! 請重新登入會員");
                                         document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';                                       
                                         $(".closeBtn").click(function () { redirect(); });
                                     }
                                     else {
-                                        $("#modelText").text(result);
+                                        $("#modalText").text(result);
                                     }
                                 }
                             });

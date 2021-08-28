@@ -79,11 +79,11 @@
                                 success: function (result) {
                                     noticeModal.show();
                                     if ("Success" == result) {
-                                        $("#modelText").text("註冊成功!! 轉跳至首頁");
+                                        $("#modalText").text("註冊成功!! 轉跳至首頁");
                                         $(".closeBtn").click(function () { redirect(); });
                                     }
                                     else {
-                                        $("#modelText").text(result);
+                                        $("#modalText").text(result);
                                     }
                                 }
                             });

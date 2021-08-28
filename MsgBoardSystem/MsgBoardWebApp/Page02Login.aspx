@@ -66,20 +66,19 @@
 
                                 if ("Success" == result) {
                                     if (authx == 0) {
-                                        $("#modelText").text("登入成功!");
+                                        $("#modalText").text("登入成功!");
                                         $(".closeBtn").click(function () {
                                             $('#funcList').show();
                                             redirect();
                                         });
                                     }
                                     else {
-                                        alert("Auth cookie fail");
-                                        $("#modelText").text(result);                                    
+                                        $("#modalText").text("Auth cookie fail");
                                     }
                                 }
                                 else {
                                     $('#funcList').hide();
-                                    $("#modelText").text(result);
+                                    $("#modalText").text(result);
                                 }
                             }
                         });

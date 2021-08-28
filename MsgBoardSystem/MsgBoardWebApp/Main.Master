@@ -13,7 +13,7 @@
     <script src="DataTableFrame/datatables.min.js"></script>
     <style>
         div {
-            //border: 1px solid #000000;
+            /*border: 1px solid #000000;*/
         }
 
         .Logo {
@@ -82,7 +82,7 @@
                             <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close" ></button>
                         </div>
                         <div class="modal-body">
-                            <p id="modelText"></p>
+                            <p id="modalText"></p>
                         </div>
                         <div class="modal-footer d-flex">
                             <input type="button" class="btn btn-secondary btn-sm closeBtn" data-bs-dismiss="modal" value="關閉"/>

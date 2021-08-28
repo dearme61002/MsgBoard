@@ -130,11 +130,11 @@
                                 success: function (result) {
                                     noticeModal.show();
                                     if ("Success" == result) {
-                                        $("#modelText").text("留言成功!");
+                                        $("#modalText").text("留言成功!");
                                         $(".closeBtn").click(function () { redirect(); });                                      
                                     }
                                     else {
-                                        $("#modelText").text(result);
+                                        $("#modalText").text(result);
                                     }                                  
                                 }
                             });

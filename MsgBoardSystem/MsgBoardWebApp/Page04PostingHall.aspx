@@ -83,7 +83,7 @@
         </tfoot>
     </table>
     <hr class="my-4">
-    <form runat="server" id="page04form">
+    <form runat="server" id="page04form" visible="false">
         <p>測試用字串</p>
         <asp:Literal runat="server" ID="ltlMsg"></asp:Literal><br />
     </form>

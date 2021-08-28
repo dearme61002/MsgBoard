@@ -120,11 +120,11 @@
                                 success: function (result) {
                                     noticeModal.show();
                                     if ("Success" == result) {
-                                        $("#modelText").text("更改成功! 轉跳至會員中心!");
+                                        $("#modalText").text("更改成功! 轉跳至會員中心!");
                                         $(".closeBtn").click(function () { redirect(); });
                                     }
                                     else {
-                                        $("#modelText").text(result);
+                                        $("#modalText").text(result);
                                     }
                                 }
                             });
