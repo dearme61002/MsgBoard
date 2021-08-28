@@ -153,6 +153,24 @@
                 validatemodalTitle()
             });
 
+            /*驗證表單增加按鈕*/
+            document.querySelector('#topTitle').addEventListener('blur', validatetopTitle);
+            function validatetopTitle() {
+                const Titletop = document.querySelector('#topTitle');
+                const re = /^\S+$/;
+                if (re.test(Titletop.value)) {
+                    Titletop.classList.remove('is-invalid');
+                    Titletop.classList.add('is-valid');
+
+                    return true;
+                } else {
+                    Titletop.classList.add('is-invalid');
+                    Titletop.classList.remove('is-valid');
+
+                    return false;
+                }
+            }
+            /*驗證表單增加按鈕*/
         })
        
     </script>
@@ -160,19 +178,23 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <%--開始製作增加標題按鈕--%>
     <div class="container mb-4">
+        <form id="topform" action="#" class="needs-validation" novalidate>
   <div class="row">
     <div class="col-2">
         
       <div type="text" class="btn alert-dark" style="width:100%;cursor:default">標題</div>
     </div>
     <div class="col-8">
-      <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+
+      <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="topTitle" required>
+        <div class="invalid-feedback">不有空白</div>
     </div>
     <div class="col-2">
      <button type="button" class="btn btn-primary">增加</button>
     </div>
   </div>
-</div>
+            </form>
+</div> 
     <%--開始製作增加標題按鈕--%>
 
     <%--檢視資料--%>
