@@ -263,6 +263,61 @@ var gg = regexdate.IsMatch(date);
 
         }
 
+
+         [HttpPost]
+        public Model.ApiResult editBucket([FromBody] string data)
+        {
+           
+            JObject myjsonData = JObject.Parse(data);
+           
+            string MybucketDate = myjsonData["MybucketDate"].ToString();
+            string dataID = myjsonData["dataID"].ToString();
+
+            Model.ApiResult apiResult = new Model.ApiResult();
+        
+            Regex regexdata = new Regex(@"^\d{4}-\d{2}-\d{2}$");
+
+       
+
+            if (!regexdata.IsMatch(MybucketDate))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
+ 
+
+            #region 從資料庫紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+                
+                try
+                {
+                    int id = Convert.ToInt32(dataID);
+                    Accounting accounting = context.Accountings.Where(x => x.ID == id).FirstOrDefault();
+                    
+                    accounting.Bucket = Convert.ToDateTime(MybucketDate);
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "更新成功";
+                    return apiResult;
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "刪除失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
+
+
         [HttpPost]
         public Model.ApiResult editmydata([FromBody] string data)
         {

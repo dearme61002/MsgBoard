@@ -5,8 +5,8 @@
         $(function () {
 
 
-            var bb;
-            var bd;
+            var bb;/*ss*/
+            var bd;/*ss*/
             /*取得所有資料*/
             function getAlldata() {
                 $.ajax({
@@ -52,8 +52,7 @@
             }
             getAlldata();
             /*取得所有資料*/
-
-        
+   
             $('#tb').on('click', '.del', function () {
                 var dataID = $(this).attr('dataID');
                 $.ajax({
@@ -74,6 +73,58 @@
 
                 })
             });
+
+            /*取得編輯用的dataID*/
+            var dataID = ""; /*選得資料唯一參數*/
+            /*為刪除綁上點擊功能用代理的方式*/
+            $('#tb').on('click', '.edit', function () {
+                dataID = $(this).attr('dataID');
+
+            });
+
+
+
+            /* Modal js*/
+
+            $("#yesdo").on("click", function () {
+
+       
+                var MybucketDate = document.getElementById("MybucketDate").value;
+                const obj = {
+                    MybucketDate: MybucketDate,
+                    dataID: dataID
+                };
+                data = JSON.stringify(obj);
+                $.ajax({
+
+                    type: 'POST',
+                    url: 'api/back/editBucket',
+
+                    data: "=" + data,
+                    success: function (res) {
+                        if (res.state !== 200) {
+                            return alert(res.msg);
+                        }
+                        getAlldata();
+                        alert(res.msg);
+                    },
+                    error: function (res) {
+                        return alert(res.msg);
+                    }
+
+                })
+                /*變回空值*/
+            
+                document.getElementById("MybucketDate").value = "";
+
+           
+
+
+                $("#myModal").modal('hide');
+            })
+            /*Modal js*/
+
+
 
 
 
@@ -99,4 +150,35 @@
         </thead>
         <tbody id="tb"></tbody>
     </table>
+
+        <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">設定封鎖期限</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+       <form id="newform" action="#" class="needs-validation" novalidate>
+
+                <div class="modal-body">
+                    <h1 style="text-align: center;">輸入你想編輯的內容</h1>
+              
+
+                    <div class="input-group input-group-lg form-group p-1">
+                        <span class="input-group-text">封鎖時間</span>
+                        <input type="date" class="form-control" id="MybucketDate" name="MybucketDate">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close" >Close</button>
+                    <button type="button" class="btn btn-primary" id="yesdo">確定</button>
+                </div>
+
+      </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
 </asp:Content>
