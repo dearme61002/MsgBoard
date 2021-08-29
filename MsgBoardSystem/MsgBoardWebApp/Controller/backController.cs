@@ -9,6 +9,8 @@ using databaseORM;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 using Model;
+using DAL;
+using System.Data.SqlClient;
 
 namespace MsgBoardWebApp
 {
@@ -84,25 +86,19 @@ namespace MsgBoardWebApp
         }
 
         [HttpPost]
-        public List<Model.GetIndex> GetIndex()
+        public List<databaseORM.data.Posting> GetIndex()
         {
             #region 從資料庫取出Index
             using (databaseEF context = new databaseEF())
             {
-     
-                var cc = from posting in context.Postings
-                         join account in context.Accountings on posting.UserID equals account.UserID
-                         orderby posting.CreateDate descending
-                         select new GetIndex
-                         {
-                             ID = posting.ID,
-                             CreateDate = posting.CreateDate,
-                             Account = account.Account,
-                             Body = posting.Body,
-                             Title = posting.Title
-                         };
-                         
-                return cc.ToList();
+
+                List<databaseORM.data.Posting> cc = context.Postings.OrderByDescending(x => x.CreateDate).ToList();
+         
+
+
+
+
+                return cc;
             }
             #endregion
 
@@ -597,7 +593,65 @@ namespace MsgBoardWebApp
 
         }
 
+        [HttpPost]
+        public Model.ApiResult setIndex([FromBody] string dataID)
+        {
 
+            Model.ApiResult apiResult = new Model.ApiResult();
+            string sql = "update  Posting set ismaincontent=1 where ID =@id";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@id", dataID)
+            };
+
+            try
+            {
+                int i = sqlhelper.executeNonQuerysql(sql, sqlParameters, false);
+                apiResult.state = 200;
+                apiResult.msg = "設定成功";
+
+                return apiResult;
+            }
+            catch (Exception)
+            {
+                apiResult.state = 404;
+                apiResult.msg = "設定失敗";
+
+                return apiResult;
+            }
+
+
+        }
+
+        [HttpPost]
+        public Model.ApiResult CancelIndex([FromBody] string dataID)
+        {
+
+            Model.ApiResult apiResult = new Model.ApiResult();
+            string sql = "update  Posting set ismaincontent=0 where ID =@id";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@id", dataID)
+            };
+
+            try
+            {
+                int i = sqlhelper.executeNonQuerysql(sql, sqlParameters, false);
+                apiResult.state = 200;
+                apiResult.msg = "設定成功";
+
+                return apiResult;
+            }
+            catch (Exception)
+            {
+                apiResult.state = 404;
+                apiResult.msg = "設定失敗";
+
+                return apiResult;
+            }
+
+
+        }
 
 
         [HttpPost]

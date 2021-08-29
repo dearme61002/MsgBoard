@@ -60,13 +60,13 @@
                             
                             /*dataID是我自定義的屬性用來查ID用的*/
                             /*  *//*  var mybotton = "<button type = 'button' class='btn btn-primary edit'data-bs-toggle='modal'data-bs-target='#myModal'dataID="+ item.ID +">gg</button>"*/
-                            rows.push('<tr><td>' + (i + 1) + '</td><td>' + CreateDate.getFullYear() + '年' + (CreateDate.getMonth() + 1) + '月' + CreateDate.getDate() + '日' + CreateDate.getHours() + '點' + CreateDate.getMinutes() + '分' + CreateDate.getSeconds() + '秒' + '</td><td>' + item.Account + '</td><td>' + item.Title + '</td><td>' + item.Body + '</td><td><a href="javascript:;"class="del" dataID="' + item.ID + '">刪除</a></td><td><button type = "button" class="btn btn-primary edit" dataID=' + item.ID + '>設定</button></td></tr>');
+                            rows.push('<tr><td>' + (i + 1) + '</td><td>' + CreateDate.getFullYear() + '年' + (CreateDate.getMonth() + 1) + '月' + CreateDate.getDate() + '日' + CreateDate.getHours() + '點' + CreateDate.getMinutes() + '分' + CreateDate.getSeconds() + '秒' + '</td><td>' + item.Title + '</td><td>' + item.Body + '</td><td>' + item.ismaincontent + '</td><td><a href="javascript:;"class="del" dataID="' + item.ID + '">刪除</a></td><td><button type = "button" class="btn btn-primary edit" dataID=' + item.ID + '>設定</button></td><td><button type = "button" class="btn btn-primary CancelTop" dataID=' + item.ID + '>取消</button></td></tr>');
                           
                         })
                         var dd = rows.join('');
                         $('#tb').empty().append(rows.join(''));
 
-
+                         
                     },
                     error: function () {
                         alert('獲取資料失敗');
@@ -100,6 +100,54 @@
             });
             /*為刪除綁上點擊功能用代理的方式*/
 
+            /*為edit綁上點擊功能用代理的方式*/
+            $('#tb').on('click', '.CancelTop', function () {
+                var dataID = $(this).attr('dataID');
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'api/back/CancelIndex',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dataID),
+                    success: function (res) {
+                        if (res.state !== 200) {
+                            return alert('設定失敗');
+                        }
+                        getAlldata();
+                        alert(res.msg);
+                    },
+                    error: function (res) {
+                        return alert('設定失敗');
+                    }
+
+                })
+            });
+            /*為edit綁上點擊功能用代理的方式*/
+
+            /*為edit綁上點擊功能用代理的方式*/
+            $('#tb').on('click', '.edit', function () {
+                var dataID = $(this).attr('dataID');
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'api/back/setIndex',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dataID),
+                    success: function (res) {
+                        if (res.state !== 200) {
+                            return alert('設定失敗');
+                        }
+                        getAlldata();
+                        alert(res.msg);
+                    },
+                    error: function (res) {
+                        return alert('設定失敗');
+                    }
+
+                })
+            });
+            /*為edit綁上點擊功能用代理的方式*/
+
         })
     </script>
 </asp:Content>
@@ -115,11 +163,12 @@
             <tr>
                <th>#</th>
                 <th>創建日期</th>
-                <th>發表者帳號</th>  
                 <th>標題</th>
                 <th>內文</th>
+                <th>是否顯示在首頁</th>
                 <th>刪除</th>
                 <th>設定</th>
+                 <th>取消設定</th>
             </tr>
         </thead>
         <tbody id="tb"></tbody>

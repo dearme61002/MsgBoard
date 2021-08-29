@@ -14,5 +14,7 @@ namespace Model
         public int ID { get; set; }
 
         public string Title { get; set; }
+
+        public bool ismaincontent { get; set; }
     }
 }
