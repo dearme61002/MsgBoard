@@ -533,7 +533,7 @@ namespace MsgBoardWebApp.Handler
                             if (string.Compare(updateResult, "Success", false) == 0)
                             {
                                 resultMsg[0] = "Success";
-                                resultMsg[1] = "新密碼 :  " + newPwd + "  請登入後盡快修改會員密碼";
+                                resultMsg[1] = "<p>新密碼 :  " + newPwd + "</p><p>請登入後盡快修改會員密碼</p>";
                             }
                             else
                                 resultMsg[0] = updateResult;

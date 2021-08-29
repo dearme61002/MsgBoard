@@ -75,7 +75,7 @@
                             success: function (result) {
                                 noticeModal.show();
                                 if ("Success" == result[0]) {
-                                    $("#modalText").text(result[1]);
+                                    $(".modal-body").append(result[1]);
                                     $(".closeBtn").click(function () { redirect(); });
                                 }
                                 else {
