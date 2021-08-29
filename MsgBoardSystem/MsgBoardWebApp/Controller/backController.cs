@@ -747,7 +747,57 @@ namespace MsgBoardWebApp
 
         }
 
+        [HttpPost]
+        public Model.ApiResult addswearing([FromBody] string data)
+        {
 
+            JObject myjsonData = JObject.Parse(data);
+            string addData = myjsonData["addData"].ToString();
+       
+
+            Model.ApiResult apiResult = new Model.ApiResult();
+
+            Regex replace = new Regex(@"^\S+$");
+
+            if (!replace.IsMatch(addData))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "標題資料格式錯誤";
+                return apiResult;
+            }
+
+            #region 從資料庫紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+
+                try
+                {
+
+                  
+                    Swear swear = new Swear();
+                    swear.Body = addData;
+
+                    context.Swears.Add(swear);
+
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "增加成功";
+                    return apiResult;
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "增加失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
 
         // GET api/<controller>/5
         [HttpGet]
