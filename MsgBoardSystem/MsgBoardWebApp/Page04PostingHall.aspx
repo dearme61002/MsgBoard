@@ -22,7 +22,9 @@
                 success: function (result) {
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
-                        AddRow(obj);
+                        if ("Member" == obj.Level) {
+                            AddRow(obj);
+                        }
                     }
                 }
             });
