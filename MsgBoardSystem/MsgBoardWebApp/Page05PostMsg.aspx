@@ -5,7 +5,6 @@
         // 取得PostID
         const pageUrl = new URL(window.location.href);
         var pid = pageUrl.searchParams.get("PID");
-        var getPost;
 
         $(document).ready(function () {
             $.ajax({
@@ -13,7 +12,6 @@
                 type: "POST",
                 data: { "PID": pid },
                 success: function (result) {
-                    getPost = result;
                     $("#navText").text(result.Title);
                     $("#headText").text(result.Title);
                     $("#cardTitle").text(result.Title);

@@ -22,6 +22,7 @@ namespace SystemDBFunction
                 {
                     var query =
                         (from item in context.Postings
+                         orderby item.CreateDate descending
                          select item);
 
                     var list = query.ToList();
