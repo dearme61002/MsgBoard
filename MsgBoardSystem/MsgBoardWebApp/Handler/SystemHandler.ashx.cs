@@ -69,7 +69,9 @@ namespace MsgBoardWebApp.Handler
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(ex.ToString());
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
                 }
             }
             // ajax呼叫後傳送Session UID

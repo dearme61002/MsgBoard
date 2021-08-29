@@ -77,7 +77,7 @@ namespace WebAuth
             }
         }
 
-        /// <summary> 驗證Cookie </summary>
+        /// <summary> 建立驗證Cookie </summary>
         /// <param name="userInfo"></param>
         public static void LoginAuthentication(UserInfoModel userInfo)
         {
@@ -103,10 +103,13 @@ namespace WebAuth
                     FormsAuthentication.FormsCookieName,
                     FormsAuthentication.Encrypt(ticket)
                 );
+
+            // Set false for page read .ASPXAUTH cookie
             cookie.HttpOnly = false;
 
+            // Current.User roles has bug, wait for fix
             GenericPrincipal gp = new GenericPrincipal(identity, roles);
-            HttpContext.Current.User = gp;
+            HttpContext.Current.User = gp; 
             HttpContext.Current.Response.Cookies.Add(cookie);
         }
         #endregion

@@ -59,7 +59,7 @@
                         <h1>Woolang 留言板</h1>
                     </a>
                 </div>
-                <div class="col-4">
+                <div class="col-4"><!--Horizontal Function List-->
                     <a class="btn btn-sm btn-outline-secondary guestFunc"  style="display:none" href="Page02Login.aspx">登入</a>
                     <a class="btn btn-sm btn-outline-secondary guestFunc"  style="display:none" href="Page03Register.aspx">註冊</a>
                     <span class="fs-5 loginFunc" style="display:none" id="welcomeText"></span>&nbsp;&nbsp;
@@ -72,10 +72,13 @@
     <div class="container">
         <div class="row">
             <div class="col-2">
-                <div class="list-group">
+                <div class="list-group"><!--Vertical Function List-->
                     <a href="Page04PostingHall.aspx" class="list-group-item list-group-item-action list-group-item-warning">貼文區</a>
                     <a href="Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display:none">撰寫新貼文</a>
                     <a href="Page06MemberCenter.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display:none">會員中心</a>
+                    <form ID="backSide" runat="server" visible="false">
+                        <a href="/backsideweb/backsidemain.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display:none">管理員後台</a>
+                    </form>
                 </div>
             </div>
             <div class="col-9">
