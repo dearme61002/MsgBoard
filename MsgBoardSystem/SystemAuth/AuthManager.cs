@@ -14,9 +14,11 @@ namespace WebAuth
 {
     public class AuthManager
     {
+        #region User Authentication Functions
+
         /// <summary> 從資料庫抓取使用者資料 </summary>
         /// <param name="account"></param>
-        /// <returns></returns>
+        /// <returns>List Accounting 資料</returns>
         public static List<Accounting> GetAccountInfo(string account)
         {
             try
@@ -38,15 +40,14 @@ namespace WebAuth
             }
             catch (Exception)
             {               
-                //Logger.WriteLog(ex);
                 return null;
             }
         }
 
         /// <summary> 取得使用者資料 </summary>
         /// <param name="account"></param>
-        /// <returns></returns>
-        public static List<UserInfoModel> GetInfo(string account)
+        /// <returns>UserInfoModel 資料</returns>
+        public static UserInfoModel GetInfo(string account)
         {
             List<Accounting> sourceList = GetAccountInfo(account);
 
@@ -68,7 +69,7 @@ namespace WebAuth
                         Birthday = obj.BirthDay
                     }).ToList();
 
-                return userSource;
+                return userSource[0];
             }
             else
             {
@@ -76,7 +77,7 @@ namespace WebAuth
             }
         }
 
-        /// <summary> 驗證Cookie </summary>
+        /// <summary> 建立驗證Cookie </summary>
         /// <param name="userInfo"></param>
         public static void LoginAuthentication(UserInfoModel userInfo)
         {
@@ -102,11 +103,44 @@ namespace WebAuth
                     FormsAuthentication.FormsCookieName,
                     FormsAuthentication.Encrypt(ticket)
                 );
+
+            // Set false for page read .ASPXAUTH cookie
             cookie.HttpOnly = false;
 
+            // Current.User roles has bug, wait for fix
             GenericPrincipal gp = new GenericPrincipal(identity, roles);
-            HttpContext.Current.User = gp;
+            HttpContext.Current.User = gp; 
             HttpContext.Current.Response.Cookies.Add(cookie);
         }
+
+        /// <summary> 檢查是否為管理者 </summary>
+        /// <param name="uid"></param>
+        /// <returns>True, False </returns>
+        public static bool UserLevelAuthentication(string uid)
+        {
+            try
+            {
+                if(!Guid.TryParse(uid, out Guid userID))
+                    return false;
+
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Accountings
+                         where item.UserID == userID
+                         select item.Level);
+
+                    if (query.ToList()[0] == "Admin")
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
     }
 }

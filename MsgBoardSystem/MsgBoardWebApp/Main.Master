@@ -13,7 +13,7 @@
     <script src="DataTableFrame/datatables.min.js"></script>
     <style>
         div {
-            //border: 1px solid #000000;
+            /*border: 1px solid #000000;*/
         }
 
         .Logo {
@@ -27,15 +27,19 @@
     </style>
     <script>
         $(function () {
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
             var authx = document.cookie.indexOf(".ASPXAUTH");
-            if (authx == 0) {
-                $("#funcList").show();
-                $("#logoutBtn").show();
-            }
-            else {
-                $("#funcList").hide();
-                $("#logoutBtn").hide();
-            }
+            if (authx == 0) { $(".loginFunc").show(); } else { $(".guestFunc").show(); }
+
+            $("#welcomeText").text(`歡迎登入! 會員: ${sessionStorage.getItem("Name")}`);
+
+            // Logout Function
+            $("#logoutBtn").click(function () {
+                document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+                $("#modalText").text("登出成功!");
+                noticeModal.show();
+                $(".closeBtn").click(function () { window.location.reload(); });
+            });
         });
     </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -55,9 +59,11 @@
                         <h1>Woolang 留言板</h1>
                     </a>
                 </div>
-                <div class="col-4">
-                    <a class="btn btn-sm btn-outline-secondary" href="Page02Login.aspx">登入</a>
-                    <a class="btn btn-sm btn-outline-secondary" href="Page03Register.aspx">註冊</a>
+                <div class="col-4"><!--Horizontal Function List-->
+                    <a class="btn btn-sm btn-outline-secondary guestFunc"  style="display:none" href="Page02Login.aspx">登入</a>
+                    <a class="btn btn-sm btn-outline-secondary guestFunc"  style="display:none" href="Page03Register.aspx">註冊</a>
+                    <span class="fs-5 loginFunc" style="display:none" id="welcomeText"></span>&nbsp;&nbsp;
+                    <a class="btn btn-warning loginFunc" style="display:none" id="logoutBtn">登出</a>
                 </div>
             </div>
             <hr class="my-4">
@@ -66,26 +72,29 @@
     <div class="container">
         <div class="row">
             <div class="col-2">
-                <div class="list-group" id="funcList">
+                <div class="list-group"><!--Vertical Function List-->
                     <a href="Page04PostingHall.aspx" class="list-group-item list-group-item-action list-group-item-warning">貼文區</a>
-                    <a href="Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning">撰寫新貼文</a>
-                    <a href="Page06MemberCenter.aspx" class="list-group-item list-group-item-action list-group-item-warning">會員中心</a>
+                    <a href="Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display:none">撰寫新貼文</a>
+                    <a href="Page06MemberCenter.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display:none">會員中心</a>
+                    <form ID="backSide" runat="server" visible="false">
+                        <a href="/backsideweb/backsidemain.aspx" class="list-group-item list-group-item-action list-group-item-danger loginFunc" style="display:none">管理員後台</a>
+                    </form>
                 </div>
             </div>
             <div class="col-9">
                 <!-- Modal Component -->
                 <div class="modal fade" id="noticeModal" tabindex="-1" aria-labelledby="noticeModalLable" aria-hidden="true">
-                    <div class="modal-dialog modal-sm">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#F8DC81;height:40px">
                             <h5 class="modal-title fw-bold fs-4" id="noticeModalLable">提示訊息</h5>
                             <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close" ></button>
                         </div>
                         <div class="modal-body">
-                            <p id="modelText"></p>
+                            <p id="modalText"></p>
                         </div>
-                        <div class="modal-footer" style="background-color:#214151;height:55px">
-                            <input type="button" class="btn btn-outline-light btn-sm closeBtn" data-bs-dismiss="modal" value="Close"/>
+                        <div class="modal-footer d-flex">
+                            <input type="button" class="btn btn-secondary btn-sm closeBtn" data-bs-dismiss="modal" value="關閉"/>
                         </div>
                     </div>
                     </div>

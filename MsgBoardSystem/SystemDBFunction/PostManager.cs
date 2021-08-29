@@ -22,6 +22,7 @@ namespace SystemDBFunction
                 {
                     var query =
                         (from item in context.Postings
+                         orderby item.CreateDate descending
                          select item);
 
                     var list = query.ToList();
@@ -113,6 +114,34 @@ namespace SystemDBFunction
             }
         }
 
+        /// <summary> 從UserID尋找使用者名稱: Name </summary>
+        /// <param name="uid"> 會員User Guid </param>
+        /// <returns> String: 使用者名稱 Name</returns>
+        public static string GetUserLevel(Guid uid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Accountings
+                         where item.UserID == uid
+                         select item);
+
+                    var list = query.ToList();
+
+                    if (list.Count != 0)
+                        return list[0].Level;
+                    else
+                        return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         /// <summary> 全部貼文資料轉換Model後送回Handler </summary>
         /// <returns></returns>
         public static List<PostInfoModel> GetAllPostInfo()
@@ -126,7 +155,7 @@ namespace SystemDBFunction
                     {
                         PostID = obj.PostID,
                         UserID = obj.UserID,
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                         Title = obj.Title,
                         Body = obj.Body
                     }).ToList();
@@ -135,6 +164,7 @@ namespace SystemDBFunction
                 foreach (var item in postSource)
                 {
                     item.Name = GetUserName(item.UserID);
+                    item.Level = GetUserLevel(item.UserID);
                 }
 
                 return postSource;
@@ -181,7 +211,7 @@ namespace SystemDBFunction
                 List<PostInfoModel> postInfo =
                     sourceList.Select(obj => new PostInfoModel()
                     {
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                         Title = obj.Title,
                         Body = obj.Body
                     }).ToList();
@@ -207,7 +237,7 @@ namespace SystemDBFunction
                     sourceList.Select(obj => new MsgInfoModel()
                     {
                         UserID = obj.UserID,
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                         Body = obj.Body
                     }).ToList();
 
@@ -321,7 +351,7 @@ namespace SystemDBFunction
                     {
                         PostID = obj.PostID,
                         UserID = obj.UserID,
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                         Title = obj.Title,
                         Body = obj.Body
                     }).ToList();
@@ -409,7 +439,7 @@ namespace SystemDBFunction
                             MsgID = obj.MsgID,
                             PostID = obj.PostID,
                             UserID = obj.UserID,
-                            CreateDate = obj.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                            CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                             Body = obj.Body
                         }).ToList();
 
