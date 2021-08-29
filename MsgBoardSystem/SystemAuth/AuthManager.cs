@@ -112,6 +112,35 @@ namespace WebAuth
             HttpContext.Current.User = gp; 
             HttpContext.Current.Response.Cookies.Add(cookie);
         }
+
+        /// <summary> 檢查是否為管理者 </summary>
+        /// <param name="uid"></param>
+        /// <returns>True, False </returns>
+        public static bool UserLevelAuthentication(string uid)
+        {
+            try
+            {
+                if(!Guid.TryParse(uid, out Guid userID))
+                    return false;
+
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Accountings
+                         where item.UserID == userID
+                         select item.Level);
+
+                    if (query.ToList()[0] == "Admin")
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #endregion
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebAuth;
 
 namespace MsgBoardWebApp
 {
@@ -20,7 +21,7 @@ namespace MsgBoardWebApp
                 var identity = HttpContext.Current.User.Identity as FormsIdentity; //判讀Identity
                 if (identity != null)
                 {
-                    if (Roles.IsUserInRole(identity.Ticket.UserData, "Admin"))
+                    if(AuthManager.UserLevelAuthentication(identity.Ticket.UserData))
                         this.backSide.Visible = true;
                 }
             }
