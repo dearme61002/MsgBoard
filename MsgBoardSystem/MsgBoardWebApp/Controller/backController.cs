@@ -83,7 +83,30 @@ namespace MsgBoardWebApp
 
         }
 
+        [HttpPost]
+        public List<Model.GetIndex> GetIndex()
+        {
+            #region 從資料庫取出Index
+            using (databaseEF context = new databaseEF())
+            {
+     
+                var cc = from posting in context.Postings
+                         join account in context.Accountings on posting.UserID equals account.UserID
+                         orderby posting.CreateDate descending
+                         select new GetIndex
+                         {
+                             ID = posting.ID,
+                             CreateDate = posting.CreateDate,
+                             Account = account.Account,
+                             Body = posting.Body,
+                             Title = posting.Title
+                         };
+                         
+                return cc.ToList();
+            }
+            #endregion
 
+        }
 
         [HttpPost]
         public List<databaseORM.data.Posting> Getbord([FromBody] string data)
@@ -114,6 +137,39 @@ namespace MsgBoardWebApp
                     ErrorLog log = new ErrorLog() { ID = Convert.ToInt32(dataID) };
                     context.ErrorLogs.Attach(log);
                     context.ErrorLogs.Remove(log);
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "刪除成功";
+                    return apiResult;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "刪除失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
+
+        [HttpPost]
+        public Model.ApiResult DelIndex([FromBody] string dataID)
+        {
+
+            #region 從資料庫刪除ErrorLog紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+                Model.ApiResult apiResult = new Model.ApiResult();
+                try
+                {
+                  
+                    Posting posting = new Posting() { ID = Convert.ToInt32(dataID) };
+                    context.Postings.Attach(posting);
+                    context.Postings.Remove(posting);
                     context.SaveChanges();
                     apiResult.state = 200;
                     apiResult.msg = "刪除成功";

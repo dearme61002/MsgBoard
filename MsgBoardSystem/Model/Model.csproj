@@ -47,6 +47,7 @@
     <Compile Include="ApiResult.cs" />
     <Compile Include="EditArticles.cs" />
     <Compile Include="EditInfoModel.cs" />
+    <Compile Include="GetIndex.cs" />
     <Compile Include="MsgInfoModel.cs" />
     <Compile Include="PostInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
