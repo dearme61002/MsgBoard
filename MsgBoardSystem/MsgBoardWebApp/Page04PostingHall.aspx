@@ -17,18 +17,6 @@
                 ]).draw(false);
             };
 
-            /*
-            var adminPostHtml =
-                `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="list-group-item list-group-item-action list-group-item-info" aria-current="true">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">管理員公告</h5>
-                            <small class="text-muted">建立時間: ${obj.CreateDate}</small>
-                        </div>
-                        <p class="mb-1">${obj.Title}</p>
-                        <small>點擊前往頁面...</small>
-                    </a>`;
-            */
-
             //Get all post's information
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllPost",
