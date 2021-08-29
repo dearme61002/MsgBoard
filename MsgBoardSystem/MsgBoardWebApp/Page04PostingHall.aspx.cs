@@ -13,6 +13,7 @@ namespace MsgBoardWebApp
         //這裡的方法是登陸驗證要判斷isAuth user identity
         protected void Page_Load(object sender, EventArgs e)
         {
+            /*
             bool isAuth = HttpContext.Current.Request.IsAuthenticated;//要否讀取COOKie 有給true
             var user = HttpContext.Current.User;//判讀User
 
@@ -26,12 +27,13 @@ namespace MsgBoardWebApp
                 }
 
                 var userdata = identity.Ticket;
-                 this.ltlMsg.Text = $"User : {user.Identity.Name}, ID : {identity.Ticket.UserData}";
+                this.ltlMsg.Text = $"User : {user.Identity.Name}, ID : {identity.Ticket.UserData}";
             }
             else
             {
                 this.ltlMsg.Text = "Not Login";
             }
+            */
         }
     }
 }

@@ -8,24 +8,50 @@
         $(document).ready(function () {
             var table = $('#PostTable').DataTable();
 
+            // set page form            
             function AddRow(obj) {
                 table.row.add([
                     `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
                     obj.Name,
                     obj.CreateDate
                 ]).draw(false);
-            }
+            };
+
+            /*
+            var adminPostHtml =
+                `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="list-group-item list-group-item-action list-group-item-info" aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">管理員公告</h5>
+                            <small class="text-muted">建立時間: ${obj.CreateDate}</small>
+                        </div>
+                        <p class="mb-1">${obj.Title}</p>
+                        <small>點擊前往頁面...</small>
+                    </a>`;
+            */
+
+            //Get all post's information
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllPost",
                 type: "GET",
                 data: {},
                 success: function (result) {
+                    var AdminPost = "<hr>";
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
-                        if ("Member" == obj.Level) {
-                            AddRow(obj);
+                        
+                        if ("Member" == obj.Level) { AddRow(obj); }
+                        else if ("Admin" == obj.Level) {
+                            AdminPost += `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="list-group-item list-group-item-action list-group-item-info" aria-current="true">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h5 class="mb-1">管理員公告</h5>
+                                                            <small class="text-muted">建立時間: ${obj.CreateDate}</small>
+                                                        </div>
+                                                        <p class="mb-1">${obj.Title}</p>
+                                                        <small>點擊前往頁面...</small>
+                                                    </a>`;
                         }
                     }
+                    $("#adminListBody").append(AdminPost);
                 }
             });
         });
@@ -41,32 +67,7 @@
             </ol>
         </nav>
     </div>
-    <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action list-group-item-info" aria-current="true">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">貼文標題1</h5>
-                <small class="text-muted">3 days ago(時間點)</small>
-            </div>
-            <p class="mb-1">一些內容放這裡....</p>
-            <small>第二段放這裡...</small>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action list-group-item-info">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">貼文標題2</h5>
-                <small class="text-muted">3 days ago(時間點)</small>
-            </div>
-            <p class="mb-1">一些內容放這裡....</p>
-            <small class="text-muted">第二段放這裡...</small>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action list-group-item-info">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">貼文標題3</h5>
-                <small class="text-muted">3 days ago(時間點)</small>
-            </div>
-            <p class="mb-1">一些內容放這裡....</p>
-            <small class="text-muted">第二段放這裡...</small>
-        </a>
-    </div>
+    <div class="list-group" id="adminListBody"><!--公告放這裡--></div>
     <hr class="my-4">
     <table id="PostTable" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
         <thead>
