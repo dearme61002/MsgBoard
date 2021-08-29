@@ -19,7 +19,7 @@
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllPost",
                 type: "GET",
                 data: {},
-                success: function (result) {
+                success: function (result) {              
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
                         AddRow(obj);
