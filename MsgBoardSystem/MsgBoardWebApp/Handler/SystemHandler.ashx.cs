@@ -517,27 +517,32 @@ namespace MsgBoardWebApp.Handler
                     string newPwd = AccountFunction.CreateRandomCode(5, 5, 10);
                     string[] resultMsg = new string[2];
 
-                    // check info is correct
-                    UserInfoModel userInfo = AuthManager.GetInfo(account);
-                    int checkEmail = string.Compare(email, userInfo.Email, false);
-                    int checkDate = string.Compare(birthday, userInfo.Birthday.ToString("yyyy-MM-dd"), false);
-                    int checkResult = checkEmail + checkDate;
-
-                    if(checkResult == 0)
+                    // check account exist
+                    if (AccountFunction.CheckUserByAccount(account) != null)
                     {
-                        // write random string into password
-                        string updateResult = AccountFunction.UpdateUserPwd(userInfo.UserID, account, newPwd);
-                        if (string.Compare(updateResult, "Success", false) == 0)
+                        // check info is correct
+                        UserInfoModel userInfo = AuthManager.GetInfo(account);
+                        int checkEmail = string.Compare(email, userInfo.Email, false);
+                        int checkDate = string.Compare(birthday, userInfo.Birthday.ToString("yyyy-MM-dd"), false);
+                        int checkResult = checkEmail + checkDate;
+
+                        if (checkResult == 0)
                         {
-                            resultMsg[0] = "Success";
-                            resultMsg[1] = "新密碼 : " + newPwd + "，請登入後盡快修改會員密碼"; 
+                            // write random string into password
+                            string updateResult = AccountFunction.UpdateUserPwd(userInfo.UserID, account, newPwd);
+                            if (string.Compare(updateResult, "Success", false) == 0)
+                            {
+                                resultMsg[0] = "Success";
+                                resultMsg[1] = "新密碼 :  " + newPwd + "  請登入後盡快修改會員密碼";
+                            }
+                            else
+                                resultMsg[0] = updateResult;
                         }
                         else
-                            resultMsg[0] = updateResult;
+                            resultMsg[0] = "Email 或 生日日期不符，請重新輸入";
                     }
                     else
-                        resultMsg[0] = "Email 或 生日日期不符，請重新輸入";
-                    
+                        resultMsg[0] = "此帳號不存在，請重新輸入";
 
                     // send to ajax
                     string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);

@@ -74,10 +74,12 @@
                                     }
                                     else {
                                         $("#modalText").text("Auth cookie fail");
+                                        $(".closeBtn").click(function () { noticeModal.hide(); });
                                     }
                                 }
                                 else {
                                     $("#modalText").text(result[0]);
+                                    $(".closeBtn").click(function () { noticeModal.hide(); });
                                 }
                             }
                         });

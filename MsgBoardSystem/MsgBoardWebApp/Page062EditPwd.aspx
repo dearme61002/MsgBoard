@@ -79,6 +79,7 @@
                                     }
                                     else {
                                         $("#modalText").text(result);
+                                        $(".closeBtn").click(function () { noticeModal.hide(); });
                                     }
                                 }
                             });

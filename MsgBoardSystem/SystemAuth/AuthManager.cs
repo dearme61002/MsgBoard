@@ -18,7 +18,7 @@ namespace WebAuth
 
         /// <summary> 從資料庫抓取使用者資料 </summary>
         /// <param name="account"></param>
-        /// <returns></returns>
+        /// <returns>List Accounting 資料</returns>
         public static List<Accounting> GetAccountInfo(string account)
         {
             try
@@ -40,14 +40,13 @@ namespace WebAuth
             }
             catch (Exception)
             {               
-                //Logger.WriteLog(ex);
                 return null;
             }
         }
 
         /// <summary> 取得使用者資料 </summary>
         /// <param name="account"></param>
-        /// <returns></returns>
+        /// <returns>UserInfoModel 資料</returns>
         public static UserInfoModel GetInfo(string account)
         {
             List<Accounting> sourceList = GetAccountInfo(account);

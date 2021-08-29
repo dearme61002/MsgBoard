@@ -49,8 +49,8 @@
         (function () {
             'use strict'
             var forms = document.querySelectorAll('.needs-validation');
-            var redirect = function () { window.location.href = "http://localhost:49461/Page01Default.aspx"; };
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
+            var redirect = function () { window.location.href = "http://localhost:49461/Page01Default.aspx"; };
 
             Array.prototype.slice.call(forms).forEach(function (form) {
                 form.addEventListener('submit', function (login) {
@@ -80,12 +80,13 @@
                                 }
                                 else {
                                     $("#modalText").text(result[0]);
+                                    $(".closeBtn").click(function () { noticeModal.hide(); });
                                 }
                             }
                         });
                     }
                     form.classList.add('was-validated')
-                }, false)
+                }, false),
                 form.addEventListener('reset', function (resetEvn) {
                     $("input:text").val("");
                 }, false)

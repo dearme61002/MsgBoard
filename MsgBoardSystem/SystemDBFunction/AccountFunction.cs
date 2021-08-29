@@ -275,6 +275,34 @@ namespace SystemDBFunction
             // return
             return randomCode;
         }
+
+        /// <summary> 輸入帳號檢查用戶是否存在 </summary>
+        /// <param name="account"></param>
+        /// <returns>Exist : 存在, Null : 不存在</returns>
+        public static string CheckUserByAccount(string account)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Accountings
+                         where item.Account == account
+                         select item);
+
+                    var list = query.ToList();
+
+                    if (list.Count != 0)
+                        return "Exist";
+                    else
+                        return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         #endregion
     }
 }
