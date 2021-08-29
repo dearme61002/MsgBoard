@@ -52,6 +52,29 @@
             });
 
 
+            /*為刪除綁上點擊功能用代理的方式*/
+            $('#tb').on('click', '.edit', function () {
+                var dataID = $(this).attr('dataID');
+                $.ajax({
+                    type: 'POST',
+                    url: 'api/back/DelEditMessage',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dataID),
+                    success: function (res) {
+                        if (res.state !== 200) {
+                            return alert(res.msg);
+                        }
+                        getAlldata();
+                        alert(res.msg);
+                    },
+                    error: function (res) {
+                        return alert(res.msg);
+                    }
+
+                })
+            });
+
+
         })
     </script>
 

@@ -184,6 +184,41 @@ namespace MsgBoardWebApp
 
         }
 
+        public Model.ApiResult DelEditMessage([FromBody] string dataID)
+        {
+
+            #region 從資料庫刪除Posting紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+                Model.ApiResult apiResult = new Model.ApiResult();
+                try
+                {
+                    int id = Convert.ToInt32(dataID);
+                   string today=  DateTime.Now.ToString("yyyy-MM-dd");
+                     string timeNow=  DateTime.Now.ToShortTimeString().ToString();
+                    Message message = context.Messages.Where(x => x.ID == id).FirstOrDefault();
+                    message.Body = "已被管理者刪除於日期:" + today + "時間" + timeNow + "刪除";
+                    
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "刪除內文成功";
+                    return apiResult;
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "刪除內文成功失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
+
         [HttpPost]
         public Model.ApiResult DelMember([FromBody] string dataID)
         {
