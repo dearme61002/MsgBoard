@@ -44,7 +44,7 @@ namespace MsgBoardWebApp
         [HttpPost]
         public List<Model.EditArticles> GetEditArticles()
         {
-            #region 從資料庫取出EditAccounting紀錄
+            #region 從資料庫取出Articles
             using (databaseEF context = new databaseEF())
             {
                 var cc = from message in context.Messages
@@ -153,7 +153,36 @@ namespace MsgBoardWebApp
 
         }
 
+        public Model.ApiResult DelMessage([FromBody] string dataID)
+        {
 
+            #region 從資料庫刪除Posting紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+                Model.ApiResult apiResult = new Model.ApiResult();
+                try
+                {
+                    Message message = new Message() { ID = Convert.ToInt32(dataID) };
+                    context.Messages.Attach(message);
+                    context.Messages.Remove(message);
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "刪除成功";
+                    return apiResult;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "刪除失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
 
         [HttpPost]
         public Model.ApiResult DelMember([FromBody] string dataID)
