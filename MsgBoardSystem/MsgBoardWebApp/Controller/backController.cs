@@ -28,6 +28,20 @@ namespace MsgBoardWebApp
             #endregion
 
         }
+
+        [HttpPost]
+        public List<databaseORM.data.Swear> GetSwear()
+        {
+            #region 從資料庫取出ErrorLog紀錄
+            using (databaseEF context = new databaseEF())
+            {
+                List<databaseORM.data.Swear> cc = context.Swears.ToList();
+                return cc;
+            }
+            #endregion
+
+        }
+
         [HttpPost]
         public List<databaseORM.data.Accounting> GetEditMember()
         {
@@ -100,6 +114,40 @@ namespace MsgBoardWebApp
                     ErrorLog log = new ErrorLog() { ID = Convert.ToInt32(dataID) };
                     context.ErrorLogs.Attach(log);
                     context.ErrorLogs.Remove(log);
+                    context.SaveChanges();
+                    apiResult.state = 200;
+                    apiResult.msg = "刪除成功";
+                    return apiResult;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    apiResult.state = 404;
+                    apiResult.msg = "刪除失敗";
+                    return apiResult;
+
+                }
+
+            }
+            #endregion
+
+        }
+
+
+        [HttpPost]
+        public Model.ApiResult DelSwear([FromBody] string dataID)
+        {
+
+            #region 從資料庫刪除ErrorLog紀錄透過dataID
+            using (databaseEF context = new databaseEF())
+            {
+                Model.ApiResult apiResult = new Model.ApiResult();
+                try
+                {
+                    
+                    Swear swear = new Swear() { ID = Convert.ToInt32(dataID) };
+                    context.Swears.Attach(swear);
+                    context.Swears.Remove(swear);
                     context.SaveChanges();
                     apiResult.state = 200;
                     apiResult.msg = "刪除成功";
@@ -762,7 +810,7 @@ namespace MsgBoardWebApp
             if (!replace.IsMatch(addData))
             {
                 apiResult.state = 404;
-                apiResult.msg = "標題資料格式錯誤";
+                apiResult.msg = "輸入框為空無法增加資料";
                 return apiResult;
             }
 

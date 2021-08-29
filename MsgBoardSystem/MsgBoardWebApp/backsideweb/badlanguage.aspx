@@ -5,8 +5,31 @@
     <script>
         $(function () {
 
+            /*初始化資料*/
+            function getAlldata() {
+                $.ajax({
+                    type: 'POST',
+                    url: 'api/back/GetSwear',
+                    success: function (res) {
+                        var rows = [];
+                        $.each(res, function (i, item) {
+                           
+                            /*dataID是我自定義的屬性用來查ID用的*/
+                            rows.push('<tr><td>' + (i + 1) + '</td><td>' + item.Body + '</td><td><a href="javascript:;"class="del" dataID="' + item.ID + '">刪除</a></td></tr>');
+                        })
+                        var dd = rows.join('');
+                        $('#tb').empty().append(rows.join(''));
 
 
+                    },
+                    error: function () {
+                        alert('獲取資料失敗');
+                    }
+                }
+                )
+            }
+            getAlldata();
+            /*初始化資料*/
             /*驗證表單增加按鈕*/
             /*檢驗*/
             document.querySelector('#topTitle').addEventListener('blur', validatetopTitle);
@@ -49,7 +72,7 @@
                         if (res.state !== 200) {
                             return alert(res.msg);
                         }
-                       /* getAlldata();*/
+                        getAlldata();
                         alert(res.msg);
                     },
                     error: function (res) {
@@ -66,6 +89,30 @@
 
             /*  Topadd Modal js*/
             /*驗證表單增加按鈕*/
+
+
+            /*為刪除綁上點擊功能用代理的方式*/
+            $('#tb').on('click', '.del', function () {
+                var dataID = $(this).attr('dataID');
+                $.ajax({
+                    type: 'POST',
+                    url: 'api/back/DelSwear',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dataID),
+                    success: function (res) {
+                        if (res.state !== 200) {
+                            return alert('刪除資料失敗');
+                        }
+                        getAlldata();
+                        alert(res.msg);
+                    },
+                    error: function (res) {
+                        return alert('刪除資料失敗');
+                    }
+
+                })
+            });
+
 
         })
     </script>
@@ -92,4 +139,17 @@
             </div>
         </form>
     </div>
+    <%--內文製作--%>
+    <%--圖表--%>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+              
+                <th>#</th>
+                <th>關鍵字</th>              
+                <th>刪除</th>
+            </tr>
+        </thead>
+        <tbody id="tb"></tbody>
+    </table>
 </asp:Content>
