@@ -8,6 +8,7 @@ using System.Web.Http;
 using databaseORM;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using Model;
 
 namespace MsgBoardWebApp
 {
@@ -39,6 +40,36 @@ namespace MsgBoardWebApp
             #endregion
 
         }
+
+        [HttpPost]
+        public List<Model.EditArticles> GetEditArticles()
+        {
+            #region 從資料庫取出EditAccounting紀錄
+            using (databaseEF context = new databaseEF())
+            {
+                var cc = from message in context.Messages
+                         join account in context.Accountings on message.UserID equals account.UserID
+                         join posting in context.Postings on message.PostID equals posting.PostID
+                         orderby message.CreateDate descending
+                         select new EditArticles
+                         {
+                             Name = account.Name,
+                             CreateDate = message.CreateDate,
+                             Account = account.Account,
+                             UserID = message.UserID,
+                             Title = posting.Title,
+                             Body = message.Body,
+                             ID = message.ID,
+
+                         };
+
+                return cc.ToList();
+            }
+            #endregion
+
+        }
+
+
 
         [HttpPost]
         public List<databaseORM.data.Posting> Getbord([FromBody] string data)
