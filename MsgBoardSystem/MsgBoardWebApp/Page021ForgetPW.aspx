@@ -27,6 +27,17 @@
                 </div>
             </div>
         </div>
+        <div class="row mb-3">
+            <div class="col-2 text-center">
+                <label for="forgetBirthday" class="form-label">生日 : </label>
+            </div>
+            <div class="col-4">
+                <input type="date" class="form-control" id="forgetBirthday" value="" required>
+                <div class="invalid-feedback">
+                    生日日期格式錯誤!
+                </div>
+            </div>
+        </div>
         <div class="col-12">
             <button class="btn btn-outline-primary" type="submit">送出</button>
             <button class="btn btn-outline-secondary" type="reset">清除</button>
@@ -37,8 +48,9 @@
     <script>
         (function () {
             'use strict'
-
-            var forms = document.querySelectorAll('.needs-validation')
+            var forms = document.querySelectorAll('.needs-validation');
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
+            var redirect = function () { window.location.href = "http://localhost:49461/Page01Default.aspx"; };
 
             Array.prototype.slice.call(forms).forEach(function (form) {
                 form.addEventListener('submit', function (login) {
@@ -47,12 +59,34 @@
                         event.stopPropagation()
                     }
                     else {
-                        alert("送出成功 請檢查Email郵件");
-                        event.preventDefault()
-                        window.location.href = "http://localhost:49461/Page01Default.aspx";
+                        var account = $("#forgetAcc").val();
+                        var email = $("#forgetEmail").val();
+                        var birthday = $("#forgetBirthday").val();
+
+                        event.preventDefault();
+                        $.ajax({
+                            url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=ForgetPW",
+                            type: "POST",
+                            data: {
+                                "Account": account,
+                                "Email": email,
+                                "Birthday": birthday
+                            },
+                            success: function (result) {
+                                noticeModal.show();
+                                if ("Success" == result[0]) {
+                                    $(".modal-body").append(result[1]);
+                                    $(".closeBtn").click(function () { redirect(); });
+                                }
+                                else {
+                                    $("#modalText").text(result[0]);
+                                    $(".closeBtn").click(function () { noticeModal.hide(); });
+                                }
+                            }
+                        });
                     }
                     form.classList.add('was-validated')
-                }, false)
+                }, false),
                 form.addEventListener('reset', function (resetEvn) {
                     $("input:text").val("");
                 }, false)

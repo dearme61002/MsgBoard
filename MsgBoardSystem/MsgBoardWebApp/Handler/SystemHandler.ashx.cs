@@ -31,38 +31,48 @@ namespace MsgBoardWebApp.Handler
             // 登入驗證
             if (actionName == "Login")
             {
-                var get_acc = context.Request.Form["Account"];
-                var get_pwd = context.Request.Form["Password"];
-                string acc = Convert.ToString(get_acc);
-                string pwd = Convert.ToString(get_pwd);
-
-                string statusMsg = string.Empty;
-
-                List<UserInfoModel> userInfo = AuthManager.GetInfo(acc);
-
-                if (userInfo != null)
+                try
                 {
-                    if (string.Compare(pwd, userInfo[0].Password, false) == 0)
+                    var get_acc = context.Request.Form["Account"];
+                    var get_pwd = context.Request.Form["Password"];
+                    string acc = Convert.ToString(get_acc);
+                    string pwd = Convert.ToString(get_pwd);
+
+                    string[] statusMsg = new string[2];
+
+                    UserInfoModel userInfo = AuthManager.GetInfo(acc);
+
+                    if (userInfo != null)
                     {
-                        // 登入驗證
-                        AuthManager.LoginAuthentication(userInfo[0]);
-                        context.Session["UID"] = userInfo[0].UserID;
-                        statusMsg = "Success";
+                        if (string.Compare(pwd, userInfo.Password, false) == 0)
+                        {
+                            // 登入驗證
+                            AuthManager.LoginAuthentication(userInfo);
+                            context.Session["UID"] = userInfo.UserID;
+                            statusMsg[0] = "Success";
+                            statusMsg[1] = userInfo.Name;
+                        }
+                        else
+                        {
+                            statusMsg[0] = "密碼錯誤";
+                        }
                     }
                     else
                     {
-                        statusMsg = "密碼錯誤";
+                        statusMsg[0] = "用戶不存在";
                     }
-                }
-                else
-                {
-                    statusMsg = "用戶不存在";
-                }
 
-                // throw statusMsg
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(statusMsg);
-                context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
+                    // throw statusMsg
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(statusMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(ex.ToString());
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
             }
             // ajax呼叫後傳送Session UID
             else if (actionName == "GetSession")
@@ -71,7 +81,7 @@ namespace MsgBoardWebApp.Handler
                 context.Response.ContentType = "application/json";
                 context.Response.Write(jsonText);
             }
-            // 從DB取得貼文資料
+            // 從DB取得全部貼文資料
             else if (actionName == "GetAllPost")
             {
                 List<PostInfoModel> allPostInfo = PostManager.GetAllPostInfo();
@@ -486,6 +496,55 @@ namespace MsgBoardWebApp.Handler
                         resultMsg = PostManager.UserDeleteMsg(uid, mid);
                     else
                         resultMsg = "Param UID or Ajax MID Error";
+
+                    // send to ajax
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            // 忘記密碼
+            else if (actionName == "ForgetPW")
+            {
+                try
+                {
+                    // set values
+                    string account = context.Request.Form["Account"];
+                    string email = context.Request.Form["Email"];
+                    string birthday = context.Request.Form["Birthday"];
+                    string newPwd = AccountFunction.CreateRandomCode(5, 5, 10);
+                    string[] resultMsg = new string[2];
+
+                    // check account exist
+                    if (AccountFunction.CheckUserByAccount(account) != null)
+                    {
+                        // check info is correct
+                        UserInfoModel userInfo = AuthManager.GetInfo(account);
+                        int checkEmail = string.Compare(email, userInfo.Email, false);
+                        int checkDate = string.Compare(birthday, userInfo.Birthday.ToString("yyyy-MM-dd"), false);
+                        int checkResult = checkEmail + checkDate;
+
+                        if (checkResult == 0)
+                        {
+                            // write random string into password
+                            string updateResult = AccountFunction.UpdateUserPwd(userInfo.UserID, account, newPwd);
+                            if (string.Compare(updateResult, "Success", false) == 0)
+                            {
+                                resultMsg[0] = "Success";
+                                resultMsg[1] = "<p>新密碼 :  " + newPwd + "</p><p>請登入後盡快修改會員密碼</p>";
+                            }
+                            else
+                                resultMsg[0] = updateResult;
+                        }
+                        else
+                            resultMsg[0] = "Email 或 生日日期不符，請重新輸入";
+                    }
+                    else
+                        resultMsg[0] = "此帳號不存在，請重新輸入";
 
                     // send to ajax
                     string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);

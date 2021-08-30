@@ -47,7 +47,10 @@
     <script>
         (function () {
             'use strict'
-            var forms = document.querySelectorAll('.needs-validation')
+            var forms = document.querySelectorAll('.needs-validation');
+            var redirect = function () { window.location.href = "http://localhost:49461/Page01Default.aspx"; };
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
+
             Array.prototype.slice.call(forms)
                 .forEach(function (form) {
                     form.addEventListener('submit', function (event) {
@@ -74,12 +77,14 @@
                                     "BirthDay": birthday
                                 },
                                 success: function (result) {
+                                    noticeModal.show();
                                     if ("Success" == result) {
-                                        alert("註冊成功!! 轉跳至首頁")
-                                        window.location.href = "http://localhost:49461/Page01Default.aspx";
+                                        $("#modalText").text("註冊成功!! 轉跳至首頁");
+                                        $(".closeBtn").click(function () { redirect(); });
                                     }
                                     else {
-                                        alert(result);
+                                        $("#modalText").text(result);
+                                        $(".closeBtn").click(function () { noticeModal.hide(); });
                                     }
                                 }
                             });

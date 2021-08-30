@@ -9,6 +9,7 @@ namespace databaseORM.data
     [Table("Swear")]
     public partial class Swear
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [Required]

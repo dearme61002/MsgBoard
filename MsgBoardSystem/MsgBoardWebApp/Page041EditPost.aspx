@@ -1,21 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page041EditPost.aspx.cs" Inherits="MsgBoardWebApp.Page041EditPost" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script>
-        // This is for session test record, you can delete this script
-        /*
-        var uid;
-        $(document).ready(function () {
-            $.ajax({
-                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetSession",
-                type: "GET",
-                success: function (result) {
-                    uid = result;
-                }
-            });
-        });
-        */
-    </script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -54,7 +39,9 @@
         (function () {
             'use strict'
 
-            var forms = document.querySelectorAll('.needs-validation')
+            var forms = document.querySelectorAll('.needs-validation');
+            var redirect = function () { window.location.href = "http://localhost:49461/Page04PostingHall.aspx"; };
+            var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms)
                 .forEach(function (form) {
@@ -76,12 +63,14 @@
                                     "Body": body,
                                 },
                                 success: function (result) {
+                                    noticeModal.show();
                                     if ("Success" == result) {
-                                        alert("貼文建立成功!")
-                                        window.location.href = "http://localhost:49461/Page04PostingHall.aspx";
+                                        $("#modalText").text("貼文建立成功!");
+                                        $(".closeBtn").click(function () { redirect(); });
                                     }
                                     else {
-                                        alert(result);
+                                        $("#modalText").text(result);
+                                        $(".closeBtn").click(function () { noticeModal.hide(); });
                                     }
                                 }
                             });

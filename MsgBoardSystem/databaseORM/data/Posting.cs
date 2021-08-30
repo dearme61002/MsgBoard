@@ -9,12 +9,14 @@ namespace databaseORM.data
     [Table("Posting")]
     public partial class Posting
     {
+       
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public Guid PostID { get; set; }
 
         public Guid UserID { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreateDate { get; set; }
 
         [Required]
@@ -23,7 +25,7 @@ namespace databaseORM.data
 
         [StringLength(4000)]
         public string Body { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public bool ismaincontent { get; set; }
     }
 }

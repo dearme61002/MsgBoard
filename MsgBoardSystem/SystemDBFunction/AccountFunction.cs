@@ -28,7 +28,7 @@ namespace SystemDBFunction
 
                     var list = query.ToList();
 
-                    if(list.Count() != 0)
+                    if (list.Count() != 0)
                     {
                         return "帳號已存在!";
                     }
@@ -246,6 +246,61 @@ namespace SystemDBFunction
             catch (Exception ex)
             {
                 return ex.ToString();
+            }
+        }
+        #endregion
+
+        #region Forget Password Function
+
+        /// <summary>產生亂數字串</summary>
+        /// <param name="charCount">英文字碼數目</param>
+        /// <param name="codeCount">英數字碼數目</param>
+        /// <param name="extCount">延展長度數目</param>
+        public static string CreateRandomCode(int charCount, int codeCount, int extCount, int seed = 0)
+        {
+            string allChar = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,0,1,2,3,4,5,6,7,8,9";
+            string[] allCharArray = allChar.Split(',');
+            string randomCode = "";
+
+            Random rand = new Random((int)DateTime.Now.Ticks + seed);
+
+            // 產生英文字碼
+            for (int i = 0; i < charCount; i++)
+                randomCode += allCharArray[rand.Next() % 52];
+
+            // 產生英數字碼
+            for (int i = 0; i < codeCount + rand.Next() % (extCount + 1); i++)
+                randomCode += allCharArray[rand.Next() % 62];
+
+            // return
+            return randomCode;
+        }
+
+        /// <summary> 輸入帳號檢查用戶是否存在 </summary>
+        /// <param name="account"></param>
+        /// <returns>Exist : 存在, Null : 不存在</returns>
+        public static string CheckUserByAccount(string account)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Accountings
+                         where item.Account == account
+                         select item);
+
+                    var list = query.ToList();
+
+                    if (list.Count != 0)
+                        return "Exist";
+                    else
+                        return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
         #endregion
