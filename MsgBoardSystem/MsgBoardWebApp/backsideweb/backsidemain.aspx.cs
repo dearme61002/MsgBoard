@@ -13,12 +13,7 @@ namespace MsgBoardWebApp.backsideweb
     
         protected void Page_Load(object sender, EventArgs e)
         {
-
-          List<string> dd=  DAL.tools.getSwear();
-            if (dd.Count > 5)
-            {
-
-            }
+           
                 
         }
     }
