@@ -76,7 +76,7 @@ namespace DAL
         {
             //獲得錯誤代碼
             string Message = "";
-           
+
             Message = "{0}錯誤訊息:{1}堆疊內容:{2}";
             Message = String.Format(Message, Environment.NewLine, ex.GetBaseException().Message + Environment.NewLine, Environment.NewLine + ex.StackTrace);
             //以下要寫出錯誤代碼並導入置資料庫
@@ -95,7 +95,6 @@ namespace DAL
                 Console.WriteLine("LOG寫入問題");
             }
         }
-
 
 
     }

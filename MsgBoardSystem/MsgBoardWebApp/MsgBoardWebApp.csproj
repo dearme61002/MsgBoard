@@ -539,6 +539,7 @@
     <Content Include="backsideweb\editmember.aspx" />
     <Content Include="backsideweb\errorlog.aspx" />
     <Content Include="backsideweb\index.aspx" />
+    <Content Include="backsideweb\info.aspx" />
     <Content Include="backsideweb\passwordchange.aspx" />
     <Content Include="Bootstrap\css\bootstrap-grid.css" />
     <Content Include="Bootstrap\css\bootstrap-grid.min.css" />
@@ -631,6 +632,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="backsideweb\info.aspx.cs">
+      <DependentUpon>info.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\info.aspx.designer.cs">
+      <DependentUpon>info.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Controller\backController.cs" />
     <Compile Include="backsideweb\backside.Master.cs">
       <DependentUpon>backside.Master</DependentUpon>
