@@ -7,45 +7,41 @@
         }
    
     </style>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllPost",
+                type: "GET",
+                data: {},
+                success: function (result) {
+                    var table = '<table class="table table-striped">';
+                    table += '<tr> <th>Title</th> <th>Name</th>  <th>CreateDate</th>  </tr>';
+
+                    for (var i = 0; i < 10; i++) {
+                        var obj = result[i];
+                        var htmlText =
+                            `<tr> 
+                                <td><a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}</a></td>
+                                <td>${obj.Name}</td>
+                                <td>${obj.CreateDate}</td>
+                            </tr>`;
+                        table += htmlText;
+                    }
+
+                    table += "</table>";
+                    $("#divPostList").append(table);
+                }
+            });
+
+        });
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
         <div class="row">
             <div class="col-7">
                 <h1 class="display-4 text-center alert-danger">熱門焦點</h1>
-
-                <table class="table table-striped">
-                    <tr>
-                        <td><a href="#">1. (主題)貼文標題 發文者 時間</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">2. (主題)貼文標題 發文者 時間</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">3. (主題)貼文標題 發文者 時間</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">4. (主題)貼文標題 發文者 時間</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">5. (主題)貼文標題 發文者 時間</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">6. (主題)貼文標題 發文者 時間</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">7. (主題)貼文標題 發文者 時間</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">8. (主題)貼文標題 發文者 時間</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">9. (主題)貼文標題 發文者 時間</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">10. (主題)貼文標題 發文者 時間</a></td>
-                    </tr>
-                </table>
+                <div id="divPostList"></div>
             </div>
             <div class="col-5">
                 <img class="img-fluid" src="Img/udon.png" />
