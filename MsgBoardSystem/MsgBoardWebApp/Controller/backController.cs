@@ -32,6 +32,73 @@ namespace MsgBoardWebApp
         }
 
         [HttpPost]
+        public info Getinfo([FromBody] string data)
+        {
+            JObject myjsonData = JObject.Parse(data);
+            string date = myjsonData["date"].ToString();
+            string date2 = myjsonData["date2"].ToString();
+            DateTime dateTime1 = Convert.ToDateTime(date);
+            DateTime dateTime2 = Convert.ToDateTime(date2);
+
+            Regex regexdate = new Regex(@"^((19|20)?[0-9]{2}[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01]))*$");
+            info info = new info();
+
+            if (dateTime2 < dateTime1)
+            {
+                info.msg = "日期資料大小錯誤";
+                return info;
+            }
+            long days = (dateTime2 - dateTime1).Days + 1;
+
+            if (!regexdate.IsMatch(date))
+            {
+
+                info.msg = "資料格式錯誤";
+                return info;
+            }
+            if (!regexdate.IsMatch(date2))
+            {
+
+                info.msg = "資料格式錯誤";
+                return info;
+            }
+
+            try
+            {
+                string ARP = "SELECT sum(RegisteredPeople) as AllRegisteredPeople FROM Info WHERE CreateDate BETWEEN @timeOne AND @timeTwo";
+                SqlParameter[] ARPsqls = new SqlParameter[]
+                {
+                new SqlParameter("@timeOne",date),
+                new SqlParameter("@timeTwo",date2)
+                };
+                info.AllRegisteredPeople = Convert.ToInt32(sqlhelper.executeScalarsql(ARP, ARPsqls, false));
+
+                string APO = "SELECT sum(PeopleOnline) as AllPeopleOnline FROM Info WHERE CreateDate BETWEEN @timeOne AND @timeTwo";
+                SqlParameter[] APOsqls = new SqlParameter[]
+                {
+                new SqlParameter("@timeOne",date),
+                new SqlParameter("@timeTwo",date2)
+                };
+                info.AllPeopleOnline = Convert.ToInt32(sqlhelper.executeScalarsql(APO, APOsqls, false));
+                long a = info.AllPeopleOnline;
+                long b = info.AllRegisteredPeople;
+              
+                info.avgPeopleOnline = Math.Round((decimal)a / days,3);
+                info.avgRegisteredPeople = Math.Round((decimal) b/ days,3);
+                info.msg = "獲取資料成功";
+                return info;
+            }
+            catch (Exception)
+            {
+
+                info.msg = "獲取資料失敗";
+                return info;
+            }
+
+
+        }
+
+        [HttpPost]
         public List<databaseORM.data.Swear> GetSwear()
         {
             #region 從資料庫取出ErrorLog紀錄
@@ -93,7 +160,7 @@ namespace MsgBoardWebApp
             {
 
                 List<databaseORM.data.Posting> cc = context.Postings.OrderByDescending(x => x.CreateDate).ToList();
-         
+
 
 
 
@@ -162,7 +229,7 @@ namespace MsgBoardWebApp
                 Model.ApiResult apiResult = new Model.ApiResult();
                 try
                 {
-                  
+
                     Posting posting = new Posting() { ID = Convert.ToInt32(dataID) };
                     context.Postings.Attach(posting);
                     context.Postings.Remove(posting);
@@ -196,7 +263,7 @@ namespace MsgBoardWebApp
                 Model.ApiResult apiResult = new Model.ApiResult();
                 try
                 {
-                    
+
                     Swear swear = new Swear() { ID = Convert.ToInt32(dataID) };
                     context.Swears.Attach(swear);
                     context.Swears.Remove(swear);
@@ -294,11 +361,11 @@ namespace MsgBoardWebApp
                 try
                 {
                     int id = Convert.ToInt32(dataID);
-                   string today=  DateTime.Now.ToString("yyyy-MM-dd");
-                     string timeNow=  DateTime.Now.ToShortTimeString().ToString();
+                    string today = DateTime.Now.ToString("yyyy-MM-dd");
+                    string timeNow = DateTime.Now.ToShortTimeString().ToString();
                     Message message = context.Messages.Where(x => x.ID == id).FirstOrDefault();
                     message.Body = "已被管理者刪除於日期:" + today + "時間" + timeNow + "刪除";
-                    
+
                     context.SaveChanges();
                     apiResult.state = 200;
                     apiResult.msg = "刪除內文成功";
@@ -911,7 +978,7 @@ namespace MsgBoardWebApp
 
             JObject myjsonData = JObject.Parse(data);
             string addData = myjsonData["addData"].ToString();
-       
+
 
             Model.ApiResult apiResult = new Model.ApiResult();
 
@@ -931,7 +998,7 @@ namespace MsgBoardWebApp
                 try
                 {
 
-                  
+
                     Swear swear = new Swear();
                     swear.Body = addData;
 
