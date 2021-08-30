@@ -28,6 +28,7 @@ namespace MsgBoardWebApp.Handler
                 context.Response.End();
             }
 
+            #region Function List
             // 登入驗證
             if (actionName == "Login")
             {
@@ -98,17 +99,17 @@ namespace MsgBoardWebApp.Handler
             // 取得貼文內容
             else if (actionName == "GetPostInfo")
             {
-                // 從ajax取得PID
-                var ajaxPID = context.Request.Form["PID"];
-                if (!Guid.TryParse(ajaxPID, out Guid pid))
-                {
-                    context.Response.Write("Pid Error");
-                    context.Response.End();
-                    return;
-                }
-
                 try
                 {
+                    // 從ajax取得PID
+                    var ajaxPID = context.Request.Form["PID"];
+                    if (!Guid.TryParse(ajaxPID, out Guid pid))
+                    {
+                        context.Response.Write("Pid Error");
+                        context.Response.End();
+                        return;
+                    }
+
                     // 取得貼文資料
                     List<PostInfoModel> postInfo = PostManager.GetOnePostInfo(pid);
 
@@ -200,27 +201,30 @@ namespace MsgBoardWebApp.Handler
             // 建立貼文
             else if (actionName == "NewPost")
             {
-                // Get value from ajax
-                string title = context.Request.Form["Title"];
-                string body = context.Request.Form["Body"];
-                string strUID = context.Session["UID"].ToString();
-                string responseMsg = string.Empty;
-
-                if (!Guid.TryParse(strUID, out Guid UID))
-                {
-                    responseMsg = "Session UID Error";
-                }
-
-                // set value to object and write into DB
                 try
                 {
+                    // Get value from ajax
+                    string title = context.Request.Form["Title"];
+                    string body = context.Request.Form["Body"];
+                    string strUID = context.Session["UID"].ToString();
+                    string responseMsg = string.Empty;
+
+                    // Check Guid
+                    if (!Guid.TryParse(strUID, out Guid UID))
+                        responseMsg = "Session UID Error";
+
+                    // Check body and title string is no swear
+                    string checkedTitle = DAL.tools.myTextCheck(title, DAL.tools.getSwear());
+                    string checkedBody = DAL.tools.myTextCheck(body, DAL.tools.getSwear());
+
+                    // set value to object and write into DB
                     Posting postInfo = new Posting()
                     {
                         PostID = Guid.NewGuid(),
                         UserID = UID,
                         CreateDate = DateTime.Now,
-                        Title = title,
-                        Body = body,
+                        Title = checkedTitle,
+                        Body = checkedBody,
                         ismaincontent = false
                     };
 
@@ -245,33 +249,32 @@ namespace MsgBoardWebApp.Handler
             // 建立留言
             else if (actionName == "NewMsg")
             {
-                // Get value from ajax
-                string body = context.Request.Form["Body"];
-                string strPID = context.Request.Form["PID"];
-                string strUID = context.Session["UID"].ToString();
-                string responseMsg = string.Empty;
-
-                // check guid
-                if (!Guid.TryParse(strUID, out Guid uid))
-                {
-                    responseMsg = "Param UID Error";
-                }
-
-                if (!Guid.TryParse(strPID, out Guid pid))
-                {
-                    responseMsg = "Param PID Error";
-                }
-
-                // set value to object and write into DB
                 try
                 {
+                    // Get value from ajax
+                    string body = context.Request.Form["Body"];
+                    string strPID = context.Request.Form["PID"];
+                    string strUID = context.Session["UID"].ToString();
+                    string responseMsg = string.Empty;
+
+                    // check Guid Values
+                    if (!Guid.TryParse(strUID, out Guid uid))
+                        responseMsg = "Param UID Error";
+
+                    if (!Guid.TryParse(strPID, out Guid pid))
+                        responseMsg = "Param PID Error";
+
+                    // Check message string is no swear
+                    string checkedBody= DAL.tools.myTextCheck(body, DAL.tools.getSwear());
+
+                    // set value to object and write into DB
                     Message msgInfo = new Message()
                     {
                         MsgID = Guid.NewGuid(),
                         PostID = pid,
                         UserID = uid,
                         CreateDate = DateTime.Now,
-                        Body = body,
+                        Body = checkedBody,
                     };
 
                     // check UID and PID is correct and user is exist
@@ -288,15 +291,15 @@ namespace MsgBoardWebApp.Handler
                         // Have error
                         responseMsg = "Exception Error";
                     }
+
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
-
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
-                context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
             }
             // 取得會員資料
             else if(actionName == "GetEditInfo")
@@ -561,6 +564,7 @@ namespace MsgBoardWebApp.Handler
                     throw ex;
                 }
             }
+            #endregion
         }
 
         public bool IsReusable

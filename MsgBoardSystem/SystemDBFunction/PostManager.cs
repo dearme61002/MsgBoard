@@ -451,7 +451,7 @@ namespace SystemDBFunction
                         if (checkPostExist != null)
                             item.PostTile = checkPostExist;
                         else
-                            item.PostTile = "貼文已被刪除";
+                            item.PostTile = "**貼文已被刪除**";
                     }
 
                     return msgSource;
@@ -489,7 +489,7 @@ namespace SystemDBFunction
 
                     var deletePostMsg =
                         $@"
-                            DELETE FROM [dbo].[Messages]
+                            DELETE FROM [dbo].[Message]
                             WHERE [PostID] = '{pid}'
                         ";
                     context.Database.ExecuteSqlCommand(deletePostMsg);

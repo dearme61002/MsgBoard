@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form class="row g-3 needs-validation" novalidate>
-        <h2>忘記密碼</h2>
+        <p class="fs-2 fw-bold">忘記密碼</p>
         <div class="row mb-3">
             <div class="col-2 text-center">
                 <label for="forgetAcc" class="form-label">帳號 : </label>
@@ -50,7 +50,7 @@
             'use strict'
             var forms = document.querySelectorAll('.needs-validation');
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
-            var redirect = function () { window.location.href = "http://localhost:49461/Page01Default.aspx"; };
+            var redirect = function () { window.location.href = "Page01Default.aspx"; };
 
             Array.prototype.slice.call(forms).forEach(function (form) {
                 form.addEventListener('submit', function (login) {
@@ -65,7 +65,7 @@
 
                         event.preventDefault();
                         $.ajax({
-                            url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=ForgetPW",
+                            url: "/Handler/SystemHandler.ashx?ActionName=ForgetPW",
                             type: "POST",
                             data: {
                                 "Account": account,

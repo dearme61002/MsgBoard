@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form class="row g-3 needs-validation" novalidate>
-        <h2>會員登入</h2>
+        <p class="fs-2 fw-bold">會員登入</p>
         <div class="row mb-3">
             <div class="col-2 text-center">
                 <label for="txtAcc" class="form-label">帳號 : </label>

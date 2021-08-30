@@ -5,7 +5,7 @@
         var testVal;
         $(document).ready(function () {
             $.ajax({
-                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetEditInfo",
+                url: "/Handler/SystemHandler.ashx?ActionName=GetEditInfo",
                 type: "GET",
                 data: {},
                 success: function (result) {
@@ -91,7 +91,7 @@
         (function () {
             'use strict'
             var forms = document.querySelectorAll('.needs-validation');
-            var redirect = function () { window.location.href = "http://localhost:49461/Page06MemberCenter.aspx"; }
+            var redirect = function () { window.location.href = "Page06MemberCenter.aspx"; }
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms)
@@ -109,7 +109,7 @@
 
                             event.preventDefault();
                             $.ajax({
-                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UpdateInfo",
+                                url: "/Handler/SystemHandler.ashx?ActionName=UpdateInfo",
                                 type: "POST",
                                 data: {
                                     "Name": name,

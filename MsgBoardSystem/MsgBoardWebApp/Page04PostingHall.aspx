@@ -11,7 +11,7 @@
             // set page form            
             function AddRow(obj) {
                 table.row.add([
-                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
+                    `<a href="Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
                     obj.Name,
                     obj.CreateDate
                 ]).draw(false);
@@ -19,7 +19,7 @@
 
             //Get all post's information
             $.ajax({
-                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllPost",
+                url: "/Handler/SystemHandler.ashx?ActionName=GetAllPost",
                 type: "GET",
                 data: {},
                 success: function (result) {
