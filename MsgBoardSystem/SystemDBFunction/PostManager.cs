@@ -415,9 +415,9 @@ namespace SystemDBFunction
                     return list[0].Title;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return null;
             }
         }
 
@@ -440,14 +440,18 @@ namespace SystemDBFunction
                             PostID = obj.PostID,
                             UserID = obj.UserID,
                             CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                            Body = obj.Body
+                            Body = obj.Body,
+                            Name = GetUserName(obj.UserID)
                         }).ToList();
 
-                    // 用UID比對查詢，並寫入User Name
+                    // 檢查Post是否存在
                     foreach (var item in msgSource)
                     {
-                        item.Name = GetUserName(item.UserID);
-                        item.PostTile = GetPostTitle(item.PostID);
+                        string checkPostExist = GetPostTitle(item.PostID);
+                        if (checkPostExist != null)
+                            item.PostTile = checkPostExist;
+                        else
+                            item.PostTile = "貼文已被刪除";
                     }
 
                     return msgSource;
@@ -476,12 +480,20 @@ namespace SystemDBFunction
             {
                 using (databaseEF context = new databaseEF())
                 {
-                    var query =
+                    var deletePost =
                         $@"
                             DELETE FROM [dbo].[Posting]
                             WHERE [PostID] = '{pid}' and [UserID] = '{uid}'
                         ";
-                    context.Database.ExecuteSqlCommand(query);
+                    context.Database.ExecuteSqlCommand(deletePost);
+
+                    var deletePostMsg =
+                        $@"
+                            DELETE FROM [dbo].[Messages]
+                            WHERE [PostID] = '{pid}'
+                        ";
+                    context.Database.ExecuteSqlCommand(deletePostMsg);
+
                     return "Success";
                 }
             }
