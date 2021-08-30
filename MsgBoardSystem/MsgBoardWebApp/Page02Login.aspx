@@ -39,7 +39,7 @@
             'use strict'
 
             var forms = document.querySelectorAll('.needs-validation')
-            var redirect = function () { window.location.href = "http://localhost:49461/Page04PostingHall.aspx"; }
+            var redirect = function () { window.location.href = "Page04PostingHall.aspx"; }
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms).forEach(function (form) {
@@ -53,7 +53,7 @@
                         var pwd = $("#txtPwd").val();
                         event.preventDefault()
                         $.ajax({
-                            url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=Login",
+                            url: "Handler/SystemHandler.ashx?ActionName=Login",
                             type: "POST",
                             data: {
                                 "Account": acc,

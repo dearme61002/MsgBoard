@@ -33,17 +33,30 @@ namespace MsgBoardWebApp.Handler
             {
                 try
                 {
-                    var get_acc = context.Request.Form["Account"];
-                    var get_pwd = context.Request.Form["Password"];
-                    string acc = Convert.ToString(get_acc);
-                    string pwd = Convert.ToString(get_pwd);
-
+                    string acc = Convert.ToString(context.Request.Form["Account"]);
+                    string pwd = Convert.ToString(context.Request.Form["Password"]);
                     string[] statusMsg = new string[2];
 
                     UserInfoModel userInfo = AuthManager.GetInfo(acc);
 
+                    // check account exist
                     if (userInfo != null)
                     {
+                        // Check account is bucket and bucket is expire or not
+                        if (userInfo.Bucket != null && userInfo.Bucket > DateTime.Now)
+                        {
+                            statusMsg[0] = $"錯誤 : 此帳號被封鎖 ， 即日起至 {userInfo.Bucket.Value.ToString("yyyy-MM-dd")} 後解除";
+                        }
+                    }
+                    else
+                    {
+                        statusMsg[0] = "用戶不存在";
+                    }
+
+                    // Check info is ok
+                    if(statusMsg[0] == null)
+                    {
+                        // Check Password
                         if (string.Compare(pwd, userInfo.Password, false) == 0)
                         {
                             // 登入驗證
@@ -57,10 +70,6 @@ namespace MsgBoardWebApp.Handler
                             statusMsg[0] = "密碼錯誤";
                         }
                     }
-                    else
-                    {
-                        statusMsg[0] = "用戶不存在";
-                    }
 
                     // throw statusMsg
                     string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(statusMsg);
@@ -69,9 +78,7 @@ namespace MsgBoardWebApp.Handler
                 }
                 catch (Exception ex)
                 {
-                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(ex.ToString());
-                    context.Response.ContentType = "application/json";
-                    context.Response.Write(jsonText);
+                    DAL.tools.summitError(ex);
                 }
             }
             // ajax呼叫後傳送Session UID
