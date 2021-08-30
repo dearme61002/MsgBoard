@@ -65,13 +65,28 @@ namespace MsgBoardWebApp
 
             try
             {
-                string ARP = "SELECT sum(RegisteredPeople) as AllRegisteredPeople FROM Info WHERE CreateDate BETWEEN @timeOne AND @timeTwo";
-                SqlParameter[] ARPsqls = new SqlParameter[]
+                //string ARP = "SELECT sum(RegisteredPeople) as AllRegisteredPeople FROM Info WHERE CreateDate BETWEEN @timeOne AND @timeTwo";
+                //SqlParameter[] ARPsqls = new SqlParameter[]
+                //{
+                //new SqlParameter("@timeOne",date),
+                //new SqlParameter("@timeTwo",date2)
+                //};
+                //info.AllRegisteredPeople = Convert.ToInt32(sqlhelper.executeScalarsql(ARP, ARPsqls, false));
+
+                //DateTime sd = Convert.ToDateTime("2010/05/07");
+                //4:      DateTime ed = Convert.ToDateTime("2010/05/10").AddDays(1);
+                //5:      TESTDBEntities _db = new TESTDBEntities();
+                //6:      var showToView = _db.TrackStatistic.Where(
+                //7:          m => m.ClickDate >= sd && m.ClickDate <= ed);
+                //8:      return View(showToView);
+                long AllRegistered = 0;
+                using (databaseEF context = new databaseEF())
                 {
-                new SqlParameter("@timeOne",date),
-                new SqlParameter("@timeTwo",date2)
-                };
-                info.AllRegisteredPeople = Convert.ToInt32(sqlhelper.executeScalarsql(ARP, ARPsqls, false));
+                    AllRegistered = context.Accountings.Where(x => x.CreateDate >= dateTime1 && x.CreateDate <= dateTime2 &&x.Level== "Member").Count();
+                }
+               
+
+
 
                 string APO = "SELECT sum(PeopleOnline) as AllPeopleOnline FROM Info WHERE CreateDate BETWEEN @timeOne AND @timeTwo";
                 SqlParameter[] APOsqls = new SqlParameter[]
@@ -81,17 +96,17 @@ namespace MsgBoardWebApp
                 };
                 info.AllPeopleOnline = Convert.ToInt32(sqlhelper.executeScalarsql(APO, APOsqls, false));
                 long a = info.AllPeopleOnline;
-                long b = info.AllRegisteredPeople;
-              
+
+                info.AllRegisteredPeople = AllRegistered;
                 info.avgPeopleOnline = Math.Round((decimal)a / days,3);
-                info.avgRegisteredPeople = Math.Round((decimal) b/ days,3);
+                info.avgRegisteredPeople = Math.Round((decimal)AllRegistered / days,3);
                 info.msg = "獲取資料成功";
                 return info;
             }
             catch (Exception)
             {
 
-                info.msg = "獲取資料失敗";
+                info.msg = "沒有資料";
                 return info;
             }
 

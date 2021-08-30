@@ -19,9 +19,9 @@ namespace MsgBoardWebApp.backsideweb
             #region 從資料庫取出紀錄
             using (databaseEF context = new databaseEF())
             {
-                //var q = db.Orders.Select(o => o.Freight).Sum();
-                //memberCount=context.Accountings.Where(x => x.Level == "Member").Count();
-                memberCount = context.Infoes.Select(x => x.RegisteredPeople).Sum();
+              
+                memberCount = context.Accountings.Where(x => x.Level == "Member").Count();
+                //memberCount = context.Infoes.Select(x => x.RegisteredPeople).Sum();
             }
             #endregion
 

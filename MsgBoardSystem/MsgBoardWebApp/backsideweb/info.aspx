@@ -8,7 +8,12 @@
 
                 var date = document.getElementById("date").value;
                 var date2 = document.getElementById("date2").value;
-                
+                if (date == '') {
+                    return alert("沒有輸入日期");
+                }
+                if (date2 == '') {
+                    return alert("沒有輸入日期");
+                }
                 const obj = {
                     date: date,
                     date2: date2
@@ -30,12 +35,18 @@
                         document.getElementById("addGoHere").innerHTML = res.AllPeopleOnline;
                         document.getElementById("avgAllmumber").innerHTML = res.avgRegisteredPeople;
                         document.getElementById("avgGoHere").innerHTML = res.avgPeopleOnline;
-
+                        //if (res == undefined) {
+                        //    return alert("沒有輸入日期");
+                        //}
 
                         alert(res.msg);
                     },
                     error: function (res) {
+                        //if (res == undefined) {
+                        //    return alert("沒有輸入日期");
+                        //}
                         return alert(res.msg);
+                        
                     }
 
                 })
