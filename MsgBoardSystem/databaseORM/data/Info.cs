@@ -10,9 +10,9 @@ namespace databaseORM.data
     public partial class Info
     {
         public int ID { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int RegisteredPeople { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int PeopleOnline { get; set; }
 
         [Column(TypeName = "date")]

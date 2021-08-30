@@ -10,11 +10,15 @@ namespace MsgBoardWebApp.backsideweb
 { 
     public partial class backsidemain : System.Web.UI.Page
     {
-        public string qq;
-        public string ee;
+    
         protected void Page_Load(object sender, EventArgs e)
         {
-        
+
+          List<string> dd=  DAL.tools.getSwear();
+            if (dd.Count > 5)
+            {
+
+            }
                 
         }
     }
