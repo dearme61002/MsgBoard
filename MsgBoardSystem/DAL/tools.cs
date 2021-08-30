@@ -68,7 +68,10 @@ namespace DAL
 
 
         }
-
+        /// <summary>
+        /// 寫入錯誤訊息到DB內
+        /// </summary>
+        /// <param name="ex">要寫入的錯誤訊息</param>
         public static void summitError(Exception ex)
         {
             //獲得錯誤代碼
