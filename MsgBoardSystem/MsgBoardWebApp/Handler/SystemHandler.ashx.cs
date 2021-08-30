@@ -81,12 +81,10 @@ namespace MsgBoardWebApp.Handler
                     DAL.tools.summitError(ex);
                 }
             }
-            // ajax呼叫後傳送Session UID
-            else if (actionName == "GetSession")
+            // 首頁載入時寫入資料
+            else if (actionName == "DefaultPageLoad")
             {
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(context.Session["UID"]);
-                context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
+                OtherFunctions.DefaultPageRecord();
             }
             // 從DB取得全部貼文資料
             else if (actionName == "GetAllPost")

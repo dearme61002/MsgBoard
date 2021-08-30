@@ -9,6 +9,8 @@
     </style>
     <script>
         $(document).ready(function () {
+            $.ajax({ url: "/Handler/SystemHandler.ashx?ActionName=DefaultPageLoad", type: "POST"});
+
             $.ajax({
                 url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllPost",
                 type: "GET",
