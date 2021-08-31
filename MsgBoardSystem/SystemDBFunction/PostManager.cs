@@ -192,7 +192,8 @@ namespace SystemDBFunction
                             {
                                 Body = obj.Body,
                                 Name = obj.Name,
-                                CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
+                                CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                                ismaincontent = obj.ismaincontent
                             }).ToList();
 
                         return MsgSource;
