@@ -9,8 +9,10 @@
     </style>
     <script>
         $(document).ready(function () {
+            $.ajax({ url: "/Handler/SystemHandler.ashx?ActionName=DefaultPageLoad", type: "POST"});
+
             $.ajax({
-                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllPost",
+                url: "/Handler/SystemHandler.ashx?ActionName=GetAllPost",
                 type: "GET",
                 data: {},
                 success: function (result) {
@@ -22,7 +24,7 @@
                         if ("Member" == obj.Level && true == obj.ismaincontent) {
                         var htmlText =
                             `<tr> 
-                                <td><a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}</a></td>
+                                <td><a href="Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}</a></td>
                                 <td>${obj.Name}</td>
                                 <td>${obj.CreateDate}</td>
                             </tr>`;
@@ -42,7 +44,7 @@
     <div class="container">
         <div class="row">
             <div class="col-7">
-                <h1 class="display-4 text-center alert-danger">熱門焦點</h1>
+                <h1 class="display-4 text-center alert-danger">熱門焦點6</h1>
                 <div id="divPostList"></div>
             </div>
             <div class="col-5">

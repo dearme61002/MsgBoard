@@ -46,7 +46,7 @@
         (function () {
             'use strict'
             var forms = document.querySelectorAll('.needs-validation');
-            var redirect = function () { window.location.href = "http://localhost:49461/Page01Default.aspx"; };
+            var redirect = function () { window.location.href = "Page01Default.aspx"; };
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms)
@@ -63,7 +63,7 @@
 
                             event.preventDefault();
                             $.ajax({
-                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UpdatePwd",
+                                url: "/Handler/SystemHandler.ashx?ActionName=UpdatePwd",
                                 type: "POST",
                                 data: {
                                     "OldPwd": oldPwd,

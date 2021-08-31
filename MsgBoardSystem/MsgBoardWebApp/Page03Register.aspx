@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form class="row g-3 needs-validation" novalidate>
-        <h2>註冊會員</h2>
+        <p class="fs-2 fw-bold">註冊會員</p>
         <div class="col-9 form-floating mb-3">
             <input type="text" class="form-control" id="floatingName" placeholder="123" required>
             <div class="invalid-feedback">
@@ -48,7 +48,7 @@
         (function () {
             'use strict'
             var forms = document.querySelectorAll('.needs-validation');
-            var redirect = function () { window.location.href = "http://localhost:49461/Page01Default.aspx"; };
+            var redirect = function () { window.location.href = "Page01Default.aspx"; };
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms)
@@ -67,7 +67,7 @@
 
                             event.preventDefault();
                             $.ajax({
-                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=Register",
+                                url: "/Handler/SystemHandler.ashx?ActionName=Register",
                                 type: "POST",
                                 data: {
                                     "Name" : name,

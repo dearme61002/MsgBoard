@@ -8,7 +8,7 @@
 
         $(document).ready(function () {
             $.ajax({
-                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetPostInfo",
+                url: "/Handler/SystemHandler.ashx?ActionName=GetPostInfo",
                 type: "POST",
                 data: { "PID": pid },
                 success: function (result) {
@@ -38,7 +38,7 @@
             }
 
             $.ajax({
-                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllMsg",
+                url: "/Handler/SystemHandler.ashx?ActionName=GetAllMsg",
                 type: "POST",
                 data: { "PID": pid },
                 success: function (result) {
@@ -119,7 +119,7 @@
 
                             event.preventDefault();
                             $.ajax({
-                                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=NewMsg",
+                                url: "/Handler/SystemHandler.ashx?ActionName=NewMsg",
                                 type: "POST",
                                 data: {
                                     "PID": pid,
