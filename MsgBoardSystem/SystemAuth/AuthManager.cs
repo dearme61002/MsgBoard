@@ -49,6 +49,7 @@ namespace WebAuth
         /// <returns>UserInfoModel 資料</returns>
         public static UserInfoModel GetInfo(string account)
         {
+            DateTime defaultDateTime = new DateTime(1911, 10, 10);
             List<Accounting> sourceList = GetAccountInfo(account);
 
             // Check account exist

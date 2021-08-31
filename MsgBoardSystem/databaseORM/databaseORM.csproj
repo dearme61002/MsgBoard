@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="data\Accounting.cs" />
     <Compile Include="data\databaseEF.cs" />
     <Compile Include="data\ErrorLog.cs" />
@@ -59,6 +58,8 @@
     <Compile Include="data\Posting.cs" />
     <Compile Include="data\Swear.cs" />
     <Compile Include="data\UserLogin.cs" />
+    <Compile Include="data\vwDisplayMsg.cs" />
+    <Compile Include="data\vwDisplayPost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

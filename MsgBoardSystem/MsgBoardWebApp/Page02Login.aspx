@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form class="row g-3 needs-validation" novalidate>
-        <h2>會員登入</h2>
+        <p class="fs-2 fw-bold">會員登入</p>
         <div class="row mb-3">
             <div class="col-2 text-center">
                 <label for="txtAcc" class="form-label">帳號 : </label>
@@ -39,7 +39,7 @@
             'use strict'
 
             var forms = document.querySelectorAll('.needs-validation')
-            var redirect = function () { window.location.href = "http://localhost:49461/Page04PostingHall.aspx"; }
+            var redirect = function () { window.location.href = "Page04PostingHall.aspx"; }
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
 
             Array.prototype.slice.call(forms).forEach(function (form) {
@@ -53,7 +53,7 @@
                         var pwd = $("#txtPwd").val();
                         event.preventDefault()
                         $.ajax({
-                            url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=Login",
+                            url: "Handler/SystemHandler.ashx?ActionName=Login",
                             type: "POST",
                             data: {
                                 "Account": acc,

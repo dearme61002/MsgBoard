@@ -15,5 +15,6 @@ namespace Model
         public string Title { get; set; }
         public string Body { get; set; }      
         public string Level { get; set; }
+        public bool ismaincontent { get; set; }
     }
 }

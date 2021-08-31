@@ -9,23 +9,27 @@
     </style>
     <script>
         $(document).ready(function () {
+            $.ajax({ url: "/Handler/SystemHandler.ashx?ActionName=DefaultPageLoad", type: "POST"});
+
             $.ajax({
-                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetAllPost",
+                url: "/Handler/SystemHandler.ashx?ActionName=GetAllPost",
                 type: "GET",
                 data: {},
                 success: function (result) {
                     var table = '<table class="table table-striped">';
                     table += '<tr> <th>Title</th> <th>Name</th>  <th>CreateDate</th>  </tr>';
 
-                    for (var i = 0; i < 10; i++) {
+                    for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
+                        if ("Member" == obj.Level && true == obj.ismaincontent) {
                         var htmlText =
                             `<tr> 
-                                <td><a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}</a></td>
+                                <td><a href="Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}</a></td>
                                 <td>${obj.Name}</td>
                                 <td>${obj.CreateDate}</td>
                             </tr>`;
-                        table += htmlText;
+                            table += htmlText;
+                        }
                     }
 
                     table += "</table>";

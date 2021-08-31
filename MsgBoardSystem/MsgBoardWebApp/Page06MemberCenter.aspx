@@ -18,7 +18,7 @@
                 userPostTable.row.add([
                     obj.PostID,
                     obj.Title,
-                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
+                    `<a href="/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
                     obj.Name,
                     obj.CreateDate
                 ]).draw(false);
@@ -26,7 +26,7 @@
             function AddMsgRow(obj) {
                 userMsgTable.row.add([
                     obj.MsgID,
-                    `<a href="http://localhost:49461/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.PostTile}<a>`,
+                    `<a href="/Page05PostMsg.aspx?PID=${obj.PostID}">${obj.PostTile}<a>`,
                     obj.Body,
                     obj.Name,
                     obj.CreateDate
@@ -35,7 +35,7 @@
 
             // Load Post data Ajax
             $.ajax({
-                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetUserPost",
+                url: "/Handler/SystemHandler.ashx?ActionName=GetUserPost",
                 type: "GET",
                 data: {},
                 success: function (result) {
@@ -48,7 +48,7 @@
 
             // Load Msg data Ajax
             $.ajax({
-                url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=GetUserMsg",
+                url: "/Handler/SystemHandler.ashx?ActionName=GetUserMsg",
                 type: "GET",
                 data: {},
                 success: function (result) {
@@ -92,7 +92,7 @@
                 $('#confirmBtn').click(function () {
                     confirmModal.hide();
                     $.ajax({
-                        url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeletePost",
+                        url: "/Handler/SystemHandler.ashx?ActionName=UserDeletePost",
                         type: "POST",
                         data: {
                             "PID": rowData[0][0]
@@ -102,6 +102,7 @@
                             if ("Success" == result) {
                                 $("#modalText").text("刪除成功");
                                 userPostTable.row('.selected').remove().draw(false);
+                                $(".closeBtn").click(function () { window.location.reload(); });
                             }
                             else {
                                 $("#modalText").text(result);
@@ -117,7 +118,7 @@
                 confirmModal.show();
                 $('#confirmBtn').click(function () {
                     $.ajax({
-                        url: "http://localhost:49461/Handler/SystemHandler.ashx?ActionName=UserDeleteMsg",
+                        url: "/Handler/SystemHandler.ashx?ActionName=UserDeleteMsg",
                         type: "POST",
                         data: {
                             "MID": rowData[0][0]

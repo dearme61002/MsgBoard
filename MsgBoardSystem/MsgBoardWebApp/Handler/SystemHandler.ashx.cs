@@ -28,22 +28,36 @@ namespace MsgBoardWebApp.Handler
                 context.Response.End();
             }
 
+            #region Function List
             // 登入驗證
             if (actionName == "Login")
             {
                 try
                 {
-                    var get_acc = context.Request.Form["Account"];
-                    var get_pwd = context.Request.Form["Password"];
-                    string acc = Convert.ToString(get_acc);
-                    string pwd = Convert.ToString(get_pwd);
-
+                    string acc = Convert.ToString(context.Request.Form["Account"]);
+                    string pwd = Convert.ToString(context.Request.Form["Password"]);
                     string[] statusMsg = new string[2];
 
                     UserInfoModel userInfo = AuthManager.GetInfo(acc);
 
+                    // check account exist
                     if (userInfo != null)
                     {
+                        // Check account is bucket and bucket is expire or not
+                        if (userInfo.Bucket != null && userInfo.Bucket > DateTime.Now)
+                        {
+                            statusMsg[0] = $"錯誤 : 此帳號被封鎖 ， 即日起至 {userInfo.Bucket.Value.ToString("yyyy-MM-dd")} 後解除";
+                        }
+                    }
+                    else
+                    {
+                        statusMsg[0] = "用戶不存在";
+                    }
+
+                    // Check info is ok
+                    if(statusMsg[0] == null)
+                    {
+                        // Check Password
                         if (string.Compare(pwd, userInfo.Password, false) == 0)
                         {
                             // 登入驗證
@@ -57,10 +71,6 @@ namespace MsgBoardWebApp.Handler
                             statusMsg[0] = "密碼錯誤";
                         }
                     }
-                    else
-                    {
-                        statusMsg[0] = "用戶不存在";
-                    }
 
                     // throw statusMsg
                     string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(statusMsg);
@@ -69,17 +79,13 @@ namespace MsgBoardWebApp.Handler
                 }
                 catch (Exception ex)
                 {
-                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(ex.ToString());
-                    context.Response.ContentType = "application/json";
-                    context.Response.Write(jsonText);
+                    DAL.tools.summitError(ex);
                 }
             }
-            // ajax呼叫後傳送Session UID
-            else if (actionName == "GetSession")
+            // 首頁載入時寫入資料
+            else if (actionName == "DefaultPageLoad")
             {
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(context.Session["UID"]);
-                context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
+                OtherFunctions.DefaultPageRecord();
             }
             // 從DB取得全部貼文資料
             else if (actionName == "GetAllPost")
@@ -93,17 +99,17 @@ namespace MsgBoardWebApp.Handler
             // 取得貼文內容
             else if (actionName == "GetPostInfo")
             {
-                // 從ajax取得PID
-                var ajaxPID = context.Request.Form["PID"];
-                if (!Guid.TryParse(ajaxPID, out Guid pid))
-                {
-                    context.Response.Write("Pid Error");
-                    context.Response.End();
-                    return;
-                }
-
                 try
                 {
+                    // 從ajax取得PID
+                    var ajaxPID = context.Request.Form["PID"];
+                    if (!Guid.TryParse(ajaxPID, out Guid pid))
+                    {
+                        context.Response.Write("Pid Error");
+                        context.Response.End();
+                        return;
+                    }
+
                     // 取得貼文資料
                     List<PostInfoModel> postInfo = PostManager.GetOnePostInfo(pid);
 
@@ -195,34 +201,35 @@ namespace MsgBoardWebApp.Handler
             // 建立貼文
             else if (actionName == "NewPost")
             {
-                // Get value from ajax
-                string title = context.Request.Form["Title"];
-                string body = context.Request.Form["Body"];
-                string strUID = context.Session["UID"].ToString();
-                string responseMsg = string.Empty;
-
-                if (!Guid.TryParse(strUID, out Guid UID))
-                {
-                    responseMsg = "Session UID Error";
-                }
-
-                // set value to object and write into DB
                 try
                 {
+                    // Get value from ajax
+                    string title = context.Request.Form["Title"];
+                    string body = context.Request.Form["Body"];
+                    string strUID = context.Session["UID"].ToString();
+                    string responseMsg = string.Empty;
+
+                    // Check Guid
+                    if (!Guid.TryParse(strUID, out Guid UID))
+                        responseMsg = "Session UID Error";
+
+                    // Check body and title string is no swear
+                    string checkedTitle = DAL.tools.myTextCheck(title, DAL.tools.getSwear());
+                    string checkedBody = DAL.tools.myTextCheck(body, DAL.tools.getSwear());
+
+                    // set value to object and write into DB
                     Posting postInfo = new Posting()
                     {
                         PostID = Guid.NewGuid(),
                         UserID = UID,
                         CreateDate = DateTime.Now,
-                        Title = title,
-                        Body = body,
+                        Title = checkedTitle,
+                        Body = checkedBody,
                         ismaincontent = false
                     };
 
                     // check UID is correct and user is exist
-                    var checkUID = PostManager.GetUserName(UID);
-
-                    if (checkUID != null)
+                    if (PostManager.CheckUserExist(UID))
                     {
                         // write into DB
                         responseMsg = PostManager.CreateNewPost(postInfo);
@@ -240,40 +247,36 @@ namespace MsgBoardWebApp.Handler
             // 建立留言
             else if (actionName == "NewMsg")
             {
-                // Get value from ajax
-                string body = context.Request.Form["Body"];
-                string strPID = context.Request.Form["PID"];
-                string strUID = context.Session["UID"].ToString();
-                string responseMsg = string.Empty;
-
-                // check guid
-                if (!Guid.TryParse(strUID, out Guid uid))
-                {
-                    responseMsg = "Param UID Error";
-                }
-
-                if (!Guid.TryParse(strPID, out Guid pid))
-                {
-                    responseMsg = "Param PID Error";
-                }
-
-                // set value to object and write into DB
                 try
                 {
+                    // Get value from ajax
+                    string body = context.Request.Form["Body"];
+                    string strPID = context.Request.Form["PID"];
+                    string strUID = context.Session["UID"].ToString();
+                    string responseMsg = string.Empty;
+
+                    // check Guid Values
+                    if (!Guid.TryParse(strUID, out Guid uid))
+                        responseMsg = "Param UID Error";
+
+                    if (!Guid.TryParse(strPID, out Guid pid))
+                        responseMsg = "Param PID Error";
+
+                    // Check message string is no swear
+                    string checkedBody= DAL.tools.myTextCheck(body, DAL.tools.getSwear());
+
+                    // set value to object and write into DB
                     Message msgInfo = new Message()
                     {
                         MsgID = Guid.NewGuid(),
                         PostID = pid,
                         UserID = uid,
                         CreateDate = DateTime.Now,
-                        Body = body,
+                        Body = checkedBody,
                     };
 
                     // check UID and PID is correct and user is exist
-                    var checkUID = PostManager.GetUserName(uid);
-                    bool checkPID = PostManager.CheckPostExist(pid);
-
-                    if (checkUID != null && checkPID)
+                    if (PostManager.CheckUserExist(uid) && PostManager.CheckPostExist(pid))
                     {
                         // write into DB
                         responseMsg = PostManager.CreateNewMsg(msgInfo);
@@ -283,15 +286,15 @@ namespace MsgBoardWebApp.Handler
                         // Have error
                         responseMsg = "Exception Error";
                     }
+
+                    string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(jsonText);
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
-
-                string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
-                context.Response.ContentType = "application/json";
-                context.Response.Write(jsonText);
             }
             // 取得會員資料
             else if(actionName == "GetEditInfo")
@@ -556,6 +559,7 @@ namespace MsgBoardWebApp.Handler
                     throw ex;
                 }
             }
+            #endregion
         }
 
         public bool IsReusable
