@@ -102,7 +102,7 @@
                             if ("Success" == result) {
                                 $("#modalText").text("刪除成功");
                                 userPostTable.row('.selected').remove().draw(false);
-                                window.location.reload();
+                                $(".closeBtn").click(function () { window.location.reload(); });
                             }
                             else {
                                 $("#modalText").text(result);
