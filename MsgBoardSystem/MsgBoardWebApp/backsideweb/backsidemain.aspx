@@ -37,12 +37,36 @@
                 var urlhtml = '<iframe src="' + myurl + '"style="height:100%; width:100%;border:0"></iframe>';
                 return urlhtml;
             }
-			/*綁定按鈕*/
+
+
+          //刪除cookie
+            function delCookie(name) {
+                var exp = new Date();
+                exp.setTime(exp.getTime() - 1);
+                var cval = getCookie(name);
+                if (cval != null)
+                    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";path=/";
+            }
+
+            function getCookie(name) {
+                let arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+                if (arr != null) return unescape(arr[2]);
+                return null;
+            }
+
+            /*綁定按鈕*/
             $('#out').bind('click', function () {
+                delCookie('.ASPXAUTH');
                 parent.window.location.assign("../Page01Default.aspx");
+ document.cookie;
             })
-		})
-        
+
+  
+           
+
+
+        })
+
     </script>
 	<%--寫功能--%>
 </head>
