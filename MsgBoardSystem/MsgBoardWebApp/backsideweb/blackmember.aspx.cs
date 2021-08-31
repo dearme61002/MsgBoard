@@ -4,20 +4,37 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using DAL;
 
 namespace MsgBoardWebApp.backsideweb
 {
     public partial class blackmember : System.Web.UI.Page
     {
+        public string dataID;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["UID"] != null)
+            try
             {
+                if (Session["UID"] != null)
+                {
+                    dataID = Session["UID"].ToString();
+                    token token = new token();
+                    if (!token.isAdmin(dataID))
+                    {
+                        Response.Cookies[".ASPXAUTH"].Expires = DateTime.Now.AddDays(-1);
+                        Response.Redirect(@"~/Page02Login.aspx");
+                    }
+                }
+                else
+                {
+                    Response.Cookies[".ASPXAUTH"].Expires = DateTime.Now.AddDays(-1);
+                    Response.Redirect(@"~/Page02Login.aspx");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                Response.Cookies[".ASPXAUTH"].Expires = DateTime.Now.AddDays(-1);
-                Response.Redirect(@"~/Page02Login.aspx");
+                tools.summitError(ex);
             }
 
         }

@@ -1,4 +1,5 @@
-﻿using JWT;
+﻿using databaseORM.data;
+using JWT;
 using JWT.Algorithms;
 using JWT.Serializers;
 using System;
@@ -9,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace DAL
 {/// <summary>
-/// 用來加密解密密碼
-/// </summary>
-  public  class token
+ /// 用來加密解密密碼
+ /// </summary>
+    public class token
     {
         /// <summary>
         /// 加密:傳入一組字典型的參數我回傳一串加密的String參數
         /// </summary>
         /// <param name="keyValuePairs">打算加密的參數</param>
         /// <returns>以加密的字串</returns>
-        public string encode(Dictionary<string,object> keyValuePairs)
+        public string encode(Dictionary<string, object> keyValuePairs)
         {
             var secret = "wearediediiebutlivelive&&@@dd";//加密與解密密碼不能洩漏
             IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
@@ -46,7 +47,8 @@ namespace DAL
                 var json = decoder.Decode(myToken, secret, verify: true);
                 return json;
 
-            }catch(TokenExpiredException)
+            }
+            catch (TokenExpiredException)
             {
                 Console.WriteLine("token has expired");
                 return string.Empty;
@@ -61,6 +63,33 @@ namespace DAL
                 Console.WriteLine("other error");
                 return string.Empty;
             }
+        }
+
+        public bool isAdmin(string userID)
+        {
+            try
+            {
+                Guid guidID = Guid.Parse(userID);
+                using (databaseEF context = new databaseEF())
+                {
+               int i = context.Accountings.Where(x => x.UserID == guidID).Where(x => x.Level == "Admin").Count();
+                    if (i > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                tools.summitError(ex);
+                throw;
+            }
+
         }
     }
 }

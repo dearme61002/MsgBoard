@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,25 +18,32 @@ namespace MsgBoardWebApp.backsideweb
 
             try
             {
-             if (Session["UID"] != null)
-            {
-                dataID = Session["UID"].ToString();
-            }
-            else
-            {
-                Response.Cookies[".ASPXAUTH"].Expires = DateTime.Now.AddDays(-1);
-                Response.Redirect(@"~/Page02Login.aspx");
-            }
-            }
-            catch (Exception)
-            {
+                if (Session["UID"] != null)
+                {
+                    dataID = Session["UID"].ToString();
+                    token token = new token();
+                    if (!token.isAdmin(dataID))
+                    {
+                        Response.Cookies[".ASPXAUTH"].Expires = DateTime.Now.AddDays(-1);
+                        Response.Redirect(@"~/Page02Login.aspx");
+                    }
+                }
+                else
+                {
+                    Response.Cookies[".ASPXAUTH"].Expires = DateTime.Now.AddDays(-1);
+                    Response.Redirect(@"~/Page02Login.aspx");
+                }
 
             }
+            catch (Exception ex)
+            {
+                tools.summitError(ex);
+            }
 
-            
-       
 
-            
+
+
+
         }
     }
 }
