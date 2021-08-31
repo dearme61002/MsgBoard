@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using Model;
 using DAL;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace MsgBoardWebApp
 {
@@ -140,33 +141,54 @@ namespace MsgBoardWebApp
         }
 
         [HttpPost]
-        public List<Model.EditArticles> GetEditArticles()
+        public List<EditArticles> GetEditArticles()
         {
-            #region 從資料庫取出Articles
-            using (databaseEF context = new databaseEF())
-            {
-                var cc = from message in context.Messages
-                         join account in context.Accountings on message.UserID equals account.UserID
-                         join posting in context.Postings on message.PostID equals posting.PostID
-                         orderby message.CreateDate descending
-                         select new EditArticles
-                         {
-                             Name = account.Name,
-                             CreateDate = message.CreateDate,
-                             Account = account.Account,
-                             UserID = message.UserID,
-                             Title = posting.Title,
-                             Body = message.Body,
-                             ID = message.ID,
+            //#region 從資料庫取出Articles
+            //using (databaseEF context = new databaseEF())
+            //{
+                //var cc = from message in context.Messages
+                //         join account in context.Accountings on message.UserID equals account.UserID into ps
+                //         from account in ps.DefaultIfEmpty()
+                //         join posting in context.Postings on message.PostID equals posting.PostID into pse
+                //         from posting in pse.DefaultIfEmpty()
+                //         orderby message.CreateDate descending
+                //         select new EditArticles
+                //         {
+                //             Name = account.Name,
+                //             CreateDate = message.CreateDate,
+                //             Account = account.Account,
+                //             UserID = message.UserID,
+                //             Title = posting.Title,
+                //             Body = message.Body,
+                //             ID = message.ID,
 
-                         };
+                //         };
 
-                return cc.ToList();
-            }
-            #endregion
+    
+
+              
+                string sql = "select Name,Message.CreateDate,Account,Posting.UserID,Title,Message.Body,Message.ID FROM Message left JOIN Accounting ON Accounting.UserID = Message.UserID left join Posting on Message.PostID = Message.PostID";
+                SqlDataReader sqlDataReader = sqlhelper.executeReadesql(sql);
+                EditArticles editArticles = new EditArticles();
+                List<EditArticles> EditArticlesList = new List<EditArticles>();
+                while (sqlDataReader.Read())
+                {
+                    editArticles.Name = sqlDataReader["Name"].ToString();
+                    editArticles.CreateDate = Convert.ToDateTime(sqlDataReader["CreateDate"]);
+                    editArticles.Account = sqlDataReader["Account"].ToString();
+                    editArticles.UserID =  Guid.Parse(sqlDataReader["UserID"].ToString());
+                    editArticles.Title = sqlDataReader["Title"].ToString();
+                    editArticles.Body = sqlDataReader["Body"].ToString();
+                    editArticles.ID = Convert.ToInt32(sqlDataReader["ID"]);
+                    EditArticlesList.Add(editArticles);
+
+                }
+
+                return EditArticlesList;
+            //}
+            //#endregion
 
         }
-
         [HttpPost]
         public List<databaseORM.data.Posting> GetIndex()
         {
