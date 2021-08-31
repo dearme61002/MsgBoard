@@ -75,34 +75,6 @@ namespace SystemDBFunction
 
         #region Posting Hall Page Functions
 
-        /// <summary> 從UserID尋找使用者名稱: Name </summary>
-        /// <param name="uid"> 會員User Guid </param>
-        /// <returns> String: 使用者名稱 Name</returns>
-        public static string GetUserName(Guid uid)
-        {
-            try
-            {
-                using (databaseEF context = new databaseEF())
-                {
-                    var query =
-                        (from item in context.Accountings
-                         where item.UserID == uid
-                         select item);
-
-                    var list = query.ToList();
-
-                    if (list.Count != 0)
-                        return list[0].Name;
-                    else
-                        return null;
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
         /// <summary> 從DB取得全部貼文資料後，轉換成Model回傳Handler </summary>
         /// <returns>List PostInfoModel</returns>
         public static List<PostInfoModel> GetAllPostInfo()
@@ -295,15 +267,20 @@ namespace SystemDBFunction
             using (databaseEF context = new databaseEF())
             {
                 var query =
-                    (from postInfo in context.Postings
-                     where postInfo.UserID == uid
-                     join account in context.Accountings
-                     on postInfo.UserID equals account.UserID into accinfo
-                     select new
-                     {
-                         postInfo,
-                         accinfo
-                     });
+                (
+                    from postInfo in context.Postings
+                    where postInfo.UserID == uid
+                    join account in context.Accountings
+                    on postInfo.UserID equals account.UserID
+                    select new
+                    {
+                        PostID = postInfo.PostID,
+                        Title = postInfo.Title,
+                        Name = account.Name,
+                        CreateDate = postInfo.CreateDate,
+                        UserID = postInfo.UserID
+                    }
+                );
 
                 var sourceList = query.ToList();
 
@@ -312,11 +289,11 @@ namespace SystemDBFunction
                     List<PostInfoModel> postSource =
                         sourceList.Select(obj => new PostInfoModel()
                         {
-                            PostID = obj.postInfo.PostID,
-                            UserID = obj.postInfo.UserID,
-                            Title = obj.postInfo.Title,
-                            Name = obj.accinfo.ToList()[0].Name,
-                            CreateDate = obj.postInfo.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
+                            PostID = obj.PostID,
+                            UserID = obj.UserID,
+                            Title = obj.Title,
+                            Name = obj.Name,
+                            CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
                         }).ToList();
 
                     /*
@@ -339,93 +316,65 @@ namespace SystemDBFunction
 
         #region Show User's Message Functions
 
-        /// <summary> 從資料庫取得使用者留言 </summary>
-        /// <param name="uid"> 會員User Guid </param>
-        /// <returns> List Message 格式 </returns>
-        public static List<Message> GetUserAllMsgFromDB(Guid uid)
-        {
-            try
-            {
-                using (databaseEF context = new databaseEF())
-                {
-                    var query =
-                        (from item in context.Messages
-                         where item.UserID == uid
-                         select item);
-
-                    var list = query.ToList();
-                    return list;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        /// <summary> 取得貼文標題 </summary>
-        /// <param name="pid"> 貼文Post Guid </param>
-        /// <returns> String 標題Title </returns>
-        public static string GetPostTitle(Guid pid)
-        {
-            try
-            {
-                using (databaseEF context = new databaseEF())
-                {
-                    var query =
-                        (from item in context.Postings
-                         where item.PostID == pid
-                         select item);
-
-                    var list = query.ToList();
-                    return list[0].Title;
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
         /// <summary> 回傳會員留言資料給Handler </summary>
         /// <param name="uid"></param>
         /// <returns> List UserMsgInfo </returns>
         public static List<UserMsgInfo> GetUserAllMsgInfo(Guid uid)
         {
             try
-            {
-                List<Message> sourceList = GetUserAllMsgFromDB(uid);
-
-                // Check exist in DB
-                if (sourceList != null)
+            {                
+                using (databaseEF context = new databaseEF())
                 {
-                    List<UserMsgInfo> msgSource =
-                        sourceList.Select(obj => new UserMsgInfo()
+                    var query =
+                    (
+                        from msg in context.Messages
+                        where msg.UserID == uid
+                        join acc in context.Accountings on msg.UserID equals acc.UserID
+                        join post in context.Postings on msg.PostID equals post.PostID
+                        select new
                         {
-                            MsgID = obj.MsgID,
-                            PostID = obj.PostID,
-                            UserID = obj.UserID,
-                            CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                            Body = obj.Body,
-                            Name = GetUserName(obj.UserID)
-                        }).ToList();
+                            MsgID = msg.MsgID,
+                            PostID = msg.PostID,
+                            Title = post.Title,
+                            Body = msg.Body,
+                            Name = acc.Name,
+                            CreateDate = msg.CreateDate,
+                            UserID = msg.UserID
+                        }
+                    );
 
-                    // 檢查Post是否存在
-                    foreach (var item in msgSource)
+                    var sourceList = query.ToList();
+
+                    // Check exist in DB
+                    if (sourceList != null)
                     {
-                        string checkPostExist = GetPostTitle(item.PostID);
-                        if (checkPostExist != null)
-                            item.PostTile = checkPostExist;
-                        else
-                            item.PostTile = "**貼文已被刪除**";
-                    }
+                        List<UserMsgInfo> msgSource =
+                            sourceList.Select(obj => new UserMsgInfo()
+                            {
+                                MsgID = obj.MsgID,
+                                PostID = obj.PostID,
+                                PostTile = obj.Title,
+                                Body = obj.Body,
+                                Name = obj.Name,
+                                CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                                UserID = obj.UserID,
+                            }).ToList();
 
-                    return msgSource;
+                        // 檢查Post是否存在
+                        foreach (var item in msgSource)
+                        {
+                            if (item.PostID == null)
+                                item.PostTile = "**貼文已被刪除**";
+                        }
+
+                        return msgSource;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
-                else
-                {
-                    return null;
-                }
+
             }
             catch (Exception ex)
             {
