@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -16,21 +17,23 @@ namespace MsgBoardWebApp.filter
 
         public async Task<HttpResponseMessage> ExecuteAuthorizationFilterAsync(HttpActionContext actionContext, CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation)
         {
-            //登入API前 檢查代碼 範例如下
-            //IEnumerable<string> userNames;
-            //if (!actionContext.Request.Headers.TryGetValues("UserName", out userNames))//檢查Headers參數是否正確
-            //{
-            //    return new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
-            //}
-            //string userName = userNames.First();
-            //if (userName == "amdin")
-            //{
-            //    return await continuation();
-            //}
-            //else
-            //{
-            //    return new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
-            //}
+            //登入API前 檢查代碼 代碼如下
+            IEnumerable<string> key;
+            if (!actionContext.Request.Headers.TryGetValues("key", out key))//檢查Headers參數是否正確
+            {
+                return new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
+            }
+            string keytext = key.First();
+            token token = new token();
+
+            if (token.isAdmin(keytext))
+            {
+                return await continuation();
+            }
+            else
+            {
+                return new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
+            }
 
             return await continuation();
         }
