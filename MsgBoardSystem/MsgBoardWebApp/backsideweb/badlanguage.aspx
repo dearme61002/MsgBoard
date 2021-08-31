@@ -83,6 +83,9 @@
                             return alert("增加失敗");
                         }
                         return alert(res.msg);
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
                     }
                 })
                 document.getElementById("topTitle").value = "";
@@ -111,6 +114,9 @@
                     },
                     error: function (res) {
                         return alert('刪除資料失敗');
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
                     }
 
                 })

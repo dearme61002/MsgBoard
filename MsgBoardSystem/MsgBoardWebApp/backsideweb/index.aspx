@@ -70,7 +70,10 @@
                     },
                     error: function () {
                         alert('獲取資料失敗');
-                    }
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
+                     }
                 }
                 )
             }
@@ -94,7 +97,10 @@
                     },
                     error: function (res) {
                         return alert('刪除資料失敗');
-                    }
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
+                     }
 
                 })
             });
@@ -118,7 +124,10 @@
                     },
                     error: function (res) {
                         return alert('設定失敗');
-                    }
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
+                     }
 
                 })
             });
@@ -142,7 +151,10 @@
                     },
                     error: function (res) {
                         return alert('設定失敗');
-                    }
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
+                     }
 
                 })
             });

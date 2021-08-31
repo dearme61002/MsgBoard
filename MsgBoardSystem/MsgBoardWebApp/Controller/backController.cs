@@ -904,6 +904,15 @@ namespace MsgBoardWebApp
                         return apiResult;
                     }
 
+                    var emailquery = context.Accountings.Where(x => x.Email == email);
+                    var eee = emailquery.Count();
+                    if (emailquery.Count() > 0)
+                    {
+                        apiResult.state = 404;
+                        apiResult.msg = "更新失敗,已存在E-mail";
+                        return apiResult;
+                    }
+
                 }
             }
             catch (Exception e)

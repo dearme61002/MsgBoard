@@ -36,6 +36,9 @@
                     },
                     error: function () {
                         alert('獲取資料失敗');
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
                     }
                 }
                 )
@@ -60,6 +63,9 @@
                     },
                     error: function (res) {
                         return alert('刪除資料失敗');
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
                     }
 
                 })
@@ -104,6 +110,9 @@
                             return alert("更新失敗");
                         }
                         return alert(res.msg);
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
                     }
 
                 })
@@ -161,6 +170,9 @@
                             return alert("更新失敗");
                         }
                         return alert(res.msg);
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
                     }
                 })
                 document.getElementById("topTextarea").value = "";

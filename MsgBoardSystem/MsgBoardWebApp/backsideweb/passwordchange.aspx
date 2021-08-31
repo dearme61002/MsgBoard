@@ -127,7 +127,10 @@
                     },
                     error: function (res) {
                         return alert(res.msg);
-                    }
+                    },
+                    beforeSend: function (request) {
+                        request.setRequestHeader("key", "<%=dataID%>");
+                     }
 
                 })
                 /*變回空值*/
