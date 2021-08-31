@@ -19,6 +19,8 @@ namespace databaseORM.data
         public virtual DbSet<Posting> Postings { get; set; }
         public virtual DbSet<Swear> Swears { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
+        public virtual DbSet<vwDisplayPost> vwDisplayPosts { get; set; }
+        public virtual DbSet<vwDisplayMsg> vwDisplayMsg { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -31,6 +33,10 @@ namespace databaseORM.data
                 .IsUnicode(false);
 
             modelBuilder.Entity<Accounting>()
+                .Property(e => e.Level)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<vwDisplayPost>()
                 .Property(e => e.Level)
                 .IsUnicode(false);
         }

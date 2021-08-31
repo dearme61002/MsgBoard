@@ -12,53 +12,6 @@ namespace SystemDBFunction
     {
         #region Posting Hall and Post Message Page Functions
 
-        /// <summary> 從資料庫取得所有DB </summary>
-        /// <returns>List Posting</returns>
-        public static List<Posting> GetAllPostingFromDB()
-        {
-            try
-            {
-                using (databaseEF context = new databaseEF())
-                {
-                    var query =
-                        (from item in context.Postings
-                         orderby item.CreateDate descending
-                         select item);
-
-                    var list = query.ToList();
-                    return list;
-                }
-            }
-            catch (Exception)
-            {
-                throw null;
-            }
-        }
-
-        /// <summary> 從資料庫取得所有貼文 </summary>
-        /// <param name="pid"> 貼文Post Guid </param>
-        /// <returns>List Message</returns>
-        public static List<Message> GetAllMsgFromDB(Guid pid)
-        {
-            try
-            {
-                using (databaseEF context = new databaseEF())
-                {
-                    var query =
-                        (from item in context.Messages
-                         where item.PostID == pid
-                         select item);
-
-                    var list = query.ToList();
-                    return list;
-                }
-            }
-            catch (Exception)
-            {
-                throw null;
-            }
-        }
-
         /// <summary> 從資料庫取得特定Post資料 </summary>
         /// <returns></returns>
         public static List<Posting> GetOnePostInfoFromDB(Guid pid)
@@ -142,35 +95,91 @@ namespace SystemDBFunction
             }
         }
 
-        /// <summary> 全部貼文資料轉換Model後送回Handler </summary>
-        /// <returns></returns>
+        /// <summary> 從DB取得全部貼文資料後，轉換成Model回傳Handler </summary>
+        /// <returns>List PostInfoModel</returns>
         public static List<PostInfoModel> GetAllPostInfo()
         {
-            List<Posting> sourceList = GetAllPostingFromDB();
-
-            if (sourceList != null)
+            try
             {
-                List<PostInfoModel> postSource =
-                    sourceList.Select(obj => new PostInfoModel()
-                    {
-                        PostID = obj.PostID,
-                        UserID = obj.UserID,
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                        Title = obj.Title,
-                        Body = obj.Body
-                    }).ToList();
-
-                // 用UID比對查詢，並寫入User Name
-                foreach (var item in postSource)
+                using (databaseEF context = new databaseEF())
                 {
-                    item.Name = GetUserName(item.UserID);
-                    item.Level = GetUserLevel(item.UserID);
-                }
+                    // Get Post From DB View Table
+                    var query =
+                        (from item in context.vwDisplayPosts
+                         orderby item.CreateDate descending
+                         select item);
 
-                return postSource;
+                    List<vwDisplayPost> sourceList = query.ToList();
+
+                    // Check Data Exist
+                    if (sourceList != null)
+                    {
+                        // Write into Model
+                        List<PostInfoModel> postSource =
+                            sourceList.Select(obj => new PostInfoModel()
+                            {
+                                PostID = obj.PostID,
+                                Title = obj.Title,
+                                Name = obj.Name,
+                                CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                                Level = obj.Level,
+                                ismaincontent = obj.ismaincontent
+                            }).ToList();
+
+                        return postSource;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
+                DAL.tools.summitError(ex);
+                return null;
+            }
+        }
+
+        /// <summary> 從DB取得全部貼文中的留言後，轉換成Model回傳Handler </summary>
+        /// <returns>List MsgInfoModel</returns>
+        public static List<MsgInfoModel> GetAllPostMsg(Guid pid)
+        {
+            try
+            {
+                // get all msg by post id
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.vwDisplayMsg
+                         where item.PostID == pid
+                         orderby item.CreateDate descending
+                         select item);
+
+                    List<vwDisplayMsg> sourceList = query.ToList();
+
+                    // Msg Data Exist
+                    if (sourceList != null)
+                    {
+                        List<MsgInfoModel> MsgSource =
+                            sourceList.Select(obj => new MsgInfoModel()
+                            {
+                                Body = obj.Body,
+                                Name = obj.Name,
+                                CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")                                
+                            }).ToList();
+
+                        return MsgSource;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DAL.tools.summitError(ex);
                 return null;
             }
         }
@@ -224,36 +233,7 @@ namespace SystemDBFunction
             }
         }
 
-        /// <summary> 全部貼文資料轉換Model後送回Handler </summary>
-        /// <returns></returns>
-        public static List<MsgInfoModel> GetAllPostMsg(Guid pid)
-        {
-            // get all msg by post id
-            List<Message> sourceList = GetAllMsgFromDB(pid);
 
-            if (sourceList != null)
-            {
-                List<MsgInfoModel> MsgSource =
-                    sourceList.Select(obj => new MsgInfoModel()
-                    {
-                        UserID = obj.UserID,
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                        Body = obj.Body
-                    }).ToList();
-
-                // 用UID比對查詢，並寫入User Name
-                foreach (var obj in MsgSource)
-                {
-                    obj.Name = GetUserName(obj.UserID);
-                }
-
-                return MsgSource;
-            }
-            else
-            {
-                return null;
-            }
-        }
         #endregion
 
         #region Create Post Message Functions
