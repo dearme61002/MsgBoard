@@ -169,10 +169,12 @@ namespace MsgBoardWebApp
               
                 string sql = "select Name,Message.CreateDate,Account,Posting.UserID,Title,Message.Body,Message.ID FROM Message left JOIN Accounting ON Accounting.UserID = Message.UserID left join Posting on Message.PostID = Message.PostID";
                 SqlDataReader sqlDataReader = sqlhelper.executeReadesql(sql);
-                EditArticles editArticles = new EditArticles();
+                
                 List<EditArticles> EditArticlesList = new List<EditArticles>();
                 while (sqlDataReader.Read())
                 {
+                EditArticles editArticles = new EditArticles();
+
                     editArticles.Name = sqlDataReader["Name"].ToString();
                     editArticles.CreateDate = Convert.ToDateTime(sqlDataReader["CreateDate"]);
                     editArticles.Account = sqlDataReader["Account"].ToString();
@@ -190,21 +192,30 @@ namespace MsgBoardWebApp
 
         }
         [HttpPost]
-        public List<databaseORM.data.Posting> GetIndex()
+        public List<Model.GetIndexmy> GetIndex()
         {
-            #region 從資料庫取出Index
-            using (databaseEF context = new databaseEF())
+            
+          
+
+                //List<databaseORM.data.Posting> cc = context.Postings.OrderByDescending(x => x.CreateDate).ToList();
+
+                string sql = "SELECT Posting.CreateDate,Title,Body,ismaincontent,Posting.ID FROM Posting left JOIN Accounting ON Accounting.UserID = Posting.UserID where Accounting.Level != 'Admin'";
+                SqlDataReader sqlDataReader = sqlhelper.executeReadesql(sql);
+               
+                List<GetIndexmy> getIndexmies = new List<GetIndexmy>();
+            while (sqlDataReader.Read())
             {
-
-                List<databaseORM.data.Posting> cc = context.Postings.OrderByDescending(x => x.CreateDate).ToList();
-
-
-
-
-
-                return cc;
+                GetIndexmy getIndexmy = new GetIndexmy();
+                getIndexmy.CreateDate = Convert.ToDateTime(sqlDataReader["CreateDate"]);
+                getIndexmy.Title = sqlDataReader["Title"].ToString();
+                getIndexmy.Body = sqlDataReader["Body"].ToString();
+                getIndexmy.ismaincontent = Convert.ToBoolean(sqlDataReader["ismaincontent"]);
+                getIndexmy.ID = sqlDataReader["ID"].ToString();
+                getIndexmies.Add(getIndexmy);
             }
-            #endregion
+
+                return getIndexmies;
+           
 
         }
 
