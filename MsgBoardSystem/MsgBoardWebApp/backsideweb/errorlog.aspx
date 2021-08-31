@@ -56,6 +56,13 @@
 
                 })
             });
+         
+            $(document).ajaxStart(function () {<%--我的等預覽--%>
+                $('#myLoading').show(); <%--我的等預覽--%>
+            });
+            $(document).ajaxStop(function () {
+                $('#myLoading').hide(); <%--我的等預覽--%>
+            });
         })
     </script>
 </asp:Content>
@@ -73,4 +80,9 @@
         </thead>
         <tbody id="tb"></tbody>
     </table>
+<div class="d-flex justify-content-center"><%--我的等預覽--%>
+  <div class="spinner-border" role="status" id="myLoading">  <%--我的等預覽--%>
+    <span class="visually-hidden">Loading...</span><%--我的等預覽--%>
+  </div>
+</div>
 </asp:Content>
