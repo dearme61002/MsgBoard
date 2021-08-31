@@ -229,9 +229,7 @@ namespace MsgBoardWebApp.Handler
                     };
 
                     // check UID is correct and user is exist
-                    var checkUID = PostManager.GetUserName(UID);
-
-                    if (checkUID != null)
+                    if (PostManager.CheckUserExist(UID))
                     {
                         // write into DB
                         responseMsg = PostManager.CreateNewPost(postInfo);
@@ -278,10 +276,7 @@ namespace MsgBoardWebApp.Handler
                     };
 
                     // check UID and PID is correct and user is exist
-                    var checkUID = PostManager.GetUserName(uid);
-                    bool checkPID = PostManager.CheckPostExist(pid);
-
-                    if (checkUID != null && checkPID)
+                    if (PostManager.CheckUserExist(uid) && PostManager.CheckPostExist(pid))
                     {
                         // write into DB
                         responseMsg = PostManager.CreateNewMsg(msgInfo);

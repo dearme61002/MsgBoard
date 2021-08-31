@@ -10,11 +10,41 @@ namespace SystemDBFunction
 {
     public class PostManager
     {
-        #region Posting Hall and Post Message Page Functions
+        #region Check Guid Data Exist Functions
 
-        /// <summary> 從資料庫取得特定Post資料 </summary>
-        /// <returns></returns>
-        public static List<Posting> GetOnePostInfoFromDB(Guid pid)
+        /// <summary>用UID檢查使用者是否存在 </summary>
+        /// <param name="uid"></param>
+        /// <returns>true : 存在, false : 不存在</returns>
+        public static bool CheckUserExist(Guid uid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Accountings
+                         where item.UserID == uid
+                         select item);
+
+                    var list = query.ToList();
+
+                    if (list.Count() != 0)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                DAL.tools.summitError(ex);
+                return false;
+            }
+        }
+
+        /// <summary> 用PID檢查貼文是否存在 </summary>
+        /// <param name="pid"></param>
+        /// <returns>true : 存在, false : 不存在</returns>
+        public static bool CheckPostExist(Guid pid)
         {
             try
             {
@@ -27,17 +57,21 @@ namespace SystemDBFunction
 
                     var list = query.ToList();
 
-                    if (list.Count != 0)
-                        return list;
+                    if (list.Count() != 0)
+                        return true;
                     else
-                        return null;
+                        return false;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw null;
+                DAL.tools.summitError(ex);
+                return false;
             }
         }
+        #endregion
+
+        #region Posting Hall Page Functions
 
         /// <summary> 從UserID尋找使用者名稱: Name </summary>
         /// <param name="uid"> 會員User Guid </param>
@@ -57,34 +91,6 @@ namespace SystemDBFunction
 
                     if (list.Count != 0)
                         return list[0].Name;
-                    else
-                        return null;
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        /// <summary> 從UserID尋找使用者名稱: Name </summary>
-        /// <param name="uid"> 會員User Guid </param>
-        /// <returns> String: 使用者名稱 Name</returns>
-        public static string GetUserLevel(Guid uid)
-        {
-            try
-            {
-                using (databaseEF context = new databaseEF())
-                {
-                    var query =
-                        (from item in context.Accountings
-                         where item.UserID == uid
-                         select item);
-
-                    var list = query.ToList();
-
-                    if (list.Count != 0)
-                        return list[0].Level;
                     else
                         return null;
                 }
@@ -140,6 +146,52 @@ namespace SystemDBFunction
                 return null;
             }
         }
+        #endregion
+
+        #region Post Info Functions
+
+        /// <summary> 從資料庫取得貼文資訊 </summary>
+        /// <returns></returns>
+        public static List<PostInfoModel> GetOnePostInfo(Guid pid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    // get info from DB
+                    var query =
+                        (from item in context.Postings
+                         where item.PostID == pid
+                         select item);
+
+                    List<Posting> sourceList = query.ToList();
+
+                    // Check Data exist
+                    if (sourceList != null)
+                    {
+                        // write into model
+                        List<PostInfoModel> postInfo =
+                            sourceList.Select(obj => new PostInfoModel()
+                            {
+                                CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                                Title = obj.Title,
+                                Body = obj.Body
+                            }).ToList();
+
+                        return postInfo;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DAL.tools.summitError(ex);
+                return null;
+            }
+        }
 
         /// <summary> 從DB取得全部貼文中的留言後，轉換成Model回傳Handler </summary>
         /// <returns>List MsgInfoModel</returns>
@@ -166,7 +218,7 @@ namespace SystemDBFunction
                             {
                                 Body = obj.Body,
                                 Name = obj.Name,
-                                CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")                                
+                                CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
                             }).ToList();
 
                         return MsgSource;
@@ -206,69 +258,9 @@ namespace SystemDBFunction
                 return "Create Exception Error";
             }
         }
-
-        /// <summary> 取得貼文資訊 </summary>
-        /// <returns></returns>
-        public static List<PostInfoModel> GetOnePostInfo(Guid pid)
-        {
-            // get info by post guid
-            List<Posting> sourceList = GetOnePostInfoFromDB(pid);
-
-            if (sourceList != null)
-            {
-                // write into model
-                List<PostInfoModel> postInfo =
-                    sourceList.Select(obj => new PostInfoModel()
-                    {
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                        Title = obj.Title,
-                        Body = obj.Body
-                    }).ToList();
-
-                return postInfo;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-
         #endregion
 
         #region Create Post Message Functions
-
-        /// <summary> 用PID檢查貼文是否存在 </summary>
-        /// <param name="pid"></param>
-        /// <returns>true : 存在, false : 不存在</returns>
-        public static bool CheckPostExist(Guid pid)
-        {
-            try
-            {
-                using (databaseEF context = new databaseEF())
-                {
-                    var query =
-                        (from item in context.Postings
-                         where item.PostID == pid
-                         select item);
-
-                    var list = query.ToList();
-
-                    if (list.Count() != 0)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
 
         /// <summary> 建立留言寫入DB </summary>
         /// <param name="msgInfo"></param>
