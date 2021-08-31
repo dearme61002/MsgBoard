@@ -157,7 +157,8 @@ namespace SystemDBFunction
                         UserID = obj.UserID,
                         CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
                         Title = obj.Title,
-                        Body = obj.Body
+                        Body = obj.Body,
+                        ismaincontent = obj.ismaincontent
                     }).ToList();
 
                 // 用UID比對查詢，並寫入User Name
