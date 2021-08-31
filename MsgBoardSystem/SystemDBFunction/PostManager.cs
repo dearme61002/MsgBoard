@@ -2,6 +2,8 @@
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -285,60 +287,52 @@ namespace SystemDBFunction
 
         #region Show User's Post Functions
 
-        /// <summary> 從資料庫取得使用者貼文 </summary>
-        /// <param name="uid"> 會員User Guid </param>
-        /// <returns> List Posting 格式 </returns>
-        public static List<Posting> GetAllUserPostFromDB(Guid uid)
-        {
-            try
-            {
-                using (databaseEF context = new databaseEF())
-                {
-                    var query =
-                        (from item in context.Postings
-                         where item.UserID == uid
-                         select item);
-
-                    var list = query.ToList();
-                    return list;
-                }
-            }
-            catch (Exception)
-            {
-                throw null;
-            }
-        }
-
         /// <summary> 回傳會員貼文資料給Handler </summary>
         /// <param name="uid"></param>
         /// <returns> List PostInfoModel </returns>
         public static List<PostInfoModel> GetAllUserPostInfo(Guid uid)
         {
-            List<Posting> sourceList = GetAllUserPostFromDB(uid);
-
-            if (sourceList != null)
+            using (databaseEF context = new databaseEF())
             {
-                List<PostInfoModel> postSource =
-                    sourceList.Select(obj => new PostInfoModel()
-                    {
-                        PostID = obj.PostID,
-                        UserID = obj.UserID,
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                        Title = obj.Title,
-                        Body = obj.Body
-                    }).ToList();
+                var query =
+                    (from postInfo in context.Postings
+                     where postInfo.UserID == uid
+                     join account in context.Accountings
+                     on postInfo.UserID equals account.UserID into accinfo
+                     select new
+                     {
+                         postInfo,
+                         accinfo
+                     });
 
-                // 用UID比對查詢，並寫入User Name
-                foreach (var item in postSource)
+                var sourceList = query.ToList();
+
+                if (sourceList != null)
                 {
-                    item.Name = GetUserName(item.UserID);
-                }
+                    List<PostInfoModel> postSource =
+                        sourceList.Select(obj => new PostInfoModel()
+                        {
+                            PostID = obj.postInfo.PostID,
+                            UserID = obj.postInfo.UserID,
+                            Title = obj.postInfo.Title,
+                            Name = obj.accinfo.ToList()[0].Name,
+                            CreateDate = obj.postInfo.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")
+                        }).ToList();
 
-                return postSource;
-            }
-            else
-            {
-                return null;
+                    /*
+                    // 用UID比對查詢，並寫入User Name
+                    foreach (var item in postSource)
+                    {
+                        item.Name = GetUserName(item.UserID);
+                    }
+                    */
+
+                    return postSource;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
         #endregion
