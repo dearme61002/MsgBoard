@@ -45,6 +45,10 @@ namespace WebAuth
             }
         }
 
+        /// <summary>比對輸入密碼是否相同</summary>
+        /// <param name="inputPwd">比對的密碼</param>
+        /// <param name="dbPwd">資料庫的密碼</param>
+        /// <returns>ture: 相同, false: 不相同</returns>
         public static bool AccountPasswordAuthentication(string inputPwd, string dbPwd)
         {
             try

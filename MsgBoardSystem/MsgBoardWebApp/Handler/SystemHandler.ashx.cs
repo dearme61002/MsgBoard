@@ -51,15 +51,7 @@ namespace MsgBoardWebApp.Handler
                         else
                         {
                             // Check Password
-                            if (string.Compare(pwd, userInfo.Password, false) == 0)
-                            {
-                                // 登入驗證
-                                AuthManager.LoginAuthentication(userInfo);
-                                context.Session["UID"] = userInfo.UserID;
-                                statusMsg[0] = "Success";
-                                statusMsg[1] = userInfo.Name;
-                            }
-                            else if (AuthManager.AccountPasswordAuthentication(pwd, userInfo.Password))
+                            if (AuthManager.AccountPasswordAuthentication(pwd, userInfo.Password))
                             {
                                 // 登入驗證
                                 AuthManager.LoginAuthentication(userInfo);
@@ -380,16 +372,16 @@ namespace MsgBoardWebApp.Handler
                     if (Guid.TryParse(strUID, out Guid uid))
                     {
                         // get password from DB
-                        List<PwdInfoModel> pwdInfo = AccountFunction.GetUserPwd(uid);
+                        PwdInfoModel dbPwdInfo = AccountFunction.GetUserPwd(uid);
 
                         // Check new password
                         if (string.Compare(newPwd, newPwdAgain, false) == 0)
                         {
                             // Check input password and DB password
-                            if (string.Compare(oldPwd, pwdInfo[0].Password, false) == 0)
+                            if (AuthManager.AccountPasswordAuthentication(oldPwd, dbPwdInfo.Password))
                             {
                                 // Update password
-                                resultMsg = AccountFunction.UpdateUserPwd(uid, pwdInfo[0].Account, newPwd);
+                                resultMsg = AccountFunction.UpdateUserPwd(uid, dbPwdInfo.Account, newPwd);
                             }
                             else
                             {

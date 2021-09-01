@@ -196,7 +196,7 @@ namespace SystemDBFunction
         /// <summary> 取得使用者密碼 </summary>
         /// <param name="uid"></param>
         /// <returns> PwdInfoModel 格式資料 </returns>
-        public static List<PwdInfoModel> GetUserPwd(Guid uid)
+        public static PwdInfoModel GetUserPwd(Guid uid)
         {
             List<Accounting> sourceList = GetUserInfo(uid);
 
@@ -210,7 +210,7 @@ namespace SystemDBFunction
                         Password = obj.Password
                     }).ToList();
 
-                return pwdSource;
+                return pwdSource[0];
             }
             else
             {
@@ -229,6 +229,9 @@ namespace SystemDBFunction
             {
                 using (databaseEF context = new databaseEF())
                 {
+                    // encrpt new password
+                    newPwd = SystemAuth.PasswordAESCryptography.Encrypt(newPwd);
+
                     var query =
                         $@"
                             UPDATE [dbo].[Accounting]
