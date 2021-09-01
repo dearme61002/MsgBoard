@@ -61,7 +61,6 @@ function validateEmail(e) {
         return false;
     }
 }
-
 function validatePassword() {
     const password = document.querySelector('#inputpassword');
     const re = /^\w{6,15}$/;
@@ -76,6 +75,7 @@ function validatePassword() {
 
         return false;
     }
+
 }
 
 
