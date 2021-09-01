@@ -6,7 +6,7 @@ document.querySelector('#inputname').addEventListener('blur', validateUsername);
 
 document.querySelector('#inputaccount').addEventListener('blur', validateaccount);
 
-
+//你好
 const reSpaces = /^\S+$/;
 
 
@@ -77,36 +77,3 @@ function validatePassword() {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-//(function () {
-//    const forms = document.querySelectorAll('.needs-validation');
-
-//    for (let form of forms) {
-//        form.addEventListener(
-//            'submit',
-//            function (event) {
-//                if (
-//                    !form.checkValidity() ||
-//                    !validateEmail() ||
-//                    !validateUsername() ||
-//                    !validatePassword()
-//                ) {
-//                    event.preventDefault();
-//                    event.stopPropagation();
-//                } else {
-//                    form.classList.add('was-validated');
-//                }
-//            },
-//            false
-//        );
-//    }
-//})();

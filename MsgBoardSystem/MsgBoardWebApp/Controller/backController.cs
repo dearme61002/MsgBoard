@@ -576,8 +576,14 @@ namespace MsgBoardWebApp
 
             }
 
-            var ttc = regxpassworld.IsMatch(password);
 
+
+            if (!regxpassworld.IsMatch(password))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
 
             if (!regexdate.IsMatch(date))
             {
@@ -848,6 +854,12 @@ namespace MsgBoardWebApp
             Regex regexdata = new Regex(@"^\d{4}-\d{2}-\d{2}$");
 
 
+            if (!regxpassworld.IsMatch(password))
+            {
+                apiResult.state = 404;
+                apiResult.msg = "資料格式錯誤";
+                return apiResult;
+            }
 
             if (!regexdata.IsMatch(date))
             {
