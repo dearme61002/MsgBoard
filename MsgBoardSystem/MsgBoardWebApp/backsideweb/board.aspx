@@ -43,6 +43,9 @@
                 }
                 )
             }
+            $(document).ajaxStart(function () { <%--我的等預覽--%>
+                $("#myLoading").show();
+            });
             getAlldata();
  /*取得資料*/
 
@@ -227,7 +230,9 @@
                 }
             }
             /*驗證表單增加按鈕*/
-
+            $(document).ajaxStop(function () {
+                $('#myLoading').hide(); <%--我的等預覽--%>
+            });
             /*變為空值*/
             $('#topAdd').on('click', function () {
                 document.getElementById("topTitle").value = "";
@@ -278,7 +283,11 @@
         <tbody id="tb"></tbody>
     </table>
 
-
+        <div class="d-flex justify-content-center"><%--我的等預覽--%>
+  <div class="spinner-border text-primary" role="status" id="myLoading" style="width:500px;height:500px;border-width:20px; display:none">  <%--我的等預覽--%>
+    <span class="visually-hidden">Loading...</span><%--我的等預覽--%>
+  </div>
+</div>
     <%--檢視資料--%>
 
  <!-- Modal -->

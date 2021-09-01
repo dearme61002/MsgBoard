@@ -28,6 +28,9 @@
                 }
                 )
             }
+            $(document).ajaxStart(function () { <%--我的等預覽--%>
+                $("#myLoading").show();
+            });
             getAlldata();
             /*為刪除綁上點擊功能用代理的方式*/
             $('#tb').on('click', '.del', function () {
@@ -56,10 +59,8 @@
 
                 })
             });
-         
-            $(document).ajaxStart(function () {<%--我的等預覽--%>
-                $('#myLoading').show(); <%--我的等預覽--%>
-            });
+
+          
             $(document).ajaxStop(function () {
                 $('#myLoading').hide(); <%--我的等預覽--%>
             });
@@ -81,7 +82,7 @@
         <tbody id="tb"></tbody>
     </table>
 <div class="d-flex justify-content-center"><%--我的等預覽--%>
-  <div class="spinner-border" role="status" id="myLoading">  <%--我的等預覽--%>
+  <div class="spinner-border text-primary" role="status" id="myLoading" style="width:500px;height:500px;border-width:20px; display:none">  <%--我的等預覽--%>
     <span class="visually-hidden">Loading...</span><%--我的等預覽--%>
   </div>
 </div>

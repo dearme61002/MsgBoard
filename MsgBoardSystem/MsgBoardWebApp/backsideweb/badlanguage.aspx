@@ -31,6 +31,11 @@
                 }
                 )
             }
+
+            $(document).ajaxStart(function () { <%--我的等預覽--%>
+                $("#myLoading").show();
+            });
+
             getAlldata();
             /*初始化資料*/
             /*驗證表單增加按鈕*/
@@ -122,7 +127,9 @@
                 })
             });
 
-
+            $(document).ajaxStop(function () {
+                $('#myLoading').hide(); <%--我的等預覽--%>
+             });
         })
     </script>
 </asp:Content>
@@ -161,4 +168,9 @@
         </thead>
         <tbody id="tb"></tbody>
     </table>
+    <div class="d-flex justify-content-center"><%--我的等預覽--%>
+  <div class="spinner-border text-primary" role="status" id="myLoading" style="width:500px;height:500px;border-width:20px; display:none">  <%--我的等預覽--%>
+    <span class="visually-hidden">Loading...</span><%--我的等預覽--%>
+  </div>
+</div>
 </asp:Content>

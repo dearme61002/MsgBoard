@@ -53,6 +53,9 @@
                 }
                 )
             }
+            $(document).ajaxStart(function () { <%--我的等預覽--%>
+                $("#myLoading").show();
+            });
             getAlldata();
             /*取得所有資料*/
    
@@ -134,7 +137,9 @@
             /*Modal js*/
 
 
-
+            $(document).ajaxStop(function () {
+                $('#myLoading').hide(); <%--我的等預覽--%>
+             });
 
 
         })
@@ -159,7 +164,11 @@
         </thead>
         <tbody id="tb"></tbody>
     </table>
-
+    <div class="d-flex justify-content-center"><%--我的等預覽--%>
+  <div class="spinner-border text-primary" role="status" id="myLoading" style="width:500px;height:500px;border-width:20px; display:none">  <%--我的等預覽--%>
+    <span class="visually-hidden">Loading...</span><%--我的等預覽--%>
+  </div>
+</div>
         <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
