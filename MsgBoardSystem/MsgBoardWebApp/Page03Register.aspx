@@ -7,34 +7,27 @@
         <p class="fs-2 fw-bold">註冊會員</p>
         <div class="col-9 form-floating mb-3">
             <input type="text" class="form-control" id="floatingName" placeholder="123" required>
-            <div class="invalid-feedback">
-                請填入用戶名稱!
-            </div>
+            <div class="invalid-feedback">請填入用戶名稱!</div>
             <label for="floatingAcc">請在此填入用戶名稱</label>
         </div>
         <div class="col-9 form-floating mb-3">
             <input type="text" class="form-control" id="floatingAcc" placeholder="123" required>
-            <div class="invalid-feedback">
-                請填入帳號!
-            </div>
+            <div class="invalid-feedback">請填入帳號!</div>
             <label for="floatingAcc">請在此填入帳號</label>
         </div>
         <div class="col-9 form-floating mb-3">
-            <input type="password" class="form-control" id="floatingPwd" placeholder="123" required>
-            <div class="invalid-feedback">
-                請填入密碼!
-            </div>
+            <input type="password" class="form-control" id="floatingPwd" placeholder="" pattern=".{6,15}" required title="">
+            <div class="invalid-feedback">請填入6~15位密碼!</div>
             <label for="floatingPwd">請在此填入密碼</label>
         </div>
         <div class="col-9 form-floating mb-3">
-            <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
-            <div class="invalid-feedback">
-                請填入正確格式Email!
-            </div>
+            <input type="email" class="form-control" id="floatingEmail" required>
+            <div class="invalid-feedback">請填入正確格式Email!</div>
             <label for="floatingEmail">請在此填入 Email</label>
         </div>
         <div class="col-9 form-floating mb-3">
-            <input type="date" class="form-control" id="floatingBirthDate" placeholder="2000-1-1">
+            <input type="date" class="form-control" id="floatingBirthDate">
+            <div class="invalid-feedback">請選擇正確日期!</div>
             <label for="floatingBirthDate">請在此填入生日</label>
         </div>
         <div class="col-12">
