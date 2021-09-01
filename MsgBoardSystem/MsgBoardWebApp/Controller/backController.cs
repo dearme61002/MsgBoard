@@ -134,6 +134,10 @@ namespace MsgBoardWebApp
             using (databaseEF context = new databaseEF())
             {
                 List<databaseORM.data.Accounting> cc = context.Accountings.Where(x => x.Level == "Member").ToList();
+                foreach (var acc in cc)
+                {
+                    acc.Password = SystemAuth.PasswordAESCryptography.Decrypt(acc.Password);
+                }
                 return cc;
             }
             #endregion
@@ -632,7 +636,7 @@ namespace MsgBoardWebApp
                     Accounting accounting = context.Accountings.Where(x => x.ID == id).FirstOrDefault();
                     accounting.Name = name;
                     accounting.Account = account;
-                    accounting.Password = password;
+                    accounting.Password = SystemAuth.PasswordAESCryptography.Encrypt(password);
                     accounting.Email = email;
                     accounting.BirthDay = Convert.ToDateTime(date);
                     context.SaveChanges();
@@ -951,7 +955,7 @@ namespace MsgBoardWebApp
                     Accounting accounting = context.Accountings.Where(x => x.UserID == id).FirstOrDefault();
                     accounting.Name = name;
                     accounting.Account = account;
-                    accounting.Password = password;
+                    accounting.Password = SystemAuth.PasswordAESCryptography.Encrypt(password);
                     accounting.Email = email;
                     accounting.BirthDay = Convert.ToDateTime(date);
                     context.SaveChanges();
