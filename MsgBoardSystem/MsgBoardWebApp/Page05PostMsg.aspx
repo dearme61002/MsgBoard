@@ -58,14 +58,14 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="Page01Default.aspx">首頁</a></li>
                 <li class="breadcrumb-item"><a href="Page04PostingHall.aspx">貼文區</a></li>
-                <li class="breadcrumb-item active" aria-current="page" id="navText"></li>
+                <li class="breadcrumb-item active" aria-current="page" id="navText">神秘頁面</li>
             </ol>
         </nav>
     </div>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title" id="cardTitle">Post Title</h5>
-            <p class="card-text" id="cardBody">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h5 class="card-title" id="cardTitle">Oops ! .....</h5>
+            <p class="card-text" id="cardBody">看來你來到了一個神奇的地方，趕快回去正常的頁面吧</p>
         </div>
     </div>
     <table id="msgTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">

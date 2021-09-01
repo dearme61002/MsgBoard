@@ -119,8 +119,9 @@ namespace SystemDBFunction
                         return null;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                DAL.tools.summitError(ex);
                 return null;
             }
         }
@@ -128,28 +129,41 @@ namespace SystemDBFunction
         /// <summary> 取得使用者資料 </summary>
         /// <param name="uid"></param>
         /// <returns> EditInfoModel 格式資料 </returns>
-        public static List<EditInfoModel> GetEditInfo(Guid uid)
+        public static EditInfoModel GetUserEditInfo(Guid uid)
         {
-            List<Accounting> sourceList = GetUserInfo(uid);
-
-            // Check exist
-            if (sourceList != null)
+            try
             {
-                List<EditInfoModel> editSource =
-                    sourceList.Select(obj => new EditInfoModel()
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        (from item in context.Accountings
+                         where item.UserID == uid
+                         select item);
+
+                    var sourceList = query.ToList();
+
+                    // Check exist
+                    if (sourceList != null)
                     {
-                        Name = obj.Name,
-                        CreateDate = obj.CreateDate.ToString("yyyy-MM-dd"),
-                        Account = obj.Account,
-                        Level = (obj.Level == "Admin") ? "管理者" : "一般會員",
-                        Email = obj.Email,
-                        Birthday = obj.BirthDay.ToString("yyyy-MM-dd")
-                    }).ToList();
+                        List<EditInfoModel> editSource =
+                            sourceList.Select(obj => new EditInfoModel()
+                            {
+                                Name = obj.Name,
+                                CreateDate = obj.CreateDate.ToString("yyyy-MM-dd"),
+                                Account = obj.Account,
+                                Level = (obj.Level == "Admin") ? "管理者" : "一般會員",
+                                Email = obj.Email,
+                                Birthday = obj.BirthDay.ToString("yyyy-MM-dd")
+                            }).ToList();
 
-                return editSource;
+                        return editSource[0];
+                    }
+                    return null;
+                }
             }
-            else
+            catch (Exception ex)
             {
+                DAL.tools.summitError(ex);
                 return null;
             }
         }
