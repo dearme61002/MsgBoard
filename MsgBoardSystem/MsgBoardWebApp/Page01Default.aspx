@@ -44,7 +44,7 @@
     <div class="container">
         <div class="row">
             <div class="col-7">
-                <h1 class="display-4 text-center alert-danger">熱門焦點</h1>
+                <h1 class="display-4 text-center alert-danger">熱門焦點 分支7</h1>
                 <div id="divPostList"></div>
             </div>
             <div class="col-5">

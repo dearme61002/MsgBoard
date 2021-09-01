@@ -564,9 +564,6 @@
     <Content Include="Bootstrap\js\bootstrap.esm.min.js" />
     <Content Include="Bootstrap\js\bootstrap.js" />
     <Content Include="Bootstrap\js\bootstrap.min.js" />
-    <Content Include="Bootstrap\Page02Login\form-validation.css" />
-    <Content Include="Bootstrap\Page02Login\form-validation.js" />
-    <Content Include="Bootstrap\Page02Login\LoginVaild.js" />
     <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap.css" />
     <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap.min.css" />
     <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap4.css" />

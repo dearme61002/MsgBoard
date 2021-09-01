@@ -24,7 +24,7 @@ namespace databaseORM.data
         public string Account { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string Password { get; set; }
 
         [Required]

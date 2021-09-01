@@ -142,7 +142,7 @@
                     }, false),
                     form.addEventListener('reset', function (resetEvn) {
                         event.preventDefault();
-                        $("input:text").val("");
+                        $("#msgText").val("");
                     }, false)
                 })
         })()

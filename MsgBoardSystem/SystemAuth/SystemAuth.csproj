@@ -50,9 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthManager.cs" />
+    <Compile Include="PasswordAesCryptography.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{6058776b-2e13-4202-9332-d2fedd1509b6}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\databaseORM\databaseORM.csproj">
       <Project>{17F0546A-EA55-45F1-9CD4-E416D70C551D}</Project>
       <Name>databaseORM</Name>
