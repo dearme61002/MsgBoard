@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
+using SystemAuth;
 
 namespace WebAuth
 {
@@ -19,7 +20,7 @@ namespace WebAuth
         /// <summary> 從資料庫抓取使用者資料 </summary>
         /// <param name="account"></param>
         /// <returns>List Accounting 資料</returns>
-        public static List<Accounting> GetAccountInfo(string account)
+        public static Accounting GetAccountInfo(string account)
         {
             try
             {
@@ -33,7 +34,7 @@ namespace WebAuth
                     var list = query.ToList();
 
                     if (list.Count == 1)
-                        return list;
+                        return list[0];
                     else
                         return null;
                 }
@@ -44,43 +45,28 @@ namespace WebAuth
             }
         }
 
-        /// <summary> 取得使用者資料 </summary>
-        /// <param name="account"></param>
-        /// <returns>UserInfoModel 資料</returns>
-        public static UserInfoModel GetInfo(string account)
+        public static bool AccountPasswordAuthentication(string inputPwd, string dbPwd)
         {
-            DateTime defaultDateTime = new DateTime(1911, 10, 10);
-            List<Accounting> sourceList = GetAccountInfo(account);
-
-            // Check account exist
-            if (sourceList != null)
+            try
             {
-                List<UserInfoModel> userSource =
-                    sourceList.Select(obj => new UserInfoModel()
-                    {
-                        ID = obj.ID,
-                        UserID = obj.UserID,
-                        Name = obj.Name,
-                        CreateDate = obj.CreateDate,
-                        Account = obj.Account,
-                        Password = obj.Password,
-                        Level = obj.Level,
-                        Email = obj.Email,
-                        Bucket = obj.Bucket,
-                        Birthday = obj.BirthDay
-                    }).ToList();
+                // 轉成加密類型
+                string enInputPwd = PasswordAESCryptography.Encrypt(inputPwd);
 
-                return userSource[0];
+                if (string.Compare(enInputPwd, dbPwd, false) == 0)
+                    return true;
+                else
+                    return false;
             }
-            else
+            catch(Exception ex)
             {
-                return null;
+                DAL.tools.summitError(ex);
+                return false;
             }
         }
 
         /// <summary> 建立驗證Cookie </summary>
         /// <param name="userInfo"></param>
-        public static void LoginAuthentication(UserInfoModel userInfo)
+        public static void LoginAuthentication(Accounting userInfo)
         {
             string userID = userInfo.UserID.ToString();
             string[] roles = { userInfo.Level };

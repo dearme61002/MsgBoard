@@ -66,6 +66,10 @@
       <Project>{DAEB81F2-BE08-4080-A90B-B15342EEA93C}</Project>
       <Name>Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SystemAuth\SystemAuth.csproj">
+      <Project>{83e8bfb3-62ae-4cd2-8300-963f6a2f92d1}</Project>
+      <Name>SystemAuth</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

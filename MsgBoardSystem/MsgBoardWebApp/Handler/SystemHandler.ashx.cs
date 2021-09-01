@@ -38,7 +38,7 @@ namespace MsgBoardWebApp.Handler
                     string pwd = Convert.ToString(context.Request.Form["Password"]);
                     string[] statusMsg = new string[2];
 
-                    UserInfoModel userInfo = AuthManager.GetInfo(acc);
+                    Accounting userInfo = AuthManager.GetAccountInfo(acc);
 
                     // check account exist
                     if (userInfo != null)
@@ -48,28 +48,34 @@ namespace MsgBoardWebApp.Handler
                         {
                             statusMsg[0] = $"錯誤 : 此帳號被封鎖 ， 即日起至 {userInfo.Bucket.Value.ToString("yyyy-MM-dd")} 後解除";
                         }
+                        else
+                        {
+                            // Check Password
+                            if (string.Compare(pwd, userInfo.Password, false) == 0)
+                            {
+                                // 登入驗證
+                                AuthManager.LoginAuthentication(userInfo);
+                                context.Session["UID"] = userInfo.UserID;
+                                statusMsg[0] = "Success";
+                                statusMsg[1] = userInfo.Name;
+                            }
+                            else if (AuthManager.AccountPasswordAuthentication(pwd, userInfo.Password))
+                            {
+                                // 登入驗證
+                                AuthManager.LoginAuthentication(userInfo);
+                                context.Session["UID"] = userInfo.UserID;
+                                statusMsg[0] = "Success";
+                                statusMsg[1] = userInfo.Name;
+                            }
+                            else
+                            {
+                                statusMsg[0] = "密碼錯誤";
+                            }
+                        }
                     }
                     else
                     {
                         statusMsg[0] = "用戶不存在";
-                    }
-
-                    // Check info is ok
-                    if(statusMsg[0] == null)
-                    {
-                        // Check Password
-                        if (string.Compare(pwd, userInfo.Password, false) == 0)
-                        {
-                            // 登入驗證
-                            AuthManager.LoginAuthentication(userInfo);
-                            context.Session["UID"] = userInfo.UserID;
-                            statusMsg[0] = "Success";
-                            statusMsg[1] = userInfo.Name;
-                        }
-                        else
-                        {
-                            statusMsg[0] = "密碼錯誤";
-                        }
                     }
 
                     // throw statusMsg
@@ -158,6 +164,7 @@ namespace MsgBoardWebApp.Handler
                 string account = context.Request.Form["Account"];
                 string password = context.Request.Form["Password"];
                 string email = context.Request.Form["Email"];
+                string responseMsg;
                 DateTime birthday = Convert.ToDateTime(context.Request.Form["BirthDay"]);
 
                 // set value to object and write into DB
@@ -175,18 +182,19 @@ namespace MsgBoardWebApp.Handler
                         BirthDay = birthday
                     };
 
-                    // check account is already exist
-                    string responseMsg = AccountFunction.CheckAccountExist(accountInfo.Account);
-
-                    if (responseMsg == string.Empty)
+                    // check account
+                    if (AccountFunction.CheckAccountExist(accountInfo.Account))
                     {
-                        // check email is already exist
-                        responseMsg = AccountFunction.CheckEmailExist(accountInfo.Email);
-                        if (responseMsg == string.Empty)
-                        {
+                        responseMsg = "帳號已被註冊";
+                    }
+                    else
+                    {
+                        // Check email
+                        if (AccountFunction.CheckEmailExist(accountInfo.Email))
+                            responseMsg = "Email已被註冊";
+                        else
                             // write account info into DB
                             responseMsg = AccountFunction.CreateAccount(accountInfo);
-                        }
                     }
 
                     string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(responseMsg);
@@ -263,7 +271,7 @@ namespace MsgBoardWebApp.Handler
                         responseMsg = "Param PID Error";
 
                     // Check message string is no swear
-                    string checkedBody= DAL.tools.myTextCheck(body, DAL.tools.getSwear());
+                    string checkedBody = DAL.tools.myTextCheck(body, DAL.tools.getSwear());
 
                     // set value to object and write into DB
                     Message msgInfo = new Message()
@@ -297,7 +305,7 @@ namespace MsgBoardWebApp.Handler
                 }
             }
             // 取得會員資料
-            else if(actionName == "GetEditInfo")
+            else if (actionName == "GetEditInfo")
             {
                 string strUID = context.Session["UID"].ToString();
 
@@ -359,7 +367,7 @@ namespace MsgBoardWebApp.Handler
             }
             // 更改會員密碼
             else if (actionName == "UpdatePwd")
-            {                
+            {
                 try
                 {
                     string strUID = context.Session["UID"].ToString();
@@ -523,31 +531,34 @@ namespace MsgBoardWebApp.Handler
                     string[] resultMsg = new string[2];
 
                     // check account exist
-                    if (AccountFunction.CheckUserByAccount(account) != null)
+                    if (AccountFunction.CheckAccountExist(account))
                     {
                         // check info is correct
-                        UserInfoModel userInfo = AuthManager.GetInfo(account);
+                        Accounting userInfo = AuthManager.GetAccountInfo(account);
                         int checkEmail = string.Compare(email, userInfo.Email, false);
-                        int checkDate = string.Compare(birthday, userInfo.Birthday.ToString("yyyy-MM-dd"), false);
+                        int checkDate = string.Compare(birthday, userInfo.BirthDay.ToString("yyyy-MM-dd"), false);
                         int checkResult = checkEmail + checkDate;
 
-                        if (checkResult == 0)
+                        if (checkResult != 0)
+                            resultMsg[0] = "Email 或 生日日期不符，請重新輸入";
+
+                        // write random string into password
+                        string updateResult = AccountFunction.UpdateUserPwd(userInfo.UserID, account, newPwd);
+                        if (string.Compare(updateResult, "Success", false) == 0)
                         {
-                            // write random string into password
-                            string updateResult = AccountFunction.UpdateUserPwd(userInfo.UserID, account, newPwd);
-                            if (string.Compare(updateResult, "Success", false) == 0)
-                            {
-                                resultMsg[0] = "Success";
-                                resultMsg[1] = "<p>新密碼 :  " + newPwd + "</p><p>請登入後盡快修改會員密碼</p>";
-                            }
-                            else
-                                resultMsg[0] = updateResult;
+                            resultMsg[0] = "Success";
+                            resultMsg[1] = "<p>新密碼 :  " + newPwd + "</p><p>請登入後盡快修改會員密碼</p>";
                         }
                         else
-                            resultMsg[0] = "Email 或 生日日期不符，請重新輸入";
+                        {
+                            resultMsg[0] = updateResult;
+                        }
                     }
                     else
+                    {
                         resultMsg[0] = "此帳號不存在，請重新輸入";
+                    }
+
 
                     // send to ajax
                     string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(resultMsg);
@@ -556,7 +567,7 @@ namespace MsgBoardWebApp.Handler
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    DAL.tools.summitError(ex);
                 }
             }
             #endregion

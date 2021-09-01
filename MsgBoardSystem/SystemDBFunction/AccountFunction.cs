@@ -15,7 +15,7 @@ namespace SystemDBFunction
         /// <summary> 檢查帳號是否已經存在 </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        public static string CheckAccountExist(string account)
+        public static bool CheckAccountExist(string account)
         {
             try
             {
@@ -29,25 +29,22 @@ namespace SystemDBFunction
                     var list = query.ToList();
 
                     if (list.Count() != 0)
-                    {
-                        return "帳號已存在!";
-                    }
+                        return true;
                     else
-                    {
-                        return string.Empty;
-                    }
+                        return false;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return "Check account exception error";
+                DAL.tools.summitError(ex);
+                throw ex;
             }
         }
 
         /// <summary> 檢查帳號是否已經存在 </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        public static string CheckEmailExist(string email)
+        public static bool CheckEmailExist(string email)
         {
             try
             {
@@ -61,18 +58,15 @@ namespace SystemDBFunction
                     var list = query.ToList();
 
                     if (list.Count() != 0)
-                    {
-                        return "Email已存在!";
-                    }
+                        return true;
                     else
-                    {
-                        return string.Empty;
-                    }
+                        return false;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return "Check email exception error";
+                DAL.tools.summitError(ex);
+                throw ex;
             }
         }
 
@@ -83,6 +77,9 @@ namespace SystemDBFunction
         {
             try
             {
+                // Encrypt password before write into data base
+                accounting.Password = SystemAuth.PasswordAESCryptography.Encrypt(accounting.Password);
+
                 using (databaseEF context = new databaseEF())
                 {
                     context.Accountings.Add(accounting);
@@ -90,8 +87,9 @@ namespace SystemDBFunction
                 }
                 return "Success";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                DAL.tools.summitError(ex);
                 return "Excrption Error";
             }
         }
@@ -274,34 +272,6 @@ namespace SystemDBFunction
 
             // return
             return randomCode;
-        }
-
-        /// <summary> 輸入帳號檢查用戶是否存在 </summary>
-        /// <param name="account"></param>
-        /// <returns>Exist : 存在, Null : 不存在</returns>
-        public static string CheckUserByAccount(string account)
-        {
-            try
-            {
-                using (databaseEF context = new databaseEF())
-                {
-                    var query =
-                        (from item in context.Accountings
-                         where item.Account == account
-                         select item);
-
-                    var list = query.ToList();
-
-                    if (list.Count != 0)
-                        return "Exist";
-                    else
-                        return null;
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
         }
         #endregion
     }
