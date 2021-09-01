@@ -43,7 +43,7 @@
 
                     <input type="password" class="form-control" id="inputpassword" name="inputpassword" required />
 
-                    <div class="invalid-feedback">密碼格式不對</div>
+                    <div class="invalid-feedback">密碼格式不對要6到15位</div>
                     <div class="valid-feedback">OK</div>
 
                 </div>

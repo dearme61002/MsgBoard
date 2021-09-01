@@ -533,7 +533,7 @@ namespace MsgBoardWebApp
             Regex rgxemail = new Regex(@"^([a-zA-Z0-9_\-?\.?]){3,}@([a-zA-Z]){3,}\.([a-zA-Z]){2,5}$");
             Regex rgxeaccount = new Regex(@"^[\w\S]+$");
             Regex replace = new Regex(@"^\S+$");
-            Regex regxpassworld = new Regex(@"^\w+$");
+            Regex regxpassworld = new Regex(@"^\w{6,15}$");
             Regex regexdate = new Regex(@"^((19|20)?[0-9]{2}[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01]))*$");
             Regex regexdata = new Regex(@"^\d{4}-\d{2}-\d{2}$");
 
@@ -843,7 +843,7 @@ namespace MsgBoardWebApp
             Regex rgxemail = new Regex(@"^([a-zA-Z0-9_\-?\.?]){3,}@([a-zA-Z]){3,}\.([a-zA-Z]){2,5}$");
             Regex rgxeaccount = new Regex(@"^[\w\S]+$");
             Regex replace = new Regex(@"^\S+$");
-            Regex regxpassworld = new Regex(@"^\w+$");
+            Regex regxpassworld = new Regex(@"^\w{6,15}$");
             Regex regexdate = new Regex(@"^((19|20)?[0-9]{2}[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01]))*$");
             Regex regexdata = new Regex(@"^\d{4}-\d{2}-\d{2}$");
 

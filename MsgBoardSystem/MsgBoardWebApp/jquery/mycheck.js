@@ -64,7 +64,7 @@ function validateEmail(e) {
 
 function validatePassword() {
     const password = document.querySelector('#inputpassword');
-    const re = /^\w+$/;
+    const re = /^\w{6,15}$/;
     if (re.test(password.value) && reSpaces.test(password.value)) {
         password.classList.remove('is-invalid');
         password.classList.add('is-valid');

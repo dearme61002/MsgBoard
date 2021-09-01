@@ -197,7 +197,7 @@
                         <span class="input-group-text">密碼</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="inputpassword" required>
 
-                        <div class="invalid-feedback">密碼格式不對</div>
+                        <div class="invalid-feedback">密碼格式不對要6到15位</div>
                     <div class="valid-feedback">OK</div>
 
 
