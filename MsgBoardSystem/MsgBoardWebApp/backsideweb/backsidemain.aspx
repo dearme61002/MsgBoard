@@ -95,7 +95,7 @@
 		</div>
 			<div title="系統管理" data-options="iconCls:'icon-ok',selected:true" style="padding:10px 0px;width:auto;">
 		<a id="errorlog" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="errorlog.aspx?title=錯誤ＬＯＧ檔案生成">錯誤ＬＯＧ檔案生成</a> <%--錯誤ＬＯＧ檔案生成--%>	
-				<a id="passwordchange" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="passwordchange.aspx?title=跟改密碼及帳號">跟改密碼及帳號</a> <%--跟改密碼及帳號--%>	
+				<a id="passwordchange" href="#" class="easyui-linkbutton functionbar" data-options="" style="width:inherit" url="passwordchange.aspx?title=跟改密碼及帳號">更改密碼及帳號</a> <%--跟改密碼及帳號--%>	
 		</div>
 		
 		
