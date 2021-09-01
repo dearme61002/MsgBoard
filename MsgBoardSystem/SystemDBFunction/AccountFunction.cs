@@ -90,7 +90,7 @@ namespace SystemDBFunction
             catch (Exception ex)
             {
                 DAL.tools.summitError(ex);
-                return "Excrption Error";
+                return "Exception Error";
             }
         }
         #endregion
