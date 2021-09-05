@@ -132,6 +132,60 @@ namespace WebAuth
                 throw ex;
             }
         }
+
+        /// <summary>紀錄登入IP與時間</summary>
+        /// <param name="ip"></param>
+        public static void RecordUserLogin(string ip, Guid uid)
+        {
+            try
+            {
+                UserLogin userLogin = new UserLogin()
+                {
+                    UserID = uid,
+                    LoginDate = DateTime.Now,
+                    LogoutDate = new DateTime(1911, 10, 10),
+                    IP = ip
+                };
+
+                using (databaseEF context = new databaseEF())
+                {
+                    context.UserLogins.Add(userLogin);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                DAL.tools.summitError(ex);
+                throw;
+            }
+        }
+
+        /// <summary>紀錄IP的登出與時間</summary>
+        /// <param name="ip"></param>
+        public static void RecordUserLogout(string ip, Guid uid)
+        {
+            try
+            {
+                using (databaseEF context = new databaseEF())
+                {
+                    var query =
+                        $@"
+                            UPDATE [dbo].[UserLogin]
+                            SET 
+                                [LogoutDate] = '{DateTime.Now}'
+                            WHERE [IP] = '{ip}' and [UserID] = '{uid}'
+                        ";
+
+                    context.Database.ExecuteSqlCommand(query);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                DAL.tools.summitError(ex);
+                throw;
+            }
+        }
         #endregion
     }
 }

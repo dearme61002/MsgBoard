@@ -36,6 +36,7 @@ namespace MsgBoardWebApp.Handler
                 {
                     string acc = Convert.ToString(context.Request.Form["Account"]);
                     string pwd = Convert.ToString(context.Request.Form["Password"]);
+                    string ip = Convert.ToString(context.Request.Form["IP"]);
                     string[] statusMsg = new string[2];
 
                     Accounting userInfo = AuthManager.GetAccountInfo(acc);
@@ -61,6 +62,7 @@ namespace MsgBoardWebApp.Handler
                     {
                         // 登入驗證
                         AuthManager.LoginAuthentication(userInfo);
+                        AuthManager.RecordUserLogin(ip, userInfo.UserID);
                         context.Session["UID"] = userInfo.UserID;
                         statusMsg[0] = "Success";
                         statusMsg[1] = userInfo.Name;
@@ -472,6 +474,18 @@ namespace MsgBoardWebApp.Handler
                 {
                     DAL.tools.summitError(ex);
                     SendDataByJSON(context, "警告!發生預期外錯誤");
+                }
+            }
+            // 會員登出
+            else if (actionName == "Logout")
+            {
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    DAL.tools.summitError(ex);
                 }
             }
             #endregion
