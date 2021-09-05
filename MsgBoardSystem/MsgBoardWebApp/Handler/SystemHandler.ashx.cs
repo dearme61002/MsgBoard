@@ -182,7 +182,7 @@ namespace MsgBoardWebApp.Handler
                 {
                     // Get value from ajax
                     string title = context.Request.Form["Title"];
-                    string body = context.Request.Form["Body"];
+                    string body = context.Request.Form["Body"].Replace("\n", "<br>");
                     string strUID = context.Session["UID"].ToString();
                     string responseMsg = string.Empty;
 

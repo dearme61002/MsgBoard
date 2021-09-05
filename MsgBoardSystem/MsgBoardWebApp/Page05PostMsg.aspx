@@ -1,21 +1,30 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page05PostMsg.aspx.cs" Inherits="MsgBoardWebApp.Page05PostMsg" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .scroll {
+            max-height: 100px;
+            overflow-y: auto;
+        }
+    </style>
     <script>
         // 取得PostID
         const pageUrl = new URL(window.location.href);
         var pid = pageUrl.searchParams.get("PID");
-
+        var test;
         $(document).ready(function () {
             $.ajax({
                 url: "/Handler/SystemHandler.ashx?ActionName=GetPostInfo",
                 type: "POST",
                 data: { "PID": pid },
                 success: function (result) {
+                    test = result;
                     $("#navText").text(result.Title);
                     $("#headText").text(result.Title);
                     $("#cardTitle").text(result.Title);
-                    $("#cardBody").text(result.Body);
+                    $("#cardBody").text("");
+                    $("#cardBody").append(result.Body);
+                    $("#cardFooter").text("建立日期 : " + result.CreateDate);
                 }
             });
 
@@ -64,22 +73,17 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title" id="cardTitle">Oops ! .....</h5>
-            <p class="card-text" id="cardBody">看來你來到了一個神奇的地方，趕快回去正常的頁面吧</p>
+            <h5 class="card-title"><u id="cardTitle">Oops ! .....</u></h5>
+            <p class="card-text scroll" id="cardBody">看來你來到了一個神奇的地方，趕快回去正常的頁面吧</p>
         </div>
+        <div class="card-footer text-muted" id="cardFooter"></div>
     </div>
     <table id="msgTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th class="th-sm">留言內容
-
-                </th>
-                <th class="th-sm">留言者
-
-                </th>
-                <th class="th-sm">時間
-
-                </th>
+                <th class="th-sm">留言內容</th>
+                <th class="th-sm">留言者</th>
+                <th class="th-sm">時間</th>
             </tr>
         </thead>
     </table>
