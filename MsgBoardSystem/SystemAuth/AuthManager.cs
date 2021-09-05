@@ -171,8 +171,7 @@ namespace WebAuth
                     var query =
                         $@"
                             UPDATE [dbo].[UserLogin]
-                            SET 
-                                [LogoutDate] = '{DateTime.Now}'
+                            SET [LogoutDate] = '{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}'
                             WHERE [IP] = '{ip}' and [UserID] = '{uid}'
                         ";
 

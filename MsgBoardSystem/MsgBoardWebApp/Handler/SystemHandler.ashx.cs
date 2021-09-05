@@ -481,7 +481,9 @@ namespace MsgBoardWebApp.Handler
             {
                 try
                 {
-
+                    Guid uid = ConverStringToGuid(context.Session["UID"].ToString());
+                    string ip = Convert.ToString(context.Request.Form["IP"]);
+                    AuthManager.RecordUserLogout(ip, uid);
                 }
                 catch (Exception ex)
                 {

@@ -26,15 +26,23 @@
         }
     </style>
     <script>
+        var ipAddress;
+        $.getJSON("https://api.ipify.org?format=json", function (data) { ipAddress = data.ip });
         $(function () {
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
             var authx = document.cookie.indexOf(".ASPXAUTH");
-            if (authx == 0) { $(".loginFunc").show(); } else { $(".guestFunc").show(); }
+            
+            if (authx == 0) { $(".loginFunc").show(); } else { $(".guestFunc").show();}
 
             $("#welcomeText").text(`歡迎登入! 會員: ${sessionStorage.getItem("Name")}`);
 
             // Logout Function
             $("#logoutBtn").click(function () {
+                $.ajax({
+                    url: "Handler/SystemHandler.ashx?ActionName=Logout",
+                    type: "POST",
+                    data: { "IP": ipAddress }
+                });
                 document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
                 $("#modalText").text("登出成功!");
                 noticeModal.show();
