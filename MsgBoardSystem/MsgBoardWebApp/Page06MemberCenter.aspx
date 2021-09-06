@@ -176,9 +176,9 @@
                     <tr>
                         <th>PostID</th>
                         <th>PostTitle</th>
-                        <th>標題</th>
-                        <th>發文者</th>
-                        <th>建立時間</th>
+                        <th style="width:55%">標題</th>
+                        <th style="width:20%">發文者</th>
+                        <th style="width:25%">建立時間</th>
                     </tr>
                 </thead>
             </table>
@@ -192,10 +192,10 @@
                 <thead>
                     <tr>
                         <th>MsgID</th>
-                        <th>貼文標題</th>
-                        <th>留言內容</th>
-                        <th>發文者</th>
-                        <th>建立時間</th>
+                        <th style="width:30%">貼文標題</th>
+                        <th style="width:35%">留言內容</th>
+                        <th style="width:15%">發文者</th>
+                        <th style="width:20%">建立時間</th>
                     </tr>
                 </thead>
             </table>

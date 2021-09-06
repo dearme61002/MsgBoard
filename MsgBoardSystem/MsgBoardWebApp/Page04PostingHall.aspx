@@ -6,7 +6,9 @@
     <script src="DataTableFrame/DataTables-1.10.25/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function () {
-            var table = $('#PostTable').DataTable();
+            var table = $('#PostTable').DataTable({
+                "order": [[2, "desc"]]
+            });
 
             // set page form            
             function AddRow(obj) {
@@ -62,7 +64,7 @@
             <tr>
                 <th class="th-sm" width="60%">標題</th>
                 <th class="th-sm" width="20%">發文者</th>
-                <th class="th-sm" width="20%">建立時間</th>
+                <th class="th-sm" width="20%" id="createDate">建立時間</th>
             </tr>
         </thead>
     </table>

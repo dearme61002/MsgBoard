@@ -21,7 +21,6 @@
                     test = result;
                     $("#navText").text(result.Title);
                     $("#headText").text(result.Title);
-                    //$("#cardTitle").text(result.Title);
                     $("#cardBody").text("");
                     $("#cardBody").append(result.Body);
                     $("#cardFooter").text("建立日期 : " + result.CreateDate);
@@ -33,9 +32,9 @@
                     "scrollY": "200px",
                     "scrollCollapse": true,
                     "paging": false,
-                    "sorting": false,
                     "info": false,
-                    "searching": false
+                    "searching": false,
+                    "order": [[2, "asc"]]
                 });
 
             function AddRow(obj) {
@@ -73,17 +72,16 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <!--<h5 class="card-title"><u id="cardTitle">Oops ! .....</u></h5>-->
-            <p class="card-text scroll" id="cardBody" style="background-color:#fffff1">看來你來到了一個神奇的地方，趕快回去正常的頁面吧</p>
+            <p class="card-text scroll" id="cardBody" style="background-color:#fffff1">Oops..... 看來你來到了一個神奇的地方，趕快回去正常的頁面吧</p>
         </div>
         <div class="card-footer text-muted" id="cardFooter"></div>
     </div>
     <table id="msgTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th class="th-sm">留言內容</th>
-                <th class="th-sm">留言者</th>
-                <th class="th-sm">時間</th>
+                <th class="th-sm" style="width:62%">留言內容</th>
+                <th class="th-sm" style="width:15%">留言者</th>
+                <th class="th-sm" style="width:23%">時間</th>
             </tr>
         </thead>
     </table>
