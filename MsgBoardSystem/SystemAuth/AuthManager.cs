@@ -135,14 +135,14 @@ namespace WebAuth
 
         /// <summary>紀錄登入IP與時間</summary>
         /// <param name="ip"></param>
-        public static void RecordUserLogin(string ip, Guid uid)
+        public static void RecordUserLogin(string ip, Guid uid, DateTime loginDate)
         {
             try
             {
                 UserLogin userLogin = new UserLogin()
                 {
                     UserID = uid,
-                    LoginDate = DateTime.Now,
+                    LoginDate = loginDate,
                     LogoutDate = new DateTime(1911, 10, 10),
                     IP = ip
                 };
@@ -162,7 +162,7 @@ namespace WebAuth
 
         /// <summary>紀錄IP的登出與時間</summary>
         /// <param name="ip"></param>
-        public static void RecordUserLogout(string ip, Guid uid)
+        public static void RecordUserLogout(string ip, Guid uid, DateTime loginDate)
         {
             try
             {
@@ -171,8 +171,8 @@ namespace WebAuth
                     var query =
                         $@"
                             UPDATE [dbo].[UserLogin]
-                            SET [LogoutDate] = '{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}'
-                            WHERE [IP] = '{ip}' and [UserID] = '{uid}'
+                            SET [LogoutDate] = '{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff")}'
+                            WHERE [IP] = '{ip}' and [UserID] = '{uid}' and [LoginDate] BETWEEN '{loginDate.ToString("yyyy/MM/dd HH:mm")}' AND '{loginDate.AddMinutes(1).ToString("yyyy/MM/dd HH:mm")}'
                         ";
 
                     context.Database.ExecuteSqlCommand(query);

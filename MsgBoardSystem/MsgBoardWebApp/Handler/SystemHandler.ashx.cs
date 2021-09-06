@@ -61,8 +61,12 @@ namespace MsgBoardWebApp.Handler
                     if (AuthManager.AccountPasswordAuthentication(pwd, userInfo.Password))
                     {
                         // 登入驗證
+                        DateTime loginDate = DateTime.Now;
+
                         AuthManager.LoginAuthentication(userInfo);
-                        AuthManager.RecordUserLogin(ip, userInfo.UserID);
+                        AuthManager.RecordUserLogin(ip, userInfo.UserID, loginDate);
+
+                        context.Session["LoginDate"] = loginDate;
                         context.Session["UID"] = userInfo.UserID;
                         statusMsg[0] = "Success";
                         statusMsg[1] = userInfo.Name;
@@ -482,8 +486,9 @@ namespace MsgBoardWebApp.Handler
                 try
                 {
                     Guid uid = ConverStringToGuid(context.Session["UID"].ToString());
+                    DateTime loginDate = Convert.ToDateTime(context.Session["LoginDate"]);
                     string ip = Convert.ToString(context.Request.Form["IP"]);
-                    AuthManager.RecordUserLogout(ip, uid);
+                    AuthManager.RecordUserLogout(ip, uid, loginDate);
                 }
                 catch (Exception ex)
                 {
