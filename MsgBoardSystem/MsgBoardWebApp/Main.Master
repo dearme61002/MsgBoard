@@ -115,5 +115,10 @@
             </div>
         </div>
     </div>
+    <div class="container border-top" style="background-image:url(../Img/Background.png)">
+        <footer style="height:50px;text-align:center">
+            <p>© 2021 WoolongBoard, Inc. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>

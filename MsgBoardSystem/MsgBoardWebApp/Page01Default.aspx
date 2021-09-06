@@ -21,16 +21,16 @@
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
                         if ("Member" == obj.Level && true == obj.ismaincontent) {
-                        var htmlText =
-                            `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="list-group-item list-group-item-action">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-6 fw-bold">${obj.Title}</div>
-                                        <div class="col-3">${obj.Name}</div>
-                                        <div class="col-3">${obj.CreateDate}</div>
-                                    </div>
-                                </div>
-                            </a>`;
+                            var htmlText =
+                                `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="list-group-item list-group-item-action">
+                                    <table>
+                                        <tr>
+                                            <td class="fw-bold" style="width:45%">${obj.Title}</td>
+                                            <td style="width:30%">${obj.Name}</td>
+                                            <td style="width:25%">${obj.CreateDate}</td>
+                                        </tr>
+                                    </table>
+                                </a>`;
                             table += htmlText;
                         }
                     }
