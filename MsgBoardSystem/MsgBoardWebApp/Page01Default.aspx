@@ -5,7 +5,6 @@
         div {
             /*border: 1px solid #000000;*/
         }
-   
     </style>
     <script>
         $(document).ready(function () {
@@ -34,12 +33,10 @@
                             table += htmlText;
                         }
                     }
-
                     table += "</div>";
                     $("#divPostList").append(table);
                 }
             });
-
         });
     </script>
 </asp:Content>
