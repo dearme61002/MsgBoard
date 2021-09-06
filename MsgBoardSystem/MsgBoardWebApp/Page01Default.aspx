@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
         div {
-            //border: 1px solid #000000;
+            /*border: 1px solid #000000;*/
         }
    
     </style>
@@ -16,23 +16,26 @@
                 type: "GET",
                 data: {},
                 success: function (result) {
-                    var table = '<table class="table table-striped">';
-                    table += '<tr> <th>Title</th> <th>Name</th>  <th>CreateDate</th>  </tr>';
+                    var table = '<div class="list-group">';
 
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
                         if ("Member" == obj.Level && true == obj.ismaincontent) {
                         var htmlText =
-                            `<tr> 
-                                <td><a href="Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}</a></td>
-                                <td>${obj.Name}</td>
-                                <td>${obj.CreateDate}</td>
-                            </tr>`;
+                            `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="list-group-item list-group-item-action">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-6 fw-bold">${obj.Title}</div>
+                                        <div class="col-3">${obj.Name}</div>
+                                        <div class="col-3">${obj.CreateDate}</div>
+                                    </div>
+                                </div>
+                            </a>`;
                             table += htmlText;
                         }
                     }
 
-                    table += "</table>";
+                    table += "</div>";
                     $("#divPostList").append(table);
                 }
             });

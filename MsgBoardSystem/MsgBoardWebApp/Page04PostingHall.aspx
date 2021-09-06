@@ -60,18 +60,11 @@
     <table id="PostTable" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th class="th-sm">標題</th>
-                <th class="th-sm">發文者</th>
-                <th class="th-sm">建立時間</th>
+                <th class="th-sm" width="60%">標題</th>
+                <th class="th-sm" width="20%">發文者</th>
+                <th class="th-sm" width="20%">建立時間</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>標題</th>
-                <th>發文者</th>
-                <th>建立時間</th>
-            </tr>
-        </tfoot>
     </table>
     <hr class="my-4">
     <script src="Bootstrap/js/bootstrap.bundle.min.js"></script>

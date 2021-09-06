@@ -31,8 +31,8 @@
         $(function () {
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
             var authx = document.cookie.indexOf(".ASPXAUTH");
-            
-            if (authx == 0) { $(".loginFunc").show(); } else { $(".guestFunc").show();}
+
+            if (authx == 0) { $(".loginFunc").show(); } else { $(".guestFunc").show(); }
 
             $("#welcomeText").text(`歡迎登入! 會員: ${sessionStorage.getItem("Name")}`);
 
@@ -54,12 +54,12 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <div class="container">
+    <div class="container border-bottom">
         <header class="blog-header py-3">
-            <div class="row flex-nowrap justify-content-between align-items-center">
+            <div class="row flex-nowrap justify-content-between align-items-center" style="height: 100px">
                 <div class="col-2 pt-1">
                     <a class="link-secondary" href="Page01Default.aspx">
-                        <image src="../Img/Logo.png" class="img-fluid"></image>
+                        <image src="../Img/Logo.png" style="height: 100px"></image>
                     </a>
                 </div>
                 <div class="col-6 text-center">
@@ -67,44 +67,46 @@
                         <h1>Woolang 留言板</h1>
                     </a>
                 </div>
-                <div class="col-4"><!--Horizontal Function List-->
-                    <a class="btn btn-sm btn-outline-secondary guestFunc"  style="display:none" href="Page02Login.aspx">登入</a>
-                    <a class="btn btn-sm btn-outline-secondary guestFunc"  style="display:none" href="Page03Register.aspx">註冊</a>
-                    <span class="fs-5 loginFunc" style="display:none" id="welcomeText"></span>&nbsp;&nbsp;
-                    <a class="btn btn-warning loginFunc" style="display:none" id="logoutBtn">登出</a>
+                <div class="col-4" style="text-align: right">
+                    <!--Horizontal Function List-->
+                    <a class="btn btn-sm btn-outline-secondary guestFunc" style="display: none" href="Page02Login.aspx">登入</a>
+                    <a class="btn btn-sm btn-outline-secondary guestFunc" style="display: none" href="Page03Register.aspx">註冊</a>
+                    <span class="fs-5 loginFunc" style="display: none" id="welcomeText"></span>&nbsp;&nbsp;
+                    <a class="btn btn-warning loginFunc" style="display: none" id="logoutBtn">登出</a>
                 </div>
             </div>
-            <hr class="my-4">
         </header>
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-2">
-                <div class="list-group"><!--Vertical Function List-->
+            <div class="col-2" style="background-image: url(../img/Background.png)">
+                <hr class="my-4">
+                <div class="list-group">
+                    <!--Vertical Function List-->
                     <a href="Page04PostingHall.aspx" class="list-group-item list-group-item-action list-group-item-warning">貼文區</a>
-                    <a href="Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display:none">撰寫新貼文</a>
-                    <a href="Page06MemberCenter.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display:none">會員中心</a>
-                    <form ID="backSide" runat="server" visible="false">
-                        <a href="/backsideweb/backsidemain.aspx" class="list-group-item list-group-item-action list-group-item-danger loginFunc" style="display:none">管理員後台</a>
+                    <a href="Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display: none">撰寫新貼文</a>
+                    <a href="Page06MemberCenter.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display: none">會員中心</a>
+                    <form id="backSide" runat="server" visible="false">
+                        <a href="/backsideweb/backsidemain.aspx" class="list-group-item list-group-item-action list-group-item-danger loginFunc" style="display: none">管理員後台</a>
                     </form>
                 </div>
             </div>
-            <div class="col-9">
+            <div class="col-10">
                 <!-- Modal Component -->
                 <div class="modal fade" id="noticeModal" tabindex="-1" aria-labelledby="noticeModalLable" aria-hidden="true">
                     <div class="modal-dialog modal-sm modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color:#F8DC81;height:40px">
-                            <h5 class="modal-title fw-bold fs-4" id="noticeModalLable">提示訊息</h5>
-                            <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close" ></button>
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: #F8DC81; height: 40px">
+                                <h5 class="modal-title fw-bold fs-4" id="noticeModalLable">提示訊息</h5>
+                                <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p id="modalText"></p>
+                            </div>
+                            <div class="modal-footer d-flex">
+                                <input type="button" class="btn btn-secondary btn-sm closeBtn" data-bs-dismiss="modal" value="關閉" />
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <p id="modalText"></p>
-                        </div>
-                        <div class="modal-footer d-flex">
-                            <input type="button" class="btn btn-secondary btn-sm closeBtn" data-bs-dismiss="modal" value="關閉"/>
-                        </div>
-                    </div>
                     </div>
                 </div>
                 <!-- Function Page Area-->

@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
         .scroll {
-            max-height: 100px;
+            max-height: 250px;
             overflow-y: auto;
         }
     </style>
@@ -21,7 +21,7 @@
                     test = result;
                     $("#navText").text(result.Title);
                     $("#headText").text(result.Title);
-                    $("#cardTitle").text(result.Title);
+                    //$("#cardTitle").text(result.Title);
                     $("#cardBody").text("");
                     $("#cardBody").append(result.Body);
                     $("#cardFooter").text("建立日期 : " + result.CreateDate);
@@ -73,8 +73,8 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title"><u id="cardTitle">Oops ! .....</u></h5>
-            <p class="card-text scroll" id="cardBody">看來你來到了一個神奇的地方，趕快回去正常的頁面吧</p>
+            <!--<h5 class="card-title"><u id="cardTitle">Oops ! .....</u></h5>-->
+            <p class="card-text scroll" id="cardBody" style="background-color:#fffff1">看來你來到了一個神奇的地方，趕快回去正常的頁面吧</p>
         </div>
         <div class="card-footer text-muted" id="cardFooter"></div>
     </div>
