@@ -178,7 +178,7 @@ namespace SystemDBFunction
                     var query =
                         (from item in context.vwDisplayMsg
                          where item.PostID == pid
-                         orderby item.CreateDate descending
+                         orderby item.CreateDate ascending
                          select item);
 
                     List<vwDisplayMsg> sourceList = query.ToList();
