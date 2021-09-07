@@ -22,16 +22,16 @@
             <label for="oldPwd">請在此填入舊密碼</label>
         </div>
         <div class="col-9 form-floating mb-3">
-            <input type="password" class="form-control" id="newPwd" placeholder="00000" required>
+            <input type="password" class="form-control" id="newPwd" placeholder="00000" required pattern=".{6,15}" title="">
             <div class="invalid-feedback">
-                請填入新密碼!
+                請填入6~15位新密碼!
             </div>
             <label for="newPwd">請在此填入新密碼</label>
         </div>
         <div class="col-9 form-floating mb-3">
-            <input type="password" class="form-control" id="newPwdAgain" placeholder="00000" required>
+            <input type="password" class="form-control" id="newPwdAgain" placeholder="00000" required pattern=".{6,15}" title="">
             <div class="invalid-feedback">
-                請填入新密碼!
+                請填入6~15位新密碼!
             </div>
             <label for="newPwdAgain">請在此再次填入新密碼</label>
         </div>

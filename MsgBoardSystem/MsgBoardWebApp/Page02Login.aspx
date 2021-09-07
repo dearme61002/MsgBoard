@@ -21,9 +21,9 @@
                 <label for="txtPwd" class="form-label">密碼 : </label>
             </div>
             <div class="col-4">
-                <input type="password" class="form-control" id="txtPwd" value="" required>
+                <input type="password" class="form-control" id="txtPwd" value="" required pattern=".{5,15}" title="">
                 <div class="invalid-feedback">
-                    請填入密碼!
+                    請填入正確格式密碼!
                 </div>
             </div>
         </div>
