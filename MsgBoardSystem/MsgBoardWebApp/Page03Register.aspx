@@ -11,14 +11,14 @@
             <label for="floatingAcc">請在此填入用戶名稱</label>
         </div>
         <div class="col-9 form-floating mb-3">
-            <input type="text" class="form-control" id="floatingAcc" placeholder="123" required>
-            <div class="invalid-feedback">請填入帳號!</div>
-            <label for="floatingAcc">請在此填入帳號</label>
+            <input type="text" class="form-control" id="floatingAcc" placeholder="123" required pattern=".{5,15}" title="">
+            <div class="invalid-feedback">請填入正確格式帳號!</div>
+            <label for="floatingAcc">請在此填入5~15位帳號</label>
         </div>
         <div class="col-9 form-floating mb-3">
             <input type="password" class="form-control" id="floatingPwd" placeholder="" pattern=".{6,15}" required title="">
-            <div class="invalid-feedback">請填入6~15位密碼!</div>
-            <label for="floatingPwd">請在此填入密碼</label>
+            <div class="invalid-feedback">請填入正確格式密碼!</div>
+            <label for="floatingPwd">請在此填入6~15位密碼</label>
         </div>
         <div class="col-9 form-floating mb-3">
             <input type="email" class="form-control" id="floatingEmail" required>
