@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
+    <!--<title></title>-->
     <link rel="stylesheet" href="Bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="DataTableFrame/datatables.min.css" />
     <script src="Bootstrap/js/bootstrap.js"></script>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="col-6 text-center">
                     <a class="blog-header-logo text-dark" href="Page01Default.aspx">
-                        <h1>Woolang 留言板</h1>
+                        <h1>Woolong 留言板</h1>
                     </a>
                 </div>
                 <div class="col-4" style="text-align: right">

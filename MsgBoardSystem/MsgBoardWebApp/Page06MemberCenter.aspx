@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page06MemberCenter.aspx.cs" Inherits="MsgBoardWebApp.Page06MemberCenter" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <title>Woolong留言版 : 會員中心</title>
     <link rel="stylesheet" href="DataTableFrame/DataTables-1.10.25/css/jquery.dataTables.min.css" />
     <script src="DataTableFrame/DataTables-1.10.25/js/jquery.dataTables.min.js"></script>
     <script>

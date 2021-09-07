@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page061EditInfo.aspx.cs" Inherits="MsgBoardWebApp.Page061EditInfo" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <title>Woolong留言版 : 編輯會員資料</title>
     <script>
         var testVal;
         $(document).ready(function () {
