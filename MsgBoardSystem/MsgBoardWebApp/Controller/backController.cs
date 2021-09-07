@@ -171,7 +171,7 @@ namespace MsgBoardWebApp
     
 
               
-                string sql = "SELECT  dbo.Posting.PostID, dbo.Message.CreateDate, dbo.Message.Body, dbo.Accounting.Name, dbo.Posting.Title, dbo.Message.ID FROM dbo.Message INNER JOIN dbo.Accounting ON dbo.Message.UserID = dbo.Accounting.UserID INNER JOIN dbo.Posting ON dbo.Message.PostID = dbo.Posting.PostID";
+                string sql = "select DISTINCT  Message.CreateDate, Name,Account,Posting.UserID,Title,Message.Body,Message.ID FROM Message JOIN Accounting ON Accounting.UserID = Message.UserID join Posting on Posting.PostID = Message.PostID";
                 SqlDataReader sqlDataReader = sqlhelper.executeReadesql(sql);
                 
                 List<EditArticles> EditArticlesList = new List<EditArticles>();
