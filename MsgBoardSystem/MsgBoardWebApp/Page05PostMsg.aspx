@@ -4,7 +4,7 @@
     <title id="pageTitle">Woolong留言版 : 貼文內容</title>
     <style>
         .scroll {
-            max-height: 250px;
+            max-height: 500px;
             overflow-y: auto;
         }
     </style>
