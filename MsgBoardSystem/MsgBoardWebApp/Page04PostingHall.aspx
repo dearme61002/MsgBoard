@@ -13,7 +13,7 @@
             // set page form            
             function AddRow(obj) {
                 table.row.add([
-                    `<a href="Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
+                    `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="text-decoration-none">${obj.Title}<a>`,
                     obj.Name,
                     obj.CreateDate
                 ]).draw(false);
