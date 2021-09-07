@@ -3,9 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
         div {
-            //border: 1px solid #000000;
+            /*border: 1px solid #000000;*/
         }
-   
     </style>
     <script>
         $(document).ready(function () {
@@ -16,27 +15,25 @@
                 type: "GET",
                 data: {},
                 success: function (result) {
-                    var table = '<table class="table table-striped">';
-                    table += '<tr> <th>Title</th> <th>Name</th>  <th>CreateDate</th>  </tr>';
+                    var table = '<div class="list-group">';
 
                     for (var i = 0; i < result.length; i++) {
                         var obj = result[i];
                         if ("Member" == obj.Level && true == obj.ismaincontent) {
-                        var htmlText =
-                            `<tr> 
-                                <td><a href="Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}</a></td>
-                                <td>${obj.Name}</td>
-                                <td>${obj.CreateDate}</td>
-                            </tr>`;
+                            var htmlText =
+                                `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="list-group-item list-group-item-action card">
+                                  <div class="card-body" style="padding:0px">
+                                    <h5 class="card-title fw-bold">${obj.Title}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted" style="text-align:right">發文者 : ${obj.Name} &nbsp;&nbsp;&nbsp;發文時間 : ${obj.CreateDate}</h6>
+                                  </div>
+                                </a>`;
                             table += htmlText;
                         }
                     }
-
-                    table += "</table>";
+                    table += "</div>";
                     $("#divPostList").append(table);
                 }
             });
-
         });
     </script>
 </asp:Content>

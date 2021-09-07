@@ -125,7 +125,7 @@ namespace SystemDBFunction
 
         /// <summary> 從資料庫取得貼文資訊 </summary>
         /// <returns></returns>
-        public static List<PostInfoModel> GetOnePostInfo(Guid pid)
+        public static PostInfoModel GetOnePostInfo(Guid pid)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace SystemDBFunction
                                 Body = obj.Body
                             }).ToList();
 
-                        return postInfo;
+                        return postInfo[0];
                     }
                     else
                     {
@@ -226,8 +226,9 @@ namespace SystemDBFunction
                 }
                 return "Success";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                DAL.tools.summitError(ex);
                 return "Create Exception Error";
             }
         }
@@ -413,7 +414,8 @@ namespace SystemDBFunction
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                DAL.tools.summitError(ex);
+                return "警告!發生預期外錯誤";
             }
         }
 

@@ -1,21 +1,29 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Page05PostMsg.aspx.cs" Inherits="MsgBoardWebApp.Page05PostMsg" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .scroll {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+    </style>
     <script>
         // 取得PostID
         const pageUrl = new URL(window.location.href);
         var pid = pageUrl.searchParams.get("PID");
-
+        var test;
         $(document).ready(function () {
             $.ajax({
                 url: "/Handler/SystemHandler.ashx?ActionName=GetPostInfo",
                 type: "POST",
                 data: { "PID": pid },
                 success: function (result) {
+                    test = result;
                     $("#navText").text(result.Title);
                     $("#headText").text(result.Title);
-                    $("#cardTitle").text(result.Title);
-                    $("#cardBody").text(result.Body);
+                    $("#cardBody").text("");
+                    $("#cardBody").append(result.Body);
+                    $("#cardFooter").text("建立日期 : " + result.CreateDate);
                 }
             });
 
@@ -24,9 +32,10 @@
                     "scrollY": "200px",
                     "scrollCollapse": true,
                     "paging": false,
-                    "sorting": false,
                     "info": false,
-                    "searching": false
+                    "sorting": false,
+                    "searching": false,
+                    "order": [[2, "asc"]]
                 });
 
             function AddRow(obj) {
@@ -58,28 +67,22 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="Page01Default.aspx">首頁</a></li>
                 <li class="breadcrumb-item"><a href="Page04PostingHall.aspx">貼文區</a></li>
-                <li class="breadcrumb-item active" aria-current="page" id="navText"></li>
+                <li class="breadcrumb-item active" aria-current="page" id="navText">神秘頁面</li>
             </ol>
         </nav>
     </div>
     <div class="card">
-        <div class="card-body">
-            <h5 class="card-title" id="cardTitle">Post Title</h5>
-            <p class="card-text" id="cardBody">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <div class="card-body" style="background-color:#fffff1">
+            <p class="card-text scroll" id="cardBody">Oops..... 看來你來到了一個神奇的地方，趕快回去正常的頁面吧</p>
         </div>
+        <div class="card-footer text-muted" id="cardFooter"></div>
     </div>
     <table id="msgTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th class="th-sm">留言內容
-
-                </th>
-                <th class="th-sm">留言者
-
-                </th>
-                <th class="th-sm">時間
-
-                </th>
+                <th class="th-sm" style="width:62%">留言內容</th>
+                <th class="th-sm" style="width:15%">留言者</th>
+                <th class="th-sm" style="width:23%">時間</th>
             </tr>
         </thead>
     </table>

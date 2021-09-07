@@ -21,9 +21,9 @@
                 <label for="txtPwd" class="form-label">密碼 : </label>
             </div>
             <div class="col-4">
-                <input type="password" class="form-control" id="txtPwd" value="" required>
+                <input type="password" class="form-control" id="txtPwd" value="" required pattern=".{5,15}" title="">
                 <div class="invalid-feedback">
-                    請填入密碼!
+                    請填入正確格式密碼!
                 </div>
             </div>
         </div>
@@ -36,11 +36,14 @@
 
     <script>
         (function () {
+
             'use strict'
 
             var forms = document.querySelectorAll('.needs-validation')
             var redirect = function () { window.location.href = "Page04PostingHall.aspx"; }
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
+            var ipAddress;
+            $.getJSON("https://api.ipify.org?format=json", function (data) { ipAddress = data.ip; });
 
             Array.prototype.slice.call(forms).forEach(function (form) {
                 form.addEventListener('submit', function (login) {
@@ -57,7 +60,8 @@
                             type: "POST",
                             data: {
                                 "Account": acc,
-                                "Password": pwd
+                                "Password": pwd,
+                                "IP": ipAddress
                             },
                             success: function (result) {                                
                                 var authx = document.cookie.indexOf(".ASPXAUTH");

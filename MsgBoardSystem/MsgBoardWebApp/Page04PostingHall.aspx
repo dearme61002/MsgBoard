@@ -6,12 +6,14 @@
     <script src="DataTableFrame/DataTables-1.10.25/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function () {
-            var table = $('#PostTable').DataTable();
+            var table = $('#PostTable').DataTable({
+                "order": [[2, "desc"]]
+            });
 
             // set page form            
             function AddRow(obj) {
                 table.row.add([
-                    `<a href="Page05PostMsg.aspx?PID=${obj.PostID}">${obj.Title}<a>`,
+                    `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="text-decoration-none">${obj.Title}<a>`,
                     obj.Name,
                     obj.CreateDate
                 ]).draw(false);
@@ -60,18 +62,11 @@
     <table id="PostTable" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th class="th-sm">標題</th>
-                <th class="th-sm">發文者</th>
-                <th class="th-sm">建立時間</th>
+                <th class="th-sm" width="60%">標題</th>
+                <th class="th-sm" width="20%">發文者</th>
+                <th class="th-sm" width="20%" id="createDate">建立時間</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>標題</th>
-                <th>發文者</th>
-                <th>建立時間</th>
-            </tr>
-        </tfoot>
     </table>
     <hr class="my-4">
     <script src="Bootstrap/js/bootstrap.bundle.min.js"></script>
