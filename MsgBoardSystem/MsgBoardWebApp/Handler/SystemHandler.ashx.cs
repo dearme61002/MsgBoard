@@ -189,7 +189,7 @@ namespace MsgBoardWebApp.Handler
                     // Get value from ajax
                     string title = context.Request.Form["Title"];
                     string body = context.Request.Form["Body"].Replace("\n", "<br>");
-                    string strUID = context.Session["UID"].ToString();
+                    string strUID = CheckSession(context, "UID");
                     string responseMsg = string.Empty;
 
                     // Check body and title string is no swear
@@ -230,7 +230,7 @@ namespace MsgBoardWebApp.Handler
                     // Get value from ajax
                     string body = context.Request.Form["Body"];
                     string strPID = context.Request.Form["PID"];
-                    string strUID = context.Session["UID"].ToString();
+                    string strUID = CheckSession(context, "UID");
                     string responseMsg = string.Empty;
 
                     // set value to object and write into DB
@@ -259,7 +259,7 @@ namespace MsgBoardWebApp.Handler
                 }
                 catch (Exception ex)
                 {
-                    SendDataByJSON(context, "發生預期外的錯誤，請重新輸入");
+                    SendDataByJSON(context, "發生預期外的錯誤，請重新登入");
                     DAL.tools.summitError(ex);
                 }
             }
@@ -268,7 +268,7 @@ namespace MsgBoardWebApp.Handler
             {
                 try
                 {
-                    string strUID = context.Session["UID"].ToString();
+                    string strUID = CheckSession(context, "UID");
 
                     // get user infomation
                     EditInfoModel editInfo = AccountFunction.GetUserEditInfo(ConverStringToGuid(strUID));
@@ -284,7 +284,7 @@ namespace MsgBoardWebApp.Handler
             {
                 try
                 {
-                    string strUID = context.Session["UID"].ToString();
+                    string strUID = CheckSession(context, "UID");
 
                     EditInfoModel editSource = new EditInfoModel()
                     {
@@ -310,7 +310,7 @@ namespace MsgBoardWebApp.Handler
             {
                 try
                 {
-                    string strUID = context.Session["UID"].ToString();
+                    string strUID = CheckSession(context, "UID");
                     string oldPwd = context.Request.Form["OldPwd"];
                     string newPwd = context.Request.Form["NewPwd"];
                     string newPwdAgain = context.Request.Form["NewPwdAgain"];
@@ -353,7 +353,7 @@ namespace MsgBoardWebApp.Handler
                 try
                 {
                     // get uid from session
-                    string strUID = context.Session["UID"].ToString();
+                    string strUID = CheckSession(context, "UID");
 
                     // 取得貼文資料
                     List<PostInfoModel> userPostInfo = PostManager.GetAllUserPostInfo(ConverStringToGuid(strUID));
@@ -372,7 +372,7 @@ namespace MsgBoardWebApp.Handler
                 try
                 {
                     // 從Session取得UID並轉型
-                    string strUID = context.Session["UID"].ToString();
+                    string strUID = CheckSession(context, "UID");
 
                     // 取得留言資料
                     List<UserMsgInfo> userMsgInfo = PostManager.GetUserAllMsgInfo(ConverStringToGuid(strUID));
@@ -390,7 +390,7 @@ namespace MsgBoardWebApp.Handler
             {
                 try
                 {
-                    string strUID = context.Session["UID"].ToString();
+                    string strUID = CheckSession(context, "UID");
                     string strPID = context.Request.Form["PID"];
                     string resultMsg = string.Empty;
 
@@ -411,7 +411,7 @@ namespace MsgBoardWebApp.Handler
             {
                 try
                 {
-                    string strUID = context.Session["UID"].ToString();
+                    string strUID = CheckSession(context, "UID");
                     string strMID = context.Request.Form["MID"];
                     string resultMsg = string.Empty;
 
@@ -528,6 +528,21 @@ namespace MsgBoardWebApp.Handler
             }
 
             return outputGuid;
+        }
+
+        /// <summary>檢查Session是否有數值</summary>
+        /// <param name="context"></param>
+        /// <param name="dataName"></param>
+        /// <returns></returns>
+        private string CheckSession(HttpContext context, string dataName)
+        {
+            if (context.Session[dataName] == null)
+            {
+                context.Response.End();
+                return null;
+            }
+            else
+                return context.Session[dataName].ToString();
         }
     }
 }

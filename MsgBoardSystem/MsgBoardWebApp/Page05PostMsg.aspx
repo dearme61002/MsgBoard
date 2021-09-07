@@ -33,6 +33,7 @@
                     "scrollCollapse": true,
                     "paging": false,
                     "info": false,
+                    "sorting": false,
                     "searching": false,
                     "order": [[2, "asc"]]
                 });
@@ -71,8 +72,8 @@
         </nav>
     </div>
     <div class="card">
-        <div class="card-body">
-            <p class="card-text scroll" id="cardBody" style="background-color:#fffff1">Oops..... 看來你來到了一個神奇的地方，趕快回去正常的頁面吧</p>
+        <div class="card-body" style="background-color:#fffff1">
+            <p class="card-text scroll" id="cardBody">Oops..... 看來你來到了一個神奇的地方，趕快回去正常的頁面吧</p>
         </div>
         <div class="card-footer text-muted" id="cardFooter"></div>
     </div>

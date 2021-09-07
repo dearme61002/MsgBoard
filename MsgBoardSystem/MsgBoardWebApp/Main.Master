@@ -92,8 +92,10 @@
                 <div class="list-group">
                     <!--Vertical Function List-->
                     <a href="Page04PostingHall.aspx" class="list-group-item list-group-item-action list-group-item-warning">貼文區</a>
-                    <a href="Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display: none">撰寫新貼文</a>
-                    <a href="Page06MemberCenter.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display: none">會員中心</a>
+                    <form id="loginFunc" runat="server" visible="false">
+                        <a href="Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display: none">撰寫新貼文</a>
+                        <a href="Page06MemberCenter.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display: none">會員中心</a>
+                    </form>
                     <form id="backSide" runat="server" visible="false">
                         <a href="/backsideweb/backsidemain.aspx" class="list-group-item list-group-item-action list-group-item-danger loginFunc" style="display: none">管理員後台</a>
                     </form>

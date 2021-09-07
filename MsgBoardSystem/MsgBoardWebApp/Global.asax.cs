@@ -65,7 +65,6 @@ namespace MsgBoardWebApp
         //驗證方法
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            
             var request = HttpContext.Current.Request;
             var response = HttpContext.Current.Response;
             string path = request.Url.PathAndQuery;
@@ -95,32 +94,35 @@ namespace MsgBoardWebApp
                 }
             }
 
-            if (path.StartsWith("/Page06", StringComparison.InvariantCultureIgnoreCase)) //網址前面驗證
+            // setting page name and value
+            string[] pagesNeedVaild = { "/Page06", "/Page041" };
+
+            // check need vaild page
+            foreach (var page in pagesNeedVaild)
             {
-                bool isAuth = HttpContext.Current.Request.IsAuthenticated;
-                var user = HttpContext.Current.User;
-
-                if (!isAuth || user == null)
+                if (path.StartsWith(page, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    response.StatusCode = 403;
-                    response.Redirect("Page02Login.aspx");//驗證不過調轉我要的頁面
-                    response.End();
-                    return;
-                }
+                    bool isAuth = HttpContext.Current.Request.IsAuthenticated;
+                    var user = HttpContext.Current.User;
 
-                var identity = HttpContext.Current.User.Identity as FormsIdentity;
+                    if (!isAuth || user == null)
+                    {
+                        response.StatusCode = 403;
+                        response.Redirect("Page02Login.aspx");
+                        response.End();
+                        return;
+                    }
 
-                if (identity == null)
-                {
-                    response.StatusCode = 403;
-                    response.Redirect("~/Page02Login.aspx");//驗證不過調轉我要的頁面
-                    response.Write("Please Login");
-                    response.End();
-                    return;
+                    var identity = HttpContext.Current.User.Identity as FormsIdentity;
+                    if(identity == null)
+                    {
+                        response.StatusCode = 403;
+                        response.Redirect("Page02Login.aspx");
+                        response.End();
+                        return;
+                    }
                 }
             }
-
-
         }
         
         // filters
