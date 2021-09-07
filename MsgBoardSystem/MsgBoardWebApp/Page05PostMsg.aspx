@@ -36,7 +36,7 @@
                     "paging": false,
                     "info": false,
                     "searching": false,
-                    "order": [[2, "asc"]]
+                   
                 });
 
             function AddRow(obj) {

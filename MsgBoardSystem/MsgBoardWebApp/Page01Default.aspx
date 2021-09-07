@@ -45,9 +45,9 @@
                 <h1 class="display-4 text-center alert-danger">熱門焦點</h1>
                 <div id="divPostList"></div>
             </div>
-            <div class="col-5">
-                <img class="img-fluid" src="Img/udon.png" />
-            </div>
+            <a class="col-5" href="https://twitter.com/hiru2952/status/1193778263333539840">
+                <img class="img-fluid" src="Img/udon.png"  />
+            </a>
         </div>
     </div>
 </asp:Content>
