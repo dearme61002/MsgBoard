@@ -35,7 +35,6 @@
                     "scrollCollapse": true,
                     "paging": false,
                     "info": false,
-                    "sorting": false,
                     "searching": false,
                     "order": [[2, "asc"]]
                 });
