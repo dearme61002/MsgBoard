@@ -21,14 +21,11 @@
                         var obj = result[i];
                         if ("Member" == obj.Level && true == obj.ismaincontent) {
                             var htmlText =
-                                `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="list-group-item list-group-item-action">
-                                    <table>
-                                        <tr>
-                                            <td class="fw-bold" style="width:45%">${obj.Title}</td>
-                                            <td style="width:30%">${obj.Name}</td>
-                                            <td style="width:25%">${obj.CreateDate}</td>
-                                        </tr>
-                                    </table>
+                                `<a href="Page05PostMsg.aspx?PID=${obj.PostID}" class="list-group-item list-group-item-action card">
+                                  <div class="card-body" style="padding:0px">
+                                    <h5 class="card-title fw-bold">${obj.Title}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted" style="text-align:right">發文者 : ${obj.Name} &nbsp;&nbsp;&nbsp;發文時間 : ${obj.CreateDate}</h6>
+                                  </div>
                                 </a>`;
                             table += htmlText;
                         }
