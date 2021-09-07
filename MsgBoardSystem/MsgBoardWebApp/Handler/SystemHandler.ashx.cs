@@ -554,11 +554,11 @@ namespace MsgBoardWebApp.Handler
         /// <returns></returns>
         private string ShowImageAtPost(string body)
         {
-            Regex regex = new Regex(@"imgsrc.https:.*imgur.*[jpeg,png].end");
+            Regex regex = new Regex(@"imgsrc.https:..i.*[imgur,giphy].*[jpeg,png,webp].imgsrc");
             if (regex.IsMatch(body))
             {
                 body = body.Replace("/imgsrc:", "<img class=\"img-fluid\" src=\"");
-                body = body.Replace("/end", "\" />");
+                body = body.Replace(":imgsrc/", "\" />");
 
                 return body;
             }
