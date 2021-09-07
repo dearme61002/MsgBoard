@@ -440,7 +440,7 @@ namespace MsgBoardWebApp.Handler
                     string[] resultMsg = new string[2];
 
                     // check account exist
-                    if (AccountFunction.CheckAccountExist(account))
+                    if (!AccountFunction.CheckAccountExist(account))
                     {
                         resultMsg[0] = "此帳號不存在，請重新輸入";
                         SendDataByJSON(context, resultMsg);
