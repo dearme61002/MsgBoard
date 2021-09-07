@@ -73,7 +73,7 @@
 <body class="easyui-layout">
    <%--top--%>
 	<div data-options="region:'north',border:false" style="height:100px;padding:10px;overflow:hidden">
-          <img src="../Img/Logo.png" width="100" height="100" style="padding-bottom:12px;float:left"/>
+     <a href="../Page01Default.aspx"><img src="../Img/Logo.png" width="100" height="100" style="padding-bottom:12px;float:left"/></a>  
         <div style="float:left;line-height:100px;margin-left:20px;font-size:60px">Woolong留言板</div>
 		<button type="button" class="btn btn-secondary" id="out" style="float:right">登出</button>
  <%--top--%>
