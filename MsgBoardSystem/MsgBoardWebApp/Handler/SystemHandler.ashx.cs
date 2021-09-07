@@ -3,6 +3,7 @@ using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.SessionState;
 using SystemDBFunction;
@@ -195,6 +196,9 @@ namespace MsgBoardWebApp.Handler
                     // Check body and title string is no swear
                     string checkedTitle = DAL.tools.myTextCheck(title, DAL.tools.getSwear());
                     string checkedBody = DAL.tools.myTextCheck(body, DAL.tools.getSwear());
+
+                    // Set img src
+                    checkedBody = ShowImageAtPost(checkedBody);
 
                     // set value to object and write into DB
                     Posting postInfo = new Posting()
@@ -543,6 +547,25 @@ namespace MsgBoardWebApp.Handler
             }
             else
                 return context.Session[dataName].ToString();
+        }
+
+        /// <summary>貼文顯示圖片功能</summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        private string ShowImageAtPost(string body)
+        {
+            Regex regex = new Regex(@"imgsrc.https:.*imgur.*[jpeg,png].end");
+            if (regex.IsMatch(body))
+            {
+                body = body.Replace("/imgsrc:", "<img class=\"img-fluid\" src=\"");
+                body = body.Replace("/end", "\" />");
+
+                return body;
+            }
+            else
+            {
+                return body;
+            }
         }
     }
 }
