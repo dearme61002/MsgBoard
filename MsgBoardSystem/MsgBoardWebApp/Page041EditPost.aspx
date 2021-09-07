@@ -23,7 +23,7 @@
         </div>
         <div class="mb-3">
             <label for="postContext" class="form-label">貼文內容 : </label>
-            <textarea class="form-control" id="postContext" placeholder="請在此輸入內容" required style="height: 100px"></textarea>
+            <textarea class="form-control" id="postContext" placeholder="請在此輸入內容" required style="height: 250px"></textarea>
             <div class="invalid-feedback">
                 請填入貼文內容!
             </div>
