@@ -18,7 +18,6 @@ namespace MsgBoardWebApp
 
             if (isAuth && user != null)
             {
-                loginFunc.Visible = true;
                 var identity = HttpContext.Current.User.Identity as FormsIdentity; //判讀Identity
                 if (identity != null)
                 {
