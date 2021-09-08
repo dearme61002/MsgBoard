@@ -49,7 +49,7 @@
                         
                     },
                     beforeSend: function (request) {
-                        request.setRequestHeader("key", "<%=dataID%>");
+                        request.setRequestHeader("key", "<%=enCodedataID%>");
                      }
 
                 })

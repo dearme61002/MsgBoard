@@ -25,7 +25,7 @@
                         alert('獲取資料失敗');
                     },
                     beforeSend: function (request) {
-                        request.setRequestHeader("key", "<%=dataID%>");
+                        request.setRequestHeader("key", "<%=enCodedataID%>");
                      }
                 }
                 )
@@ -53,7 +53,7 @@
                         return alert('刪除資料失敗');
                     },
                     beforeSend: function (request) {
-                        request.setRequestHeader("key", "<%=dataID%>");
+                        request.setRequestHeader("key", "<%=enCodedataID%>");
                      }
 
                 })
@@ -101,7 +101,7 @@
                         return alert(res.msg);
                     },
                     beforeSend: function (request) {
-                        request.setRequestHeader("key", "<%=dataID%>");
+                        request.setRequestHeader("key", "<%=enCodedataID%>");
                      }
 
                 })
