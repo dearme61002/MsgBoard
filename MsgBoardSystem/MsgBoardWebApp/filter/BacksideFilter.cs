@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,12 @@ namespace MsgBoardWebApp.filter
                 return new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
             }
             string keytext = key.First();
-            token token = new token();
 
-            if (token.isAdmin(keytext))
+            token token = new token();
+            string decodedate= token.decode(keytext);//解碼
+            JObject myjsondecodeData = JObject.Parse(decodedate);//解json
+            string mydecodeKey = myjsondecodeData["UserID"].ToString();
+            if (token.isAdmin(mydecodeKey))
             {
                 return await continuation();
             }

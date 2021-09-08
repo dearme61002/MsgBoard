@@ -21,6 +21,7 @@ namespace DAL
         /// <returns>以加密的字串</returns>
         public string encode(Dictionary<string, object> keyValuePairs)
         {
+            //double exp = (DateTime.UtcNow.AddHours(1) - new DateTime(1970, 1, 1)).TotalSeconds;
             var secret = "wearediediiebutlivelive&&@@dd";//加密與解密密碼不能洩漏
             IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
             IJsonSerializer serializer = new JsonNetSerializer();
