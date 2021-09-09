@@ -193,12 +193,12 @@ namespace MsgBoardWebApp.Handler
                     string strUID = CheckSession(context, "UID");
                     string responseMsg = string.Empty;
 
+                    // Set img src
+                    body = ShowImageAtPost(body);
+
                     // Check body and title string is no swear
                     string checkedTitle = DAL.tools.myTextCheck(title, DAL.tools.getSwear());
                     string checkedBody = DAL.tools.myTextCheck(body, DAL.tools.getSwear());
-
-                    // Set img src
-                    checkedBody = ShowImageAtPost(checkedBody);
 
                     // set value to object and write into DB
                     Posting postInfo = new Posting()
@@ -554,7 +554,7 @@ namespace MsgBoardWebApp.Handler
         /// <returns></returns>
         private string ShowImageAtPost(string body)
         {
-            Regex regex = new Regex(@"imgsrc.https:.*[imgur,giphy].*[jpeg,png,webp,gif].imgsrc");
+            Regex regex = new Regex(@"(?<first>imgsrc+).*(imgur|giphy).*(jpg|jpeg|png|webp|gif).(\k<first>)");
             if (regex.IsMatch(body))
             {
                 body = body.Replace("/imgsrc:", "<img class=\"img-fluid\" src=\"");
