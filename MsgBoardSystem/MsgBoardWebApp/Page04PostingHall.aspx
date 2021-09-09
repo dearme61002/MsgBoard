@@ -8,7 +8,8 @@
     <script>
         $(document).ready(function () {
             var table = $('#PostTable').DataTable({
-                "order": [[2, "desc"]]
+                "order": [[2, "desc"]],
+                "language": { "emptyTable": "找不到貼文" }
             });
 
             // set page form            

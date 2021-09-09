@@ -7,8 +7,8 @@
     <script>
         $(document).ready(function () {
             // Set Table
-            var userPostTable = $('#UserPostTable').DataTable();
-            var userMsgTable = $('#UserMsgTable').DataTable();
+            var userPostTable = $('#UserPostTable').DataTable({ "language": { "emptyTable": "此帳號沒有建立的貼文" } });
+            var userMsgTable = $('#UserMsgTable').DataTable({ "language": { "emptyTable": "此帳號沒有建立的留言" } });
 
             // Set Modals
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));

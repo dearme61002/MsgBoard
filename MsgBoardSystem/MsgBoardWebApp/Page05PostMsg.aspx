@@ -36,7 +36,8 @@
                     "paging": false,
                     "info": false,
                     "searching": false,
-                   "order": [[2, "asc"]]
+                    "order": [[2, "asc"]],
+                    "language": { "emptyTable": "看起來沒有人留言，來搶沙發?"}
                 });
 
             function AddRow(obj) {
