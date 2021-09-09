@@ -28,6 +28,12 @@ namespace MsgBoardWebApp.filter
 
             token token = new token();
             string decodedate= token.decode(keytext);//解碼
+
+            if (decodedate == String.Empty) //解密失敗或過期
+            {
+                return new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
+            }
+
             JObject myjsondecodeData = JObject.Parse(decodedate);//解json
             string mydecodeKey = myjsondecodeData["UserID"].ToString();
             if (token.isAdmin(mydecodeKey))
