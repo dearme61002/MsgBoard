@@ -554,7 +554,7 @@ namespace MsgBoardWebApp.Handler
         /// <returns></returns>
         private string ShowImageAtPost(string body)
         {
-            Regex regex = new Regex(@"(?<first>imgsrc+).*(imgur|giphy).*(jpg|jpeg|png|webp|gif).(\k<first>)");
+            Regex regex = new Regex(@"(?<first>imgsrc+).*(imgur|giphy|truth.bahamut).*(jpg|jpeg|png|webp|gif|JPG|PNG).(\k<first>)");
             if (regex.IsMatch(body))
             {
                 body = body.Replace("/imgsrc:", "<img class=\"img-fluid\" src=\"");
