@@ -71,14 +71,22 @@
 
     <div class="container text-center">
         <div class="row">
-            <div class="col-9">
+            <div class="col-3">
                 <div class="alert alert-primary" role="alert">總共會員數</div>
             </div>
-            <div class="col-3">
+            <div class="col-9">
                 <div class="alert alert-primary" role="alert"><%:memberCount %></div>
             </div>
         </div>
 
+         <div class="row">
+            <div class="col-3">
+                <div class="alert alert-primary" role="alert">目前總共被封鎖的人數</div>
+            </div>
+            <div class="col-9">
+                <div class="alert alert-primary" role="alert"><%:bucketCount %></div>
+            </div>
+        </div>
 
         <div class="row">
 
@@ -98,37 +106,37 @@
         </div>
         <div class="row">
 
-            <div class="col-9">
+            <div class="col-3">
                 <div class="alert alert-primary">增加會員數</div>
             </div>
-            <div class="col-3">
+            <div class="col-9">
                 <div class="alert alert-primary" id="addAllmumber"></div>
             </div>
         </div>
          <div class="row">
 
-            <div class="col-9">
+            <div class="col-3">
                 <div class="alert alert-primary">增加到訪人數</div>
             </div>
-            <div class="col-3">
+            <div class="col-9">
                 <div class="alert alert-primary"id="addGoHere"></div>
             </div>
         </div>
         <div class="row">
 
-            <div class="col-9">
+            <div class="col-3">
                 <div class="alert alert-primary">此區間平均會員數</div>
             </div>
-            <div class="col-3">
+            <div class="col-9">
                 <div class="alert alert-primary" id="avgAllmumber"></div>
             </div>
         </div>
         <div class="row">
 
-            <div class="col-9">
+            <div class="col-3">
                 <div class="alert alert-primary">此區間平均到訪人數</div>
             </div>
-            <div class="col-3">
+            <div class="col-9">
                 <div class="alert alert-primary" id="avgGoHere"></div>
             </div>
         </div>

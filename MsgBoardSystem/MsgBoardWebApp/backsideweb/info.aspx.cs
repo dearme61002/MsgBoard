@@ -12,6 +12,7 @@ namespace MsgBoardWebApp.backsideweb
     public partial class info : System.Web.UI.Page
     {
         public int memberCount = 0;
+        public int bucketCount = 0;
         public string dataID;
         public string enCodedataID;
         protected void Page_Load(object sender, EventArgs e)
@@ -63,7 +64,20 @@ namespace MsgBoardWebApp.backsideweb
                 tools.summitError(ex);
             }
 
+            try
+            {
+                using (databaseEF context = new databaseEF())//計算黑名單
+                {
 
+                    bucketCount = context.Accountings.Where(x => x.Bucket > DateTime.Now).Count();
+                    //memberCount = context.Infoes.Select(x => x.RegisteredPeople).Sum();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                tools.summitError(ex);
+            }
 
 
 
