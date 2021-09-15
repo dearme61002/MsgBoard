@@ -440,7 +440,7 @@ namespace MsgBoardWebApp.Handler
                     string account = context.Request.Form["Account"];
                     string email = context.Request.Form["Email"];
                     string birthday = context.Request.Form["Birthday"];
-                    string newPwd = AccountFunction.CreateRandomCode(5, 5, 10);
+                    string newPwd = AccountFunction.CreateRandomCode(7, 9, 0);
                     string[] resultMsg = new string[2];
 
                     // check account exist
@@ -567,6 +567,5 @@ namespace MsgBoardWebApp.Handler
                 return body;
             }
         }
-
     }
 }
