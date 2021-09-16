@@ -96,7 +96,7 @@ CREATE TABLE [dbo].[Accounting](
 	[Name] [nvarchar](50) NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[Account] [varchar](50) NOT NULL,
-	[Password] [varchar](20) NOT NULL,
+	[Password] [varchar](50) NOT NULL,
 	[Level] [varchar](10) NOT NULL,
 	[Email] [nvarchar](50) NOT NULL,
 	[Bucket] [date] NULL,
