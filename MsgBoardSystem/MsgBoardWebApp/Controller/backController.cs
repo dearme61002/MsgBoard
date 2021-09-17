@@ -274,10 +274,20 @@ namespace MsgBoardWebApp
         [HttpPost]
         public Model.ApiResult DelIndex([FromBody] string dataID)
         {
-
+        
             #region 從資料庫刪除ErrorLog紀錄透過dataID
             using (databaseEF context = new databaseEF())
             {
+                //刪除多餘資料
+                int dataint = Convert.ToInt32(dataID);
+                String PostID = context.Postings.Where(x => x.ID == dataint).Select(x => x.PostID).FirstOrDefault().ToString();
+                string sqlmessage = "DELETE FROM message WHERE UserID= convert(uniqueidentifier,@PostID);";
+                SqlParameter[] sqlParametersmessage = new SqlParameter[] {
+                        new SqlParameter("@PostID",PostID)
+
+                       };
+                sqlhelper.executeNonQuerysql(sqlmessage, sqlParametersmessage, false);
+                //刪除多餘資料
                 Model.ApiResult apiResult = new Model.ApiResult();
                 try
                 {
@@ -349,7 +359,7 @@ namespace MsgBoardWebApp
                 Model.ApiResult apiResult = new Model.ApiResult();
                 try
                 {
-
+                 
                     Posting posting = new Posting() { ID = Convert.ToInt32(dataID) };
                     context.Postings.Attach(posting);
                     context.Postings.Remove(posting);
@@ -448,6 +458,25 @@ namespace MsgBoardWebApp
                 Model.ApiResult apiResult = new Model.ApiResult();
                 try
                 {
+                    //刪除多餘資料
+                    int dataint = Convert.ToInt32(dataID);
+                    String userID = context.Accountings.Where(x => x.ID == dataint).Select(x => x.UserID).FirstOrDefault().ToString();
+                    
+                    string sqlmessage = "DELETE FROM message WHERE UserID= convert(uniqueidentifier,@UserID);";
+                    SqlParameter[] sqlParametersmessage = new SqlParameter[] {
+                        new SqlParameter("@UserID",userID)
+                
+                       };
+                    sqlhelper.executeNonQuerysql(sqlmessage, sqlParametersmessage, false);
+
+                    string sqlposting = "DELETE FROM posting  WHERE UserID= convert(uniqueidentifier,@UserID);";
+                    SqlParameter[] sqlParametersposting = new SqlParameter[] {
+                        new SqlParameter("@UserID",userID)
+
+                       };
+                    sqlhelper.executeNonQuerysql(sqlposting, sqlParametersposting, false);
+
+                    //刪除多餘資料
                     Accounting log = new Accounting() { ID = Convert.ToInt32(dataID) };
                     context.Accountings.Attach(log);
                     context.Accountings.Remove(log);
