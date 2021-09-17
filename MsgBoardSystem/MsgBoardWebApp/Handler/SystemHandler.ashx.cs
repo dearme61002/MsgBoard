@@ -33,19 +33,21 @@ namespace MsgBoardWebApp.Handler
             // 登入驗證
             if (actionName == "Login")
             {
+                // status string array
+                string[] statusMsg = new string[2];
+
                 try
                 {
                     string acc = Convert.ToString(context.Request.Form["Account"]);
                     string pwd = Convert.ToString(context.Request.Form["Password"]);
                     string ip = Convert.ToString(context.Request.Form["IP"]);
-                    string[] statusMsg = new string[2];
 
                     Accounting userInfo = AuthManager.GetAccountInfo(acc);
 
                     // check account exist
                     if (userInfo == null)
                     {
-                        statusMsg[0] = "用戶不存在";
+                        statusMsg[0] = "帳號或密碼錯誤";
                         SendDataByJSON(context, statusMsg);
                         return; 
                     }
@@ -74,7 +76,7 @@ namespace MsgBoardWebApp.Handler
                     }
                     else
                     {
-                        statusMsg[0] = "密碼錯誤";
+                        statusMsg[0] = "帳號或密碼錯誤";
                     }
 
                     SendDataByJSON(context, statusMsg);
@@ -82,6 +84,9 @@ namespace MsgBoardWebApp.Handler
                 catch (Exception ex)
                 {
                     DAL.tools.summitError(ex);
+                    statusMsg[0] = "登入發生錯誤，請使用其他瀏覽器或無痕模式";
+                    SendDataByJSON(context, statusMsg);
+                    return;
                 }
             }
             // 首頁載入時寫入資料
@@ -440,7 +445,7 @@ namespace MsgBoardWebApp.Handler
                     string account = context.Request.Form["Account"];
                     string email = context.Request.Form["Email"];
                     string birthday = context.Request.Form["Birthday"];
-                    string newPwd = AccountFunction.CreateRandomCode(5, 5, 10);
+                    string newPwd = AccountFunction.CreateRandomCode(7, 7, 0);
                     string[] resultMsg = new string[2];
 
                     // check account exist
@@ -519,7 +524,6 @@ namespace MsgBoardWebApp.Handler
             context.Response.ContentType = "application/json";
             context.Response.Write(jsonText);            
         }
-
 
         /// <summary>從String轉型成Guid </summary>
         /// <param name="sourceGuid"></param>
