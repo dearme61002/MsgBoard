@@ -9,7 +9,20 @@
         $(document).ready(function () {
             var table = $('#PostTable').DataTable({
                 "order": [[2, "desc"]],
-                "language": { "emptyTable": "找不到貼文" }
+                "language": {
+                    "emptyTable": "找不到貼文",
+                    "zeroRecords": "找不到貼文",
+                    "infoEmpty": "顯示第 0 到 0 篇，共 0 篇貼文",
+                    "info": "顯示第 _START_  到 _END_ 篇，共 _TOTAL_ 篇貼文",
+                    "search": "搜尋貼文:",
+                    "paginate": {
+                        "first": "第一頁",
+                        "last": "最後頁",
+                        "next": "下一頁",
+                        "previous": "上一頁"
+                    },
+                    "lengthMenu": "頁面顯示 _MENU_ 篇貼文"
+                }
             });
 
             // set page form            
