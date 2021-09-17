@@ -278,16 +278,24 @@ namespace MsgBoardWebApp
             #region 從資料庫刪除ErrorLog紀錄透過dataID
             using (databaseEF context = new databaseEF())
             {
-                //刪除多餘資料
+                try
+                {
+ //刪除多餘資料
                 int dataint = Convert.ToInt32(dataID);
                 String PostID = context.Postings.Where(x => x.ID == dataint).Select(x => x.PostID).FirstOrDefault().ToString();
-                string sqlmessage = "DELETE FROM message WHERE UserID= convert(uniqueidentifier,@PostID);";
+                string sqlmessage = "DELETE FROM message WHERE PostID= convert(uniqueidentifier,@PostID);";
                 SqlParameter[] sqlParametersmessage = new SqlParameter[] {
                         new SqlParameter("@PostID",PostID)
 
                        };
                 sqlhelper.executeNonQuerysql(sqlmessage, sqlParametersmessage, false);
-                //刪除多餘資料
+                    //刪除多餘資料
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+               
                 Model.ApiResult apiResult = new Model.ApiResult();
                 try
                 {
