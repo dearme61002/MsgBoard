@@ -20,12 +20,18 @@
                 data: { "PID": pid },
                 success: function (result) {
                     test = result;
-                    $("#navText").text(result.Title);
-                    $("#headText").text(result.Title);
-                    $("#cardBody").text("");
-                    $("#cardBody").append(result.Body);
-                    $("#cardFooter").text("建立日期 : " + result.CreateDate);
-                    $('#pageTitle').text("Woolong留言版 : " + result.Title);
+                    if (null != result.Body) {
+                        $("#navText").text(result.Title);
+                        $("#headText").text(result.Title);
+                        $("#cardBody").text("");
+                        $("#cardBody").append(result.Body);
+                        $("#cardFooter").text("建立日期 : " + result.CreateDate);
+                        $('#pageTitle').text("Woolong留言版 : " + result.Title);
+                    }
+                    else {
+                        $("#headText").text("[注意!] 你到了一個神祕的頁面 [注意!]");
+                        $("#cardFooter").text("快回貼文區吧~~~~");
+                    }
                 }
             });
 

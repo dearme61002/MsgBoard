@@ -7,8 +7,36 @@
     <script>
         $(document).ready(function () {
             // Set Table
-            var userPostTable = $('#UserPostTable').DataTable({ "language": { "emptyTable": "此帳號沒有建立的貼文" } });
-            var userMsgTable = $('#UserMsgTable').DataTable({ "language": { "emptyTable": "此帳號沒有建立的留言" } });
+            var userPostTable = $('#UserPostTable').DataTable({
+                "language": {
+                    "emptyTable": "此帳號沒有建立的貼文",
+                    "infoEmpty": "顯示第 0 到 0 篇，共 0 篇貼文",
+                    "info": "顯示第 _START_  到 _END_ 篇，共 _TOTAL_ 篇貼文",
+                    "search": "搜尋貼文:",
+                    "paginate": {
+                        "first": "第一頁",
+                        "last": "最後頁",
+                        "next": "下一頁",
+                        "previous": "上一頁"
+                    },
+                    "lengthMenu": "頁面顯示 _MENU_ 篇貼文"
+                }                
+            });
+            var userMsgTable = $('#UserMsgTable').DataTable({
+                "language": {
+                    "emptyTable": "此帳號沒有建立的留言",
+                    "infoEmpty": "顯示第 0 到 0 則，共 0 則留言",
+                    "info": "顯示第 _START_  到 _END_ 則，共 _TOTAL_ 則留言",
+                    "search": "搜尋留言:",
+                    "paginate": {
+                        "first": "第一頁",
+                        "last": "最後頁",
+                        "next": "下一頁",
+                        "previous": "上一頁"
+                    },
+                    "lengthMenu": "頁面顯示 _MENU_ 則留言"
+                }
+            });
 
             // Set Modals
             var noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
