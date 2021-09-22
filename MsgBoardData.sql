@@ -12,8 +12,6 @@ INSERT [dbo].[Accounting] ([ID], [UserID], [Name], [CreateDate], [Account], [Pas
 GO
 INSERT [dbo].[Accounting] ([ID], [UserID], [Name], [CreateDate], [Account], [Password], [Level], [Email], [Bucket], [BirthDay]) VALUES (1, N'9e481fa6-27ad-41fe-a87e-2a47226e9322', N'系統管理者2', CAST(N'2021-09-01T13:23:30.493' AS DateTime), N'Admin2', N'WFR91HjGGt3X4Mxjj7WbpA==', N'Admin', N'admin2@ubay.com', NULL, CAST(N'2021-08-31' AS Date))
 GO
-INSERT [dbo].[Accounting] ([ID], [UserID], [Name], [CreateDate], [Account], [Password], [Level], [Email], [Bucket], [BirthDay]) VALUES (73, N'9e481fa6-27ad-41fe-a87e-2a47226e9326', N'系統管理者1', CAST(N'2021-09-01T13:23:30.493' AS DateTime), N'Admin', N'9a4yLSHeobDruJtcBUNJhA==', N'Admin', N'admin@ubay.com', NULL, CAST(N'2021-08-31' AS Date))
-GO
 INSERT [dbo].[Accounting] ([ID], [UserID], [Name], [CreateDate], [Account], [Password], [Level], [Email], [Bucket], [BirthDay]) VALUES (35, N'1a8853e5-ac8a-4def-ba3c-3189203d6f88', N'未來人', CAST(N'2021-09-16T21:42:25.840' AS DateTime), N'skr~skr~', N'B4hhHgMiuwt5QlQgCjm++w==', N'Member', N'thousandsones@gmail.com', NULL, CAST(N'2062-08-07' AS Date))
 GO
 INSERT [dbo].[Accounting] ([ID], [UserID], [Name], [CreateDate], [Account], [Password], [Level], [Email], [Bucket], [BirthDay]) VALUES (9, N'ee22e0cc-f51c-4e0d-8d27-4b0edf044ff8', N'場外潛水員', CAST(N'2021-09-07T09:10:30.817' AS DateTime), N'baha555', N'S4EZCSRDJp6waohPZqpTLA==', N'Member', N'baha@email.com', NULL, CAST(N'2021-09-03' AS Date))
