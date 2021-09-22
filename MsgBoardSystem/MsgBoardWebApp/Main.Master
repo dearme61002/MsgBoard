@@ -36,12 +36,10 @@
 
             // check login
             if (0 == authx && sessionStorage.getItem("Name") != null) {
-                $(".loginFunc").show();
                 $("#welcomeText").text(`歡迎登入! 會員: ${sessionStorage.getItem("Name")}`);  
             }
             else {
                 document.cookie = '.ASPXAUTH' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-                $(".guestFunc").show();
             }
 
             // Logout Function
@@ -77,10 +75,14 @@
                 </div>
                 <div class="col-4" style="text-align: right">
                     <!--Horizontal Function List-->
-                    <a class="btn btn-sm btn-outline-secondary guestFunc" style="display: none" href="Page02Login.aspx">登入</a>
-                    <a class="btn btn-sm btn-outline-secondary guestFunc" style="display: none" href="Page03Register.aspx">註冊</a>
-                    <span class="fs-5 loginFunc" style="display: none" id="welcomeText"></span>&nbsp;&nbsp;
-                    <a class="btn btn-warning loginFunc" style="display: none" id="logoutBtn">登出</a>
+                    <asp:PlaceHolder ID="guestFunc" runat="server" Visible="true">
+                        <a class="btn btn-sm btn-outline-secondary" href="Page02Login.aspx">登入</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="Page03Register.aspx">註冊</a>
+                    </asp:PlaceHolder>
+                    <asp:PlaceHolder ID="loginFunc" runat="server" Visible="false">
+                        <span class="fs-5" id="welcomeText"></span>&nbsp;&nbsp;
+                        <a class="btn btn-warning" id="logoutBtn">登出</a>
+                    </asp:PlaceHolder>
                 </div>
             </div>
         </header>
@@ -92,10 +94,12 @@
                 <div class="list-group">
                     <!--Vertical Function List-->
                     <a href="Page04PostingHall.aspx" class="list-group-item list-group-item-action list-group-item-warning">貼文區</a>
-                    <a href="Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display: none">撰寫新貼文</a>
-                    <a href="Page06MemberCenter.aspx" class="list-group-item list-group-item-action list-group-item-warning loginFunc" style="display: none">會員中心</a>
+                    <asp:PlaceHolder ID="LoginList" runat="server" Visible="false">
+                        <a href="Page041EditPost.aspx" class="list-group-item list-group-item-action list-group-item-warning">撰寫新貼文</a>
+                        <a href="Page06MemberCenter.aspx" class="list-group-item list-group-item-action list-group-item-warning">會員中心</a>
+                    </asp:PlaceHolder>                    
                     <form id="backSide" runat="server" visible="false">
-                        <a href="/backsideweb/backsidemain.aspx" class="list-group-item list-group-item-action list-group-item-danger loginFunc" style="display: none">管理員後台</a>
+                        <a href="/backsideweb/backsidemain.aspx" class="list-group-item list-group-item-action list-group-item-danger">管理員後台</a>
                     </form>
                 </div>
             </div>
