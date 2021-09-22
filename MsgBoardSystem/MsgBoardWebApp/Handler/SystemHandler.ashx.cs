@@ -35,7 +35,6 @@ namespace MsgBoardWebApp.Handler
             {
                 // status string array
                 string[] statusMsg = new string[2];
-
                 try
                 {
                     string acc = Convert.ToString(context.Request.Form["Account"]);

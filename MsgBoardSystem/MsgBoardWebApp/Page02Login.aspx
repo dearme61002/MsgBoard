@@ -2,6 +2,16 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Woolong留言版 : 會員登入</title>
+    <script>
+        $(document).ready(function () {
+            // Clean Cookies
+            document.cookie.split(";").forEach(
+                function (c) {
+                    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ';path=/');
+                }
+            );
+        })
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form class="row g-3 needs-validation" novalidate>
