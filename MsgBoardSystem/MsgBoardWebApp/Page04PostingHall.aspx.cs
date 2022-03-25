@@ -9,6 +9,7 @@ namespace MsgBoardWebApp
 {
     public partial class Page04PostingHall : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
 

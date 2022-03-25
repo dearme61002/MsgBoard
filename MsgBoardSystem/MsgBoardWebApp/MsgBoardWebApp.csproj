@@ -43,7 +43,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -53,13 +66,18 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -67,6 +85,462 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="backsideUI\easyui-lang-zh_TW.js" />
+    <Content Include="backsideUI\jquery.easyui.min.js" />
+    <Content Include="backsideUI\jquery.min.js" />
+    <Content Include="backsideUI\themes\angular.css" />
+    <Content Include="backsideUI\themes\black\accordion.css" />
+    <Content Include="backsideUI\themes\black\calendar.css" />
+    <Content Include="backsideUI\themes\black\checkbox.css" />
+    <Content Include="backsideUI\themes\black\combo.css" />
+    <Content Include="backsideUI\themes\black\combobox.css" />
+    <Content Include="backsideUI\themes\black\datagrid.css" />
+    <Content Include="backsideUI\themes\black\datalist.css" />
+    <Content Include="backsideUI\themes\black\datebox.css" />
+    <Content Include="backsideUI\themes\black\dialog.css" />
+    <Content Include="backsideUI\themes\black\easyui.css" />
+    <Content Include="backsideUI\themes\black\filebox.css" />
+    <Content Include="backsideUI\themes\black\images\accordion_arrows.png" />
+    <Content Include="backsideUI\themes\black\images\blank.gif" />
+    <Content Include="backsideUI\themes\black\images\calendar_arrows.png" />
+    <Content Include="backsideUI\themes\black\images\combo_arrow.png" />
+    <Content Include="backsideUI\themes\black\images\datagrid_icons.png" />
+    <Content Include="backsideUI\themes\black\images\datebox_arrow.png" />
+    <Content Include="backsideUI\themes\black\images\layout_arrows.png" />
+    <Content Include="backsideUI\themes\black\images\linkbutton_bg.png" />
+    <Content Include="backsideUI\themes\black\images\loading.gif" />
+    <Content Include="backsideUI\themes\black\images\menu_arrows.png" />
+    <Content Include="backsideUI\themes\black\images\messager_icons.png" />
+    <Content Include="backsideUI\themes\black\images\pagination_icons.png" />
+    <Content Include="backsideUI\themes\black\images\panel_tools.png" />
+    <Content Include="backsideUI\themes\black\images\passwordbox_close.png" />
+    <Content Include="backsideUI\themes\black\images\passwordbox_open.png" />
+    <Content Include="backsideUI\themes\black\images\searchbox_button.png" />
+    <Content Include="backsideUI\themes\black\images\slider_handle.png" />
+    <Content Include="backsideUI\themes\black\images\spinner_arrows.png" />
+    <Content Include="backsideUI\themes\black\images\tabs_icons.png" />
+    <Content Include="backsideUI\themes\black\images\tagbox_icons.png" />
+    <Content Include="backsideUI\themes\black\images\tree_icons.png" />
+    <Content Include="backsideUI\themes\black\images\validatebox_warning.png" />
+    <Content Include="backsideUI\themes\black\layout.css" />
+    <Content Include="backsideUI\themes\black\linkbutton.css" />
+    <Content Include="backsideUI\themes\black\menu.css" />
+    <Content Include="backsideUI\themes\black\menubutton.css" />
+    <Content Include="backsideUI\themes\black\messager.css" />
+    <Content Include="backsideUI\themes\black\numberbox.css" />
+    <Content Include="backsideUI\themes\black\pagination.css" />
+    <Content Include="backsideUI\themes\black\panel.css" />
+    <Content Include="backsideUI\themes\black\passwordbox.css" />
+    <Content Include="backsideUI\themes\black\progressbar.css" />
+    <Content Include="backsideUI\themes\black\propertygrid.css" />
+    <Content Include="backsideUI\themes\black\radiobutton.css" />
+    <Content Include="backsideUI\themes\black\searchbox.css" />
+    <Content Include="backsideUI\themes\black\sidemenu.css" />
+    <Content Include="backsideUI\themes\black\slider.css" />
+    <Content Include="backsideUI\themes\black\spinner.css" />
+    <Content Include="backsideUI\themes\black\splitbutton.css" />
+    <Content Include="backsideUI\themes\black\switchbutton.css" />
+    <Content Include="backsideUI\themes\black\tabs.css" />
+    <Content Include="backsideUI\themes\black\tagbox.css" />
+    <Content Include="backsideUI\themes\black\textbox.css" />
+    <Content Include="backsideUI\themes\black\tooltip.css" />
+    <Content Include="backsideUI\themes\black\tree.css" />
+    <Content Include="backsideUI\themes\black\validatebox.css" />
+    <Content Include="backsideUI\themes\black\window.css" />
+    <Content Include="backsideUI\themes\bootstrap\accordion.css" />
+    <Content Include="backsideUI\themes\bootstrap\calendar.css" />
+    <Content Include="backsideUI\themes\bootstrap\checkbox.css" />
+    <Content Include="backsideUI\themes\bootstrap\combo.css" />
+    <Content Include="backsideUI\themes\bootstrap\combobox.css" />
+    <Content Include="backsideUI\themes\bootstrap\datagrid.css" />
+    <Content Include="backsideUI\themes\bootstrap\datalist.css" />
+    <Content Include="backsideUI\themes\bootstrap\datebox.css" />
+    <Content Include="backsideUI\themes\bootstrap\dialog.css" />
+    <Content Include="backsideUI\themes\bootstrap\easyui.css" />
+    <Content Include="backsideUI\themes\bootstrap\filebox.css" />
+    <Content Include="backsideUI\themes\bootstrap\images\accordion_arrows.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\blank.gif" />
+    <Content Include="backsideUI\themes\bootstrap\images\calendar_arrows.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\combo_arrow.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\datagrid_icons.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\datebox_arrow.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\layout_arrows.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\linkbutton_bg.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\loading.gif" />
+    <Content Include="backsideUI\themes\bootstrap\images\menu_arrows.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\messager_icons.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\pagination_icons.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\panel_tools.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\passwordbox_close.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\passwordbox_open.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\searchbox_button.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\slider_handle.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\spinner_arrows.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\tabs_icons.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\tagbox_icons.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\tree_icons.png" />
+    <Content Include="backsideUI\themes\bootstrap\images\validatebox_warning.png" />
+    <Content Include="backsideUI\themes\bootstrap\layout.css" />
+    <Content Include="backsideUI\themes\bootstrap\linkbutton.css" />
+    <Content Include="backsideUI\themes\bootstrap\menu.css" />
+    <Content Include="backsideUI\themes\bootstrap\menubutton.css" />
+    <Content Include="backsideUI\themes\bootstrap\messager.css" />
+    <Content Include="backsideUI\themes\bootstrap\numberbox.css" />
+    <Content Include="backsideUI\themes\bootstrap\pagination.css" />
+    <Content Include="backsideUI\themes\bootstrap\panel.css" />
+    <Content Include="backsideUI\themes\bootstrap\passwordbox.css" />
+    <Content Include="backsideUI\themes\bootstrap\progressbar.css" />
+    <Content Include="backsideUI\themes\bootstrap\propertygrid.css" />
+    <Content Include="backsideUI\themes\bootstrap\radiobutton.css" />
+    <Content Include="backsideUI\themes\bootstrap\searchbox.css" />
+    <Content Include="backsideUI\themes\bootstrap\sidemenu.css" />
+    <Content Include="backsideUI\themes\bootstrap\slider.css" />
+    <Content Include="backsideUI\themes\bootstrap\spinner.css" />
+    <Content Include="backsideUI\themes\bootstrap\splitbutton.css" />
+    <Content Include="backsideUI\themes\bootstrap\switchbutton.css" />
+    <Content Include="backsideUI\themes\bootstrap\tabs.css" />
+    <Content Include="backsideUI\themes\bootstrap\tagbox.css" />
+    <Content Include="backsideUI\themes\bootstrap\textbox.css" />
+    <Content Include="backsideUI\themes\bootstrap\tooltip.css" />
+    <Content Include="backsideUI\themes\bootstrap\tree.css" />
+    <Content Include="backsideUI\themes\bootstrap\validatebox.css" />
+    <Content Include="backsideUI\themes\bootstrap\window.css" />
+    <Content Include="backsideUI\themes\color.css" />
+    <Content Include="backsideUI\themes\default\accordion.css" />
+    <Content Include="backsideUI\themes\default\calendar.css" />
+    <Content Include="backsideUI\themes\default\checkbox.css" />
+    <Content Include="backsideUI\themes\default\combo.css" />
+    <Content Include="backsideUI\themes\default\combobox.css" />
+    <Content Include="backsideUI\themes\default\datagrid.css" />
+    <Content Include="backsideUI\themes\default\datalist.css" />
+    <Content Include="backsideUI\themes\default\datebox.css" />
+    <Content Include="backsideUI\themes\default\dialog.css" />
+    <Content Include="backsideUI\themes\default\easyui.css" />
+    <Content Include="backsideUI\themes\default\filebox.css" />
+    <Content Include="backsideUI\themes\default\images\accordion_arrows.png" />
+    <Content Include="backsideUI\themes\default\images\blank.gif" />
+    <Content Include="backsideUI\themes\default\images\calendar_arrows.png" />
+    <Content Include="backsideUI\themes\default\images\combo_arrow.png" />
+    <Content Include="backsideUI\themes\default\images\datagrid_icons.png" />
+    <Content Include="backsideUI\themes\default\images\datebox_arrow.png" />
+    <Content Include="backsideUI\themes\default\images\layout_arrows.png" />
+    <Content Include="backsideUI\themes\default\images\linkbutton_bg.png" />
+    <Content Include="backsideUI\themes\default\images\loading.gif" />
+    <Content Include="backsideUI\themes\default\images\menu_arrows.png" />
+    <Content Include="backsideUI\themes\default\images\messager_icons.png" />
+    <Content Include="backsideUI\themes\default\images\pagination_icons.png" />
+    <Content Include="backsideUI\themes\default\images\panel_tools.png" />
+    <Content Include="backsideUI\themes\default\images\passwordbox_close.png" />
+    <Content Include="backsideUI\themes\default\images\passwordbox_open.png" />
+    <Content Include="backsideUI\themes\default\images\searchbox_button.png" />
+    <Content Include="backsideUI\themes\default\images\slider_handle.png" />
+    <Content Include="backsideUI\themes\default\images\spinner_arrows.png" />
+    <Content Include="backsideUI\themes\default\images\tabs_icons.png" />
+    <Content Include="backsideUI\themes\default\images\tagbox_icons.png" />
+    <Content Include="backsideUI\themes\default\images\tree_icons.png" />
+    <Content Include="backsideUI\themes\default\images\validatebox_warning.png" />
+    <Content Include="backsideUI\themes\default\layout.css" />
+    <Content Include="backsideUI\themes\default\linkbutton.css" />
+    <Content Include="backsideUI\themes\default\menu.css" />
+    <Content Include="backsideUI\themes\default\menubutton.css" />
+    <Content Include="backsideUI\themes\default\messager.css" />
+    <Content Include="backsideUI\themes\default\numberbox.css" />
+    <Content Include="backsideUI\themes\default\pagination.css" />
+    <Content Include="backsideUI\themes\default\panel.css" />
+    <Content Include="backsideUI\themes\default\passwordbox.css" />
+    <Content Include="backsideUI\themes\default\progressbar.css" />
+    <Content Include="backsideUI\themes\default\propertygrid.css" />
+    <Content Include="backsideUI\themes\default\radiobutton.css" />
+    <Content Include="backsideUI\themes\default\searchbox.css" />
+    <Content Include="backsideUI\themes\default\sidemenu.css" />
+    <Content Include="backsideUI\themes\default\slider.css" />
+    <Content Include="backsideUI\themes\default\spinner.css" />
+    <Content Include="backsideUI\themes\default\splitbutton.css" />
+    <Content Include="backsideUI\themes\default\switchbutton.css" />
+    <Content Include="backsideUI\themes\default\tabs.css" />
+    <Content Include="backsideUI\themes\default\tagbox.css" />
+    <Content Include="backsideUI\themes\default\textbox.css" />
+    <Content Include="backsideUI\themes\default\tooltip.css" />
+    <Content Include="backsideUI\themes\default\tree.css" />
+    <Content Include="backsideUI\themes\default\validatebox.css" />
+    <Content Include="backsideUI\themes\default\window.css" />
+    <Content Include="backsideUI\themes\gray\accordion.css" />
+    <Content Include="backsideUI\themes\gray\calendar.css" />
+    <Content Include="backsideUI\themes\gray\checkbox.css" />
+    <Content Include="backsideUI\themes\gray\combo.css" />
+    <Content Include="backsideUI\themes\gray\combobox.css" />
+    <Content Include="backsideUI\themes\gray\datagrid.css" />
+    <Content Include="backsideUI\themes\gray\datalist.css" />
+    <Content Include="backsideUI\themes\gray\datebox.css" />
+    <Content Include="backsideUI\themes\gray\dialog.css" />
+    <Content Include="backsideUI\themes\gray\easyui.css" />
+    <Content Include="backsideUI\themes\gray\filebox.css" />
+    <Content Include="backsideUI\themes\gray\images\accordion_arrows.png" />
+    <Content Include="backsideUI\themes\gray\images\blank.gif" />
+    <Content Include="backsideUI\themes\gray\images\calendar_arrows.png" />
+    <Content Include="backsideUI\themes\gray\images\combo_arrow.png" />
+    <Content Include="backsideUI\themes\gray\images\datagrid_icons.png" />
+    <Content Include="backsideUI\themes\gray\images\datebox_arrow.png" />
+    <Content Include="backsideUI\themes\gray\images\layout_arrows.png" />
+    <Content Include="backsideUI\themes\gray\images\linkbutton_bg.png" />
+    <Content Include="backsideUI\themes\gray\images\loading.gif" />
+    <Content Include="backsideUI\themes\gray\images\menu_arrows.png" />
+    <Content Include="backsideUI\themes\gray\images\messager_icons.png" />
+    <Content Include="backsideUI\themes\gray\images\pagination_icons.png" />
+    <Content Include="backsideUI\themes\gray\images\panel_tools.png" />
+    <Content Include="backsideUI\themes\gray\images\passwordbox_close.png" />
+    <Content Include="backsideUI\themes\gray\images\passwordbox_open.png" />
+    <Content Include="backsideUI\themes\gray\images\searchbox_button.png" />
+    <Content Include="backsideUI\themes\gray\images\slider_handle.png" />
+    <Content Include="backsideUI\themes\gray\images\spinner_arrows.png" />
+    <Content Include="backsideUI\themes\gray\images\tabs_icons.png" />
+    <Content Include="backsideUI\themes\gray\images\tagbox_icons.png" />
+    <Content Include="backsideUI\themes\gray\images\tree_icons.png" />
+    <Content Include="backsideUI\themes\gray\images\validatebox_warning.png" />
+    <Content Include="backsideUI\themes\gray\layout.css" />
+    <Content Include="backsideUI\themes\gray\linkbutton.css" />
+    <Content Include="backsideUI\themes\gray\menu.css" />
+    <Content Include="backsideUI\themes\gray\menubutton.css" />
+    <Content Include="backsideUI\themes\gray\messager.css" />
+    <Content Include="backsideUI\themes\gray\numberbox.css" />
+    <Content Include="backsideUI\themes\gray\pagination.css" />
+    <Content Include="backsideUI\themes\gray\panel.css" />
+    <Content Include="backsideUI\themes\gray\passwordbox.css" />
+    <Content Include="backsideUI\themes\gray\progressbar.css" />
+    <Content Include="backsideUI\themes\gray\propertygrid.css" />
+    <Content Include="backsideUI\themes\gray\radiobutton.css" />
+    <Content Include="backsideUI\themes\gray\searchbox.css" />
+    <Content Include="backsideUI\themes\gray\sidemenu.css" />
+    <Content Include="backsideUI\themes\gray\slider.css" />
+    <Content Include="backsideUI\themes\gray\spinner.css" />
+    <Content Include="backsideUI\themes\gray\splitbutton.css" />
+    <Content Include="backsideUI\themes\gray\switchbutton.css" />
+    <Content Include="backsideUI\themes\gray\tabs.css" />
+    <Content Include="backsideUI\themes\gray\tagbox.css" />
+    <Content Include="backsideUI\themes\gray\textbox.css" />
+    <Content Include="backsideUI\themes\gray\tooltip.css" />
+    <Content Include="backsideUI\themes\gray\tree.css" />
+    <Content Include="backsideUI\themes\gray\validatebox.css" />
+    <Content Include="backsideUI\themes\gray\window.css" />
+    <Content Include="backsideUI\themes\icon.css" />
+    <Content Include="backsideUI\themes\icons\back.png" />
+    <Content Include="backsideUI\themes\icons\blank.gif" />
+    <Content Include="backsideUI\themes\icons\cancel.png" />
+    <Content Include="backsideUI\themes\icons\clear.png" />
+    <Content Include="backsideUI\themes\icons\cut.png" />
+    <Content Include="backsideUI\themes\icons\edit_add.png" />
+    <Content Include="backsideUI\themes\icons\edit_remove.png" />
+    <Content Include="backsideUI\themes\icons\filesave.png" />
+    <Content Include="backsideUI\themes\icons\filter.png" />
+    <Content Include="backsideUI\themes\icons\help.png" />
+    <Content Include="backsideUI\themes\icons\large_chart.png" />
+    <Content Include="backsideUI\themes\icons\large_clipart.png" />
+    <Content Include="backsideUI\themes\icons\large_picture.png" />
+    <Content Include="backsideUI\themes\icons\large_shapes.png" />
+    <Content Include="backsideUI\themes\icons\large_smartart.png" />
+    <Content Include="backsideUI\themes\icons\lock.png" />
+    <Content Include="backsideUI\themes\icons\man.png" />
+    <Content Include="backsideUI\themes\icons\mini_add.png" />
+    <Content Include="backsideUI\themes\icons\mini_edit.png" />
+    <Content Include="backsideUI\themes\icons\mini_refresh.png" />
+    <Content Include="backsideUI\themes\icons\more.png" />
+    <Content Include="backsideUI\themes\icons\no.png" />
+    <Content Include="backsideUI\themes\icons\ok.png" />
+    <Content Include="backsideUI\themes\icons\pencil.png" />
+    <Content Include="backsideUI\themes\icons\print.png" />
+    <Content Include="backsideUI\themes\icons\redo.png" />
+    <Content Include="backsideUI\themes\icons\reload.png" />
+    <Content Include="backsideUI\themes\icons\search.png" />
+    <Content Include="backsideUI\themes\icons\sum.png" />
+    <Content Include="backsideUI\themes\icons\tip.png" />
+    <Content Include="backsideUI\themes\icons\undo.png" />
+    <Content Include="backsideUI\themes\material-teal\accordion.css" />
+    <Content Include="backsideUI\themes\material-teal\calendar.css" />
+    <Content Include="backsideUI\themes\material-teal\checkbox.css" />
+    <Content Include="backsideUI\themes\material-teal\combo.css" />
+    <Content Include="backsideUI\themes\material-teal\combobox.css" />
+    <Content Include="backsideUI\themes\material-teal\datagrid.css" />
+    <Content Include="backsideUI\themes\material-teal\datalist.css" />
+    <Content Include="backsideUI\themes\material-teal\datebox.css" />
+    <Content Include="backsideUI\themes\material-teal\dialog.css" />
+    <Content Include="backsideUI\themes\material-teal\easyui.css" />
+    <Content Include="backsideUI\themes\material-teal\filebox.css" />
+    <Content Include="backsideUI\themes\material-teal\images\accordion_arrows.png" />
+    <Content Include="backsideUI\themes\material-teal\images\blank.gif" />
+    <Content Include="backsideUI\themes\material-teal\images\calendar_arrows.png" />
+    <Content Include="backsideUI\themes\material-teal\images\combo_arrow.png" />
+    <Content Include="backsideUI\themes\material-teal\images\datagrid_icons.png" />
+    <Content Include="backsideUI\themes\material-teal\images\datebox_arrow.png" />
+    <Content Include="backsideUI\themes\material-teal\images\layout_arrows.png" />
+    <Content Include="backsideUI\themes\material-teal\images\linkbutton_bg.png" />
+    <Content Include="backsideUI\themes\material-teal\images\loading.gif" />
+    <Content Include="backsideUI\themes\material-teal\images\menu_arrows.png" />
+    <Content Include="backsideUI\themes\material-teal\images\messager_icons.png" />
+    <Content Include="backsideUI\themes\material-teal\images\pagination_icons.png" />
+    <Content Include="backsideUI\themes\material-teal\images\panel_tools.png" />
+    <Content Include="backsideUI\themes\material-teal\images\passwordbox_close.png" />
+    <Content Include="backsideUI\themes\material-teal\images\passwordbox_open.png" />
+    <Content Include="backsideUI\themes\material-teal\images\searchbox_button.png" />
+    <Content Include="backsideUI\themes\material-teal\images\slider_handle.png" />
+    <Content Include="backsideUI\themes\material-teal\images\spinner_arrows.png" />
+    <Content Include="backsideUI\themes\material-teal\images\tabs_icons.png" />
+    <Content Include="backsideUI\themes\material-teal\images\tagbox_icons.png" />
+    <Content Include="backsideUI\themes\material-teal\images\tree_icons.png" />
+    <Content Include="backsideUI\themes\material-teal\images\validatebox_warning.png" />
+    <Content Include="backsideUI\themes\material-teal\layout.css" />
+    <Content Include="backsideUI\themes\material-teal\linkbutton.css" />
+    <Content Include="backsideUI\themes\material-teal\menu.css" />
+    <Content Include="backsideUI\themes\material-teal\menubutton.css" />
+    <Content Include="backsideUI\themes\material-teal\messager.css" />
+    <Content Include="backsideUI\themes\material-teal\numberbox.css" />
+    <Content Include="backsideUI\themes\material-teal\pagination.css" />
+    <Content Include="backsideUI\themes\material-teal\panel.css" />
+    <Content Include="backsideUI\themes\material-teal\passwordbox.css" />
+    <Content Include="backsideUI\themes\material-teal\progressbar.css" />
+    <Content Include="backsideUI\themes\material-teal\propertygrid.css" />
+    <Content Include="backsideUI\themes\material-teal\radiobutton.css" />
+    <Content Include="backsideUI\themes\material-teal\searchbox.css" />
+    <Content Include="backsideUI\themes\material-teal\sidemenu.css" />
+    <Content Include="backsideUI\themes\material-teal\slider.css" />
+    <Content Include="backsideUI\themes\material-teal\spinner.css" />
+    <Content Include="backsideUI\themes\material-teal\splitbutton.css" />
+    <Content Include="backsideUI\themes\material-teal\switchbutton.css" />
+    <Content Include="backsideUI\themes\material-teal\tabs.css" />
+    <Content Include="backsideUI\themes\material-teal\tagbox.css" />
+    <Content Include="backsideUI\themes\material-teal\textbox.css" />
+    <Content Include="backsideUI\themes\material-teal\tooltip.css" />
+    <Content Include="backsideUI\themes\material-teal\tree.css" />
+    <Content Include="backsideUI\themes\material-teal\validatebox.css" />
+    <Content Include="backsideUI\themes\material-teal\window.css" />
+    <Content Include="backsideUI\themes\material\accordion.css" />
+    <Content Include="backsideUI\themes\material\calendar.css" />
+    <Content Include="backsideUI\themes\material\checkbox.css" />
+    <Content Include="backsideUI\themes\material\combo.css" />
+    <Content Include="backsideUI\themes\material\combobox.css" />
+    <Content Include="backsideUI\themes\material\datagrid.css" />
+    <Content Include="backsideUI\themes\material\datalist.css" />
+    <Content Include="backsideUI\themes\material\datebox.css" />
+    <Content Include="backsideUI\themes\material\dialog.css" />
+    <Content Include="backsideUI\themes\material\easyui.css" />
+    <Content Include="backsideUI\themes\material\filebox.css" />
+    <Content Include="backsideUI\themes\material\images\accordion_arrows.png" />
+    <Content Include="backsideUI\themes\material\images\blank.gif" />
+    <Content Include="backsideUI\themes\material\images\calendar_arrows.png" />
+    <Content Include="backsideUI\themes\material\images\combo_arrow.png" />
+    <Content Include="backsideUI\themes\material\images\datagrid_icons.png" />
+    <Content Include="backsideUI\themes\material\images\datebox_arrow.png" />
+    <Content Include="backsideUI\themes\material\images\layout_arrows.png" />
+    <Content Include="backsideUI\themes\material\images\linkbutton_bg.png" />
+    <Content Include="backsideUI\themes\material\images\loading.gif" />
+    <Content Include="backsideUI\themes\material\images\menu_arrows.png" />
+    <Content Include="backsideUI\themes\material\images\messager_icons.png" />
+    <Content Include="backsideUI\themes\material\images\pagination_icons.png" />
+    <Content Include="backsideUI\themes\material\images\panel_tools.png" />
+    <Content Include="backsideUI\themes\material\images\passwordbox_close.png" />
+    <Content Include="backsideUI\themes\material\images\passwordbox_open.png" />
+    <Content Include="backsideUI\themes\material\images\searchbox_button.png" />
+    <Content Include="backsideUI\themes\material\images\slider_handle.png" />
+    <Content Include="backsideUI\themes\material\images\spinner_arrows.png" />
+    <Content Include="backsideUI\themes\material\images\tabs_icons.png" />
+    <Content Include="backsideUI\themes\material\images\tagbox_icons.png" />
+    <Content Include="backsideUI\themes\material\images\tree_icons.png" />
+    <Content Include="backsideUI\themes\material\images\validatebox_warning.png" />
+    <Content Include="backsideUI\themes\material\layout.css" />
+    <Content Include="backsideUI\themes\material\linkbutton.css" />
+    <Content Include="backsideUI\themes\material\menu.css" />
+    <Content Include="backsideUI\themes\material\menubutton.css" />
+    <Content Include="backsideUI\themes\material\messager.css" />
+    <Content Include="backsideUI\themes\material\numberbox.css" />
+    <Content Include="backsideUI\themes\material\pagination.css" />
+    <Content Include="backsideUI\themes\material\panel.css" />
+    <Content Include="backsideUI\themes\material\passwordbox.css" />
+    <Content Include="backsideUI\themes\material\progressbar.css" />
+    <Content Include="backsideUI\themes\material\propertygrid.css" />
+    <Content Include="backsideUI\themes\material\radiobutton.css" />
+    <Content Include="backsideUI\themes\material\searchbox.css" />
+    <Content Include="backsideUI\themes\material\sidemenu.css" />
+    <Content Include="backsideUI\themes\material\slider.css" />
+    <Content Include="backsideUI\themes\material\spinner.css" />
+    <Content Include="backsideUI\themes\material\splitbutton.css" />
+    <Content Include="backsideUI\themes\material\switchbutton.css" />
+    <Content Include="backsideUI\themes\material\tabs.css" />
+    <Content Include="backsideUI\themes\material\tagbox.css" />
+    <Content Include="backsideUI\themes\material\textbox.css" />
+    <Content Include="backsideUI\themes\material\tooltip.css" />
+    <Content Include="backsideUI\themes\material\tree.css" />
+    <Content Include="backsideUI\themes\material\validatebox.css" />
+    <Content Include="backsideUI\themes\material\window.css" />
+    <Content Include="backsideUI\themes\metro\accordion.css" />
+    <Content Include="backsideUI\themes\metro\calendar.css" />
+    <Content Include="backsideUI\themes\metro\checkbox.css" />
+    <Content Include="backsideUI\themes\metro\combo.css" />
+    <Content Include="backsideUI\themes\metro\combobox.css" />
+    <Content Include="backsideUI\themes\metro\datagrid.css" />
+    <Content Include="backsideUI\themes\metro\datalist.css" />
+    <Content Include="backsideUI\themes\metro\datebox.css" />
+    <Content Include="backsideUI\themes\metro\dialog.css" />
+    <Content Include="backsideUI\themes\metro\easyui.css" />
+    <Content Include="backsideUI\themes\metro\filebox.css" />
+    <Content Include="backsideUI\themes\metro\images\accordion_arrows.png" />
+    <Content Include="backsideUI\themes\metro\images\blank.gif" />
+    <Content Include="backsideUI\themes\metro\images\calendar_arrows.png" />
+    <Content Include="backsideUI\themes\metro\images\combo_arrow.png" />
+    <Content Include="backsideUI\themes\metro\images\datagrid_icons.png" />
+    <Content Include="backsideUI\themes\metro\images\datebox_arrow.png" />
+    <Content Include="backsideUI\themes\metro\images\layout_arrows.png" />
+    <Content Include="backsideUI\themes\metro\images\linkbutton_bg.png" />
+    <Content Include="backsideUI\themes\metro\images\loading.gif" />
+    <Content Include="backsideUI\themes\metro\images\menu_arrows.png" />
+    <Content Include="backsideUI\themes\metro\images\messager_icons.png" />
+    <Content Include="backsideUI\themes\metro\images\pagination_icons.png" />
+    <Content Include="backsideUI\themes\metro\images\panel_tools.png" />
+    <Content Include="backsideUI\themes\metro\images\passwordbox_close.png" />
+    <Content Include="backsideUI\themes\metro\images\passwordbox_open.png" />
+    <Content Include="backsideUI\themes\metro\images\searchbox_button.png" />
+    <Content Include="backsideUI\themes\metro\images\slider_handle.png" />
+    <Content Include="backsideUI\themes\metro\images\spinner_arrows.png" />
+    <Content Include="backsideUI\themes\metro\images\tabs_icons.png" />
+    <Content Include="backsideUI\themes\metro\images\tagbox_icons.png" />
+    <Content Include="backsideUI\themes\metro\images\tree_icons.png" />
+    <Content Include="backsideUI\themes\metro\images\validatebox_warning.png" />
+    <Content Include="backsideUI\themes\metro\layout.css" />
+    <Content Include="backsideUI\themes\metro\linkbutton.css" />
+    <Content Include="backsideUI\themes\metro\menu.css" />
+    <Content Include="backsideUI\themes\metro\menubutton.css" />
+    <Content Include="backsideUI\themes\metro\messager.css" />
+    <Content Include="backsideUI\themes\metro\numberbox.css" />
+    <Content Include="backsideUI\themes\metro\pagination.css" />
+    <Content Include="backsideUI\themes\metro\panel.css" />
+    <Content Include="backsideUI\themes\metro\passwordbox.css" />
+    <Content Include="backsideUI\themes\metro\progressbar.css" />
+    <Content Include="backsideUI\themes\metro\propertygrid.css" />
+    <Content Include="backsideUI\themes\metro\radiobutton.css" />
+    <Content Include="backsideUI\themes\metro\searchbox.css" />
+    <Content Include="backsideUI\themes\metro\sidemenu.css" />
+    <Content Include="backsideUI\themes\metro\slider.css" />
+    <Content Include="backsideUI\themes\metro\spinner.css" />
+    <Content Include="backsideUI\themes\metro\splitbutton.css" />
+    <Content Include="backsideUI\themes\metro\switchbutton.css" />
+    <Content Include="backsideUI\themes\metro\tabs.css" />
+    <Content Include="backsideUI\themes\metro\tagbox.css" />
+    <Content Include="backsideUI\themes\metro\textbox.css" />
+    <Content Include="backsideUI\themes\metro\tooltip.css" />
+    <Content Include="backsideUI\themes\metro\tree.css" />
+    <Content Include="backsideUI\themes\metro\validatebox.css" />
+    <Content Include="backsideUI\themes\metro\window.css" />
+    <Content Include="backsideUI\themes\mobile.css" />
+    <Content Include="backsideUI\themes\react.css" />
+    <Content Include="backsideUI\themes\vue.css" />
+    <Content Include="backsideweb\backsidemain.aspx" />
+    <Content Include="backsideweb\badlanguage.aspx" />
+    <Content Include="backsideweb\blackmember.aspx" />
+    <Content Include="backsideweb\board.aspx" />
+    <Content Include="backsideweb\editarticles.aspx" />
+    <Content Include="backsideweb\editmember.aspx" />
+    <Content Include="backsideweb\errorlog.aspx" />
+    <Content Include="backsideweb\index.aspx" />
+    <Content Include="backsideweb\info.aspx" />
+    <Content Include="backsideweb\passwordchange.aspx" />
     <Content Include="Bootstrap\css\bootstrap-grid.css" />
     <Content Include="Bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Bootstrap\css\bootstrap-grid.rtl.css" />
@@ -83,28 +557,163 @@
     <Content Include="Bootstrap\css\bootstrap.min.css" />
     <Content Include="Bootstrap\css\bootstrap.rtl.css" />
     <Content Include="Bootstrap\css\bootstrap.rtl.min.css" />
+    <Content Include="Bootstrap\js\bootstrap-datepicker.min.js" />
     <Content Include="Bootstrap\js\bootstrap.bundle.js" />
     <Content Include="Bootstrap\js\bootstrap.bundle.min.js" />
     <Content Include="Bootstrap\js\bootstrap.esm.js" />
     <Content Include="Bootstrap\js\bootstrap.esm.min.js" />
     <Content Include="Bootstrap\js\bootstrap.js" />
     <Content Include="Bootstrap\js\bootstrap.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap4.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap4.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap5.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bootstrap5.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bulma.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.bulma.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.dataTables.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.dataTables.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.foundation.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.foundation.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.jqueryui.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.jqueryui.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.semanticui.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\dataTables.semanticui.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\jquery.dataTables.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\css\jquery.dataTables.min.css" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\images\sort_asc.png" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\images\sort_asc_disabled.png" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\images\sort_both.png" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\images\sort_desc.png" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\images\sort_desc_disabled.png" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap4.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap4.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap5.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bootstrap5.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bulma.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.bulma.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.dataTables.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.dataTables.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.foundation.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.foundation.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.jqueryui.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.jqueryui.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.semanticui.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\dataTables.semanticui.min.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\jquery.dataTables.js" />
+    <Content Include="DataTableFrame\DataTables-1.10.25\js\jquery.dataTables.min.js" />
+    <Content Include="DataTableFrame\datatables.css" />
+    <Content Include="DataTableFrame\datatables.js" />
+    <Content Include="DataTableFrame\datatables.min.css" />
+    <Content Include="DataTableFrame\datatables.min.js" />
+    <Content Include="DataTableFrame\jquery-3.5.1.js" />
+    <Content Include="DataTableFrame\jquery.dataTables.min.js" />
     <Content Include="Global.asax" />
+    <Content Include="Img\Background.png" />
     <Content Include="Img\Logo.png" />
+    <Content Include="Img\udon.png" />
+    <Content Include="jquery\jquery.min.js" />
+    <Content Include="jquery\mycheck.js" />
     <Content Include="Page01Default.aspx" />
+    <Content Include="Page021ForgetPW.aspx" />
     <Content Include="Page02Login.aspx" />
     <Content Include="Page03Register.aspx" />
+    <Content Include="Page041EditPost.aspx" />
     <Content Include="Page04PostingHall.aspx" />
     <Content Include="Page05PostMsg.aspx" />
-    <Content Include="PageAdmin\Page071Front.aspx" />
-    <Content Include="PageAdmin\Page072Back.aspx" />
-    <Content Include="PageMember\Page061Front.aspx" />
-    <Content Include="PageMember\Page062Back.aspx" />
+    <Content Include="Page061EditInfo.aspx" />
+    <Content Include="Page062EditPwd.aspx" />
+    <Content Include="Page06MemberCenter.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="backsideweb\info.aspx.cs">
+      <DependentUpon>info.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\info.aspx.designer.cs">
+      <DependentUpon>info.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\backController.cs" />
+    <Compile Include="backsideweb\backside.Master.cs">
+      <DependentUpon>backside.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\backside.Master.designer.cs">
+      <DependentUpon>backside.Master</DependentUpon>
+    </Compile>
+    <Compile Include="backsideweb\backsidemain.aspx.cs">
+      <DependentUpon>backsidemain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\backsidemain.aspx.designer.cs">
+      <DependentUpon>backsidemain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="backsideweb\badlanguage.aspx.cs">
+      <DependentUpon>badlanguage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\badlanguage.aspx.designer.cs">
+      <DependentUpon>badlanguage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="backsideweb\blackmember.aspx.cs">
+      <DependentUpon>blackmember.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\blackmember.aspx.designer.cs">
+      <DependentUpon>blackmember.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="backsideweb\board.aspx.cs">
+      <DependentUpon>board.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\board.aspx.designer.cs">
+      <DependentUpon>board.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="backsideweb\editarticles.aspx.cs">
+      <DependentUpon>editarticles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\editarticles.aspx.designer.cs">
+      <DependentUpon>editarticles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="backsideweb\editmember.aspx.cs">
+      <DependentUpon>editmember.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\editmember.aspx.designer.cs">
+      <DependentUpon>editmember.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="backsideweb\errorlog.aspx.cs">
+      <DependentUpon>errorlog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\errorlog.aspx.designer.cs">
+      <DependentUpon>errorlog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="backsideweb\index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="backsideweb\passwordchange.aspx.cs">
+      <DependentUpon>passwordchange.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="backsideweb\passwordchange.aspx.designer.cs">
+      <DependentUpon>passwordchange.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="filter\BacksideFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\SystemHandler.ashx.cs">
+      <DependentUpon>SystemHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
@@ -120,6 +729,13 @@
     <Compile Include="Page01Default.aspx.designer.cs">
       <DependentUpon>Page01Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Page021ForgetPW.aspx.cs">
+      <DependentUpon>Page021ForgetPW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Page021ForgetPW.aspx.designer.cs">
+      <DependentUpon>Page021ForgetPW.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Page02Login.aspx.cs">
       <DependentUpon>Page02Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -133,6 +749,13 @@
     </Compile>
     <Compile Include="Page03Register.aspx.designer.cs">
       <DependentUpon>Page03Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Page041EditPost.aspx.cs">
+      <DependentUpon>Page041EditPost.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Page041EditPost.aspx.designer.cs">
+      <DependentUpon>Page041EditPost.aspx</DependentUpon>
     </Compile>
     <Compile Include="Page04PostingHall.aspx.cs">
       <DependentUpon>Page04PostingHall.aspx</DependentUpon>
@@ -148,33 +771,26 @@
     <Compile Include="Page05PostMsg.aspx.designer.cs">
       <DependentUpon>Page05PostMsg.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageAdmin\Page071Front.aspx.cs">
-      <DependentUpon>Page071Front.aspx</DependentUpon>
+    <Compile Include="Page061EditInfo.aspx.cs">
+      <DependentUpon>Page061EditInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PageAdmin\Page071Front.aspx.designer.cs">
-      <DependentUpon>Page071Front.aspx</DependentUpon>
+    <Compile Include="Page061EditInfo.aspx.designer.cs">
+      <DependentUpon>Page061EditInfo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageAdmin\Page072Back.aspx.cs">
-      <DependentUpon>Page072Back.aspx</DependentUpon>
+    <Compile Include="Page062EditPwd.aspx.cs">
+      <DependentUpon>Page062EditPwd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PageAdmin\Page072Back.aspx.designer.cs">
-      <DependentUpon>Page072Back.aspx</DependentUpon>
+    <Compile Include="Page062EditPwd.aspx.designer.cs">
+      <DependentUpon>Page062EditPwd.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageMember\Page061Front.aspx.cs">
-      <DependentUpon>Page061Front.aspx</DependentUpon>
+    <Compile Include="Page06MemberCenter.aspx.cs">
+      <DependentUpon>Page06MemberCenter.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PageMember\Page061Front.aspx.designer.cs">
-      <DependentUpon>Page061Front.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PageMember\Page062Back.aspx.cs">
-      <DependentUpon>Page062Back.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PageMember\Page062Back.aspx.designer.cs">
-      <DependentUpon>Page062Back.aspx</DependentUpon>
+    <Compile Include="Page06MemberCenter.aspx.designer.cs">
+      <DependentUpon>Page06MemberCenter.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -202,6 +818,11 @@
     <Content Include="Bootstrap\js\bootstrap.esm.min.js.map" />
     <Content Include="Bootstrap\js\bootstrap.js.map" />
     <Content Include="Bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="libman.json" />
+    <Content Include="backsideUI\themes\material-teal\images\Thumbs.db" />
+    <Content Include="backsideUI\themes\material\images\Thumbs.db" />
+    <Content Include="backsideweb\backside.Master" />
+    <Content Include="Handler\SystemHandler.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -213,6 +834,28 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{6058776b-2e13-4202-9332-d2fedd1509b6}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\databaseORM\databaseORM.csproj">
+      <Project>{17F0546A-EA55-45F1-9CD4-E416D70C551D}</Project>
+      <Name>databaseORM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{daeb81f2-be08-4080-a90b-b15342eea93c}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemAuth\SystemAuth.csproj">
+      <Project>{83E8BFB3-62AE-4CD2-8300-963F6A2F92D1}</Project>
+      <Name>SystemAuth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDBFunction\SystemDBFunction.csproj">
+      <Project>{F1B304DC-1808-44F2-969A-2F8D80CDAC6D}</Project>
+      <Name>SystemDBFunction</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

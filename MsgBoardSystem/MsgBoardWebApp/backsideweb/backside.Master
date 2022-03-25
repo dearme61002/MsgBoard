@@ -1,0 +1,33 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="backside.master.cs" Inherits="MsgBoardWebApp.backsideweb.backside" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="../jquery/jquery.min.js"></script>
+    <link href="../Bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+     <%--接收標題--%>
+     <%--檢查標別是否有參數如果沒有傳入空字符--%><%string titleh1 = (Request.QueryString["title"] != null) ? Request.QueryString["title"] : string.Empty;%>
+
+     <%--接收標題--%>
+                <h1 style="text-align: center;"><%:titleh1%></h1>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+              
+            </asp:ContentPlaceHolder>
+        </div>
+    
+</body>
+    <%--導入bootscriptjs--%>
+<script src="../Bootstrap/js/bootstrap.bundle.min.js"></script>
+    <%--導入bootscriptjs--%>
+     <%--導入bootscriptjs--%>
+<script src="../Bootstrap/js/bootstrap-datepicker.min.js"></script>
+    <%--導入bootscriptjs--%>
+</html>
