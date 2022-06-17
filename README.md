@@ -11,7 +11,7 @@ Also can use data script to insert current data(MsgBoardData.sql)</br>
 &nbsp;&nbsp;密碼(Password): 123456
 
 ## #System Profile
-* Concept
+* [Concept](Concept.md)
 * Program's Schedule
 * Front Stage Function
 * Back Stage Function
