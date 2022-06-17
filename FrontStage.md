@@ -33,4 +33,4 @@
 <hr>
 
 * #### Previous: [Project Schedule](ProjectSchedule.md)
-* #### Previous: [Back Stage](BackStage.md)
+* #### Next: [Back Stage](BackStage.md)
