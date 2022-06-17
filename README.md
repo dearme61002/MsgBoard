@@ -11,7 +11,18 @@ Also can use data script to insert current data(MsgBoardData.sql)</br>
 &nbsp;&nbsp;密碼(Password): 123456
 
 ## #System Profile
-* [Concept](Concept.md)
-* Program's Schedule
-* Front Stage Function
-* Back Stage Function
+* ### [Concept](Concept.md)
+  * System Introduction
+  * Use Case
+  * Interface Design
+  * ER Diagram
+* ### [Project Schedule](ProjectSchedule.md)
+  * Team
+  * Break down all funcitons
+  * Schedule
+* ### [Front Stage](FrontStage.md)
+  * System Structure Concept
+  * Interface
+* ### [Back Stage](BackStage.md)
+  * System Structure Concept
+  * Interface
