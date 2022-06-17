@@ -16,3 +16,8 @@
 * Review project process each of week. First week for rough coding, next week start refactor project. Final week for debugs and prepare presentation.
 * Assign function by person's coding ability, make sure task can complete on time. </br>
 ![image](https://user-images.githubusercontent.com/52659809/174235326-b1bfea63-c67f-4b50-a268-37ff93ac8efa.png)
+
+<hr>
+
+#### Previous: [Concept](Concept.md)
+#### Next: [Front Stage](FrontStage.md)
