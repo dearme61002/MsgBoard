@@ -18,4 +18,4 @@
 ![image](https://user-images.githubusercontent.com/52659809/174220324-06751d2e-1ba5-4cb2-88ec-5213a5ffd5d2.png)
 <hr>
 
-#### Next: [Program's Schedule](ProgramSchedule.md)
+#### Next: [Project Schedule](ProjectSchedule.md)
